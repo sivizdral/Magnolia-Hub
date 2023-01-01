@@ -20,6 +20,9 @@ let User = new Schema({
     },
     type: {
         type: Number
+    },
+    email: {
+        type: String
     }
 });
 exports.default = mongoose_1.default.model('UserModel', User, 'Users');

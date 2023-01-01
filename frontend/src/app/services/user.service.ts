@@ -16,5 +16,18 @@ export class UserService {
 
     return this.http.post('http://localhost:4000/users/login', data)
   }
+
+  register(username, password, firstname, lastname, email, type) {
+    const data = {
+      username: username,
+      password: password,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      type: type
+    }
+
+    return this.http.post('http://localhost:4000/users/signup', data)
+  }
   
 }
