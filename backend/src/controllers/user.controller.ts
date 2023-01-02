@@ -1,5 +1,8 @@
 import express from 'express'
+import crypto from 'crypto'
 import UserModel from '../models/user'
+import TokenModel from '../models/token'
+import nodemailer from 'nodemailer'
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -10,7 +13,7 @@ export class UserController{
         let username = req.body.username;
         let password = req.body.password;
 
-        UserModel.findOne({'username': username, 'password': password}, (err, user)=>{
+        UserModel.findOne({'username': username}, (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
@@ -64,5 +67,72 @@ export class UserController{
 
             res.send({ message: "User was registered successfully!" });
         })
+    }
+
+    passwordReset = (req: express.Request, res: express.Response) => {
+        let email = req.body.email;
+
+        UserModel.findOne({'email': email}, async (err, user)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!user) {
+                return res.status(404).send({ message: "User with given e-mail does not exist." });
+            }
+
+            TokenModel.findOne({ 'userId': user._id }, (err, token)=>{
+                if (!token) {
+                    token = new TokenModel({
+                        userId: user._id,
+                        token: crypto.randomBytes(32).toString("hex"),
+                    }).save();
+                }
+
+                const link = `localhost:4000/users/password-reset/${user._id}/${token.token}`;
+                try {
+                    this.sendEmail(user.email, "Password reset", link);
+                    res.send("password reset link sent to your email account");
+                }
+                catch(err) {
+                    console.log(err);
+                    res.send("an error occured");
+                }
+                
+            });
+        })
+    }
+
+    sendEmail = async (email, subject, text) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'magnolia.hub.001@gmail.com',
+                pass: 'fydsynggvtwaelrp',
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        await transporter.sendMail({
+            from: 'magnolia.hub.001@gmail.com',
+            to: email,
+            subject: subject,
+            text: text,
+        });
+
+        console.log("email sent sucessfully");
+    } catch (error) {
+        console.log(error, "email not sent");
+    }
+    }
+
+    changePassword = (req: express.Request, res: express.Response) => {
+        let password = req.body.password;
+
+
     }
 }

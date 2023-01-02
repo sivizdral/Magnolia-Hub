@@ -10,8 +10,6 @@ const user_routes_1 = __importDefault(require("./routers/user.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
 mongoose_1.default.connect('mongodb://127.0.0.1:27017/ArtWorkshops');
 const connection = mongoose_1.default.connection;
 connection.once('open', () => {

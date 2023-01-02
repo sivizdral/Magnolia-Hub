@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  login(usernameFromForm, passwordFromForm) {
+  login(usernameFromForm, passwordFromForm): Observable<any> {
     const data = {
       username: usernameFromForm,
       password: passwordFromForm

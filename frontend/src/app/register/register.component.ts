@@ -13,8 +13,14 @@ export class RegisterComponent implements OnInit {
     email: null,
     password: null,
     firstname: null,
-    lastname: null
+    lastname: null,
+    phone: null,
+    type: null,
+    org_name: null,
+    address: null,
+    tin: null
   };
+  isOrganizer = false;
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -25,7 +31,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { username, email, password, firstname, lastname } = this.form;
+    const { username, email, password, firstname, lastname, phone, type, org_name, address, tin } = this.form;
 
     this.authService.register(username, password, firstname, lastname, email, 1).subscribe({
       next: data => {
@@ -38,6 +44,14 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     });
+  }
+
+  changeType() {
+    if (this.form.type == "2") {
+      this.isOrganizer = true;
+    } else {
+      this.isOrganizer = false;
+    }
   }
 
 }

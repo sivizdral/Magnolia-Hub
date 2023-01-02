@@ -13,5 +13,6 @@ userRouter.use(function (req, res, next) {
 });
 userRouter.route('/login').post((req, res) => new user_controller_1.UserController().login(req, res));
 userRouter.route('/signup').post([new signUpVerification_1.RegisterVerification().checkCorrectUsernameMail], (req, res) => new user_controller_1.UserController().register(req, res));
+userRouter.route('/password-reset').post((req, res) => new user_controller_1.UserController().passwordReset(req, res));
 exports.default = userRouter;
 //# sourceMappingURL=user.routes.js.map

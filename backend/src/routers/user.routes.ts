@@ -18,4 +18,6 @@ userRouter.route('/login').post(
 
 userRouter.route('/signup').post([new RegisterVerification().checkCorrectUsernameMail], (req, res)=>new UserController().register(req, res))
 
+userRouter.route('/password-reset').post((req,res)=>new UserController().passwordReset(req,res))
+
 export default userRouter;
