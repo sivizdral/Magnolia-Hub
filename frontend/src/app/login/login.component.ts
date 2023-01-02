@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   username: String;
   password: String;
   message: String = "";
+  forgotPass: boolean = false;
+  email: String;
 
   login(){
     this.userService.login(this.username, this.password).subscribe(
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
         next: data => {
           this.tokenService.saveToken(data.accessToken);
           this.tokenService.saveUser(data);
+          this.router.navigate(['/passch']);
         },
         error: err => {
           this.message = err.error.message;
@@ -35,7 +38,19 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
-    
+    this.forgotPass = true;
+  }
+
+  backToLogin() {
+    this.forgotPass = false;
+  }
+
+  submitEmail() {
+    this.userService.forgotPass(this.email).subscribe({
+      error: err => {
+        this.message = err.error.message;
+      }
+    })
   }
 
 }

@@ -1,7 +1,13 @@
-<form>
+<form *ngIf="!forgotPass">
     Username: <input type="text" name="username" [(ngModel)]="username"><br>
     <br> Password: <input type="password" name="password" [(ngModel)]="password"><br><br>
     <button (click)="login()">Submit</button>
     <button (click)="forgotPassword()">Forgot password?</button>
+    <h2>{{message}}</h2>
+</form>
+<form *ngIf="forgotPass">
+    Email: <input type="text" name="email" [(ngModel)]="email"><br>
+    <button (click)="submitEmail()">Send email</button>
+    <button (click)="backToLogin()">Back to login</button>
     <h2>{{message}}</h2>
 </form>

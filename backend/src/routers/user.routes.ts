@@ -20,6 +20,8 @@ userRouter.route('/signup').post([new RegisterVerification().checkCorrectUsernam
 
 userRouter.route('/password-reset').post((req,res)=>new UserController().passwordReset(req,res))
 
-userRouter.route('password-reset/:userId/:token').post((req,res)=>new UserController().changePassword(req, res))
+userRouter.route('/password-reset/:userId/:token').post((req,res)=>new UserController().changePassword(req, res))
 
-export default userRouter;
+userRouter.route('/password-change').post((req, res)=>new UserController().normalChange(req,res))
+
+export default userRouter

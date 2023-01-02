@@ -30,5 +30,35 @@ export class UserService {
 
     return this.http.post('http://localhost:4000/users/signup', data)
   }
+
+  forgotPass(email) {
+    const data = {
+      email: email
+    }
+
+    return this.http.post('http://localhost:4000/users/password-reset', data)
+  }
+
+  resetPass(password, userId, token) {
+    const data = {
+      password: password
+    }
+
+    const link = "http://localhost:4000/users/password-reset/" + userId + "/" + token
+    console.log(link)
+
+    return this.http.post(link, data)
+  }
+
+  changePass(oldPass, newPass, username) {
+    
+    const data = {
+      oldPass: oldPass,
+      newPass: newPass,
+      username: username
+    }
+
+    return this.http.post('http://localhost:4000/users/password-change', data)
+  }
   
 }

@@ -72,6 +72,8 @@ export class UserController{
     passwordReset = (req: express.Request, res: express.Response) => {
         let email = req.body.email;
 
+        console.log("ENTERED");
+
         UserModel.findOne({'email': email}, async (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
@@ -90,7 +92,7 @@ export class UserController{
                     }).save();
                 }
 
-                const link = `localhost:4000/users/password-reset/${user._id}/${token.token}`;
+                const link = `http://localhost:4200/password-reset/${user._id}/${token.token}`;
                 try {
                     this.sendEmail(user.email, "Password reset", link);
                     res.send("password reset link sent to your email account");
@@ -130,9 +132,61 @@ export class UserController{
     }
     }
 
-    changePassword = (req: express.Request, res: express.Response) => {
-        let password = req.body.password;
+    changePassword = async (req: express.Request, res: express.Response) => {
+        try {
+            let password = req.body.password;
 
+            console.log("CHANGE")
+            console.log(req.params)
 
+            const user = await UserModel.findById(req.params.userId);
+            if (!user) return res.status(400).send({message:"invalid link or expired"});
+
+            const token = await TokenModel.findOne({
+                userId: user._id,
+                token: req.params.token,
+            });
+            if (!token) return res.status(400).send({message:"Invalid link or expired"});
+
+            user.password = bcrypt.hashSync(password, 8);
+            await user.save();
+            await token.delete();
+
+            res.send({message:"password reset sucessfully."});
+        } catch (error) {
+            res.send({message:"An error occured"});
+            console.log(error);
+        }
+        
+    }
+
+    normalChange = (req: express.Request, res: express.Response) => {
+        let username = req.body.username;
+        let oldPass = req.body.oldPass;
+        let newPass = req.body.newPass;
+
+        console.log(username, oldPass, newPass);
+
+        UserModel.findOne({'username': username}, (err, user)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+            
+            if (!bcrypt.compareSync(oldPass, user.password)) {
+                return res.status(401).send({
+                    message: "Old password is not correct!"
+                  });
+            }
+
+            user.password = bcrypt.hashSync(newPass, 8);
+            user.save();
+            res.send({message:"Password changed successfully!"});
+            
+        })
     }
 }

@@ -74,6 +74,7 @@ class UserController {
         };
         this.passwordReset = (req, res) => {
             let email = req.body.email;
+            console.log("ENTERED");
             user_1.default.findOne({ 'email': email }, (err, user) => __awaiter(this, void 0, void 0, function* () {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -82,14 +83,14 @@ class UserController {
                 if (!user) {
                     return res.status(404).send({ message: "User with given e-mail does not exist." });
                 }
-                token_1.default.findOne({ 'userId': user._id }).then((token) => {
+                token_1.default.findOne({ 'userId': user._id }, (err, token) => {
                     if (!token) {
                         token = new token_1.default({
                             userId: user._id,
                             token: crypto_1.default.randomBytes(32).toString("hex"),
                         }).save();
                     }
-                    const link = `localhost:4000/users/password-reset/${user._id}/${token.token}`;
+                    const link = `http://localhost:4200/password-reset/${user._id}/${token.token}`;
                     try {
                         this.sendEmail(user.email, "Password reset", link);
                         res.send("password reset link sent to your email account");
@@ -125,8 +126,52 @@ class UserController {
                 console.log(error, "email not sent");
             }
         });
-        this.changePassword = (req, res) => {
-            let password = req.body.password;
+        this.changePassword = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let password = req.body.password;
+                console.log("CHANGE");
+                console.log(req.params);
+                const user = yield user_1.default.findById(req.params.userId);
+                if (!user)
+                    return res.status(400).send({ message: "invalid link or expired" });
+                const token = yield token_1.default.findOne({
+                    userId: user._id,
+                    token: req.params.token,
+                });
+                if (!token)
+                    return res.status(400).send({ message: "Invalid link or expired" });
+                user.password = bcrypt.hashSync(password, 8);
+                yield user.save();
+                yield token.delete();
+                res.send({ message: "password reset sucessfully." });
+            }
+            catch (error) {
+                res.send({ message: "An error occured" });
+                console.log(error);
+            }
+        });
+        this.normalChange = (req, res) => {
+            let username = req.body.username;
+            let oldPass = req.body.oldPass;
+            let newPass = req.body.newPass;
+            console.log(username, oldPass, newPass);
+            user_1.default.findOne({ 'username': username }, (err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!user) {
+                    return res.status(404).send({ message: "User Not found." });
+                }
+                if (!bcrypt.compareSync(oldPass, user.password)) {
+                    return res.status(401).send({
+                        message: "Old password is not correct!"
+                    });
+                }
+                user.password = bcrypt.hashSync(newPass, 8);
+                user.save();
+                res.send({ message: "Password changed successfully!" });
+            });
         };
     }
 }
