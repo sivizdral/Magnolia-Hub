@@ -16,11 +16,28 @@ let User = new Schema({
         type: String
     },
     type: {
-        type: Number
+        type: String
     },
     email: {
         type: String
-    }
+    },
+    status: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    orgData: {
+        organizationName: {
+            type: String
+        },
+        organizationAddress: {
+            type: String
+        },
+        taxNumber: {
+            type: String
+        },
+    },
 })
 
 export default mongoose.model('UserModel', User, 'Users')

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors'
 import mongoose from 'mongoose'
 import userRouter from './routers/user.routes';
+import adminRouter from './routers/admin.routes';
 
 const app = express();
 app.use(cors())
@@ -15,7 +16,8 @@ connection.once('open', ()=>{
 })
 
 const router = express.Router();
-router.use('/users', userRouter)
+router.use('/users', userRouter);
+router.use('/admin', adminRouter);
 
 app.use('/', router)
 app.listen(4000, () => console.log(`Express server running on port 4000`));
