@@ -38,6 +38,18 @@ let User = new Schema({
             type: String
         },
     },
+    likes: {
+        type: Array
+    },
+    comments: {
+        type: Array
+    },
+    pastWorkshops: {
+        type: Array
+    },
+    pendingWorkshops: {
+        type: Array
+    }
 })
 
 export default mongoose.model('UserModel', User, 'Users')

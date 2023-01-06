@@ -41,6 +41,18 @@ let User = new Schema({
             type: String
         },
     },
+    likes: {
+        type: Array
+    },
+    comments: {
+        type: Array
+    },
+    pastWorkshops: {
+        type: Array
+    },
+    pendingWorkshops: {
+        type: Array
+    }
 });
 exports.default = mongoose_1.default.model('UserModel', User, 'Users');
 //# sourceMappingURL=user.js.map

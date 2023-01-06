@@ -44,3 +44,6 @@ Thumbs.db
 frontend/.angular/cache/
 frontend/node_modules
 backend/node_modules
+*.jpg
+*.png
+*.jpeg
