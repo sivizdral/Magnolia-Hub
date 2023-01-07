@@ -24,4 +24,8 @@ userRouter.route('/password-reset/:userId/:token').post((req,res)=>new UserContr
 
 userRouter.route('/password-change').post((req, res)=>new UserController().normalChange(req,res))
 
+userRouter.route('/myData').get((req, res)=>new UserController().getMyData(req,res))
+
+userRouter.route('/updateMyData').post((req, res)=>new UserController().updateMyData(req,res))
+
 export default userRouter

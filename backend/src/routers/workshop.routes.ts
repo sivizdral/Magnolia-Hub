@@ -5,7 +5,7 @@ import {RegisterVerification} from '../middleware/signUpVerification'
 import multer from 'multer'
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) { cb(null, __dirname) },
+    destination: function(req, file, cb) { cb(null, './uploads/') },
     filename: function(req, file, cb) { cb(null, Date.now() + file.originalname) }
 });
 
@@ -38,6 +38,34 @@ workshopRouter.route('/addGallery').post(
 
 workshopRouter.route('/all').get(
     (req, res)=>new WorkshopController().getAll(req, res)
+)
+
+workshopRouter.route('/unapproved').get(
+    (req, res)=>new WorkshopController().getUnapproved(req, res)
+)
+
+workshopRouter.route('/details').get(
+    (req, res)=>new WorkshopController().getDetails(req, res)
+)
+
+workshopRouter.route('/organizerWorkshops').get(
+    (req, res)=>new WorkshopController().getOrganizerWorkshops(req, res)
+)
+
+workshopRouter.route('/delete').post(
+    (req, res)=>new WorkshopController().delete(req, res)
+)
+
+workshopRouter.route('/update').post(
+    (req, res)=>new WorkshopController().update(req, res)
+)
+
+workshopRouter.route('/image').get(
+    (req, res)=>new WorkshopController().getImage(req, res)
+)
+
+workshopRouter.route('/top').get(
+    (req, res)=>new WorkshopController().getTop(req, res)
 )
 
 

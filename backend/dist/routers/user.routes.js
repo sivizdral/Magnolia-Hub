@@ -16,5 +16,7 @@ userRouter.route('/signup').post([new signUpVerification_1.RegisterVerification(
 userRouter.route('/password-reset').post((req, res) => new user_controller_1.UserController().passwordReset(req, res));
 userRouter.route('/password-reset/:userId/:token').post((req, res) => new user_controller_1.UserController().changePassword(req, res));
 userRouter.route('/password-change').post((req, res) => new user_controller_1.UserController().normalChange(req, res));
+userRouter.route('/myData').get((req, res) => new user_controller_1.UserController().getMyData(req, res));
+userRouter.route('/updateMyData').post((req, res) => new user_controller_1.UserController().updateMyData(req, res));
 exports.default = userRouter;
 //# sourceMappingURL=user.routes.js.map

@@ -5,7 +5,9 @@ import WorkshopModel from '../models/workshop'
 import TokenModel from '../models/token'
 import nodemailer from 'nodemailer'
 import mongoose from "mongoose";
+import fs from 'fs'
 
+const path = require('path')
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 import { Config } from "../config/auth.config"
@@ -13,11 +15,6 @@ import { Config } from "../config/auth.config"
 
 
 export class WorkshopController{
-    deleteWorkshop = (req: express.Request, res: express.Response)=>{
-        let workshop_id = req.body.workshop_id
-
-
-    }
 
     create = (req: any, res: express.Response)=>{
         let name = req.body.name;
@@ -70,6 +67,7 @@ export class WorkshopController{
             data.forEach(workshop => {
                 let jsonWorkshop = workshop.toJSON();
                 jsonArr.push({
+                    workshop_id: jsonWorkshop._id,
                     name: jsonWorkshop.name,
                     date: jsonWorkshop.date,
                     location: jsonWorkshop.location,
@@ -98,5 +96,119 @@ export class WorkshopController{
 
             res.send({ message: "Gallery was added successfully!" });
         })
+    }
+
+    delete = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+        let photoPath = "";
+
+        WorkshopModel.findByIdAndDelete(workshop_id, (err, workshop)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            fs.unlink(workshop.photo[0].path, function() {})
+
+            workshop.gallery.forEach(x=>fs.unlink(x.path, function() {}))
+
+            res.status(200).send(workshop);
+        })
+    }
+
+    getImage = (req: any, res: express.Response)=>{
+        let serverPath = req.query.path;
+        var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
+        
+        fs.exists(filePath, function(exists) {
+            if (!exists) {
+                res.status(404).send({message: "Image not found!"});
+                return;
+            }
+        })
+
+        var ext = path.extname(serverPath)
+
+        var contentType = "text/plain"
+        if (ext === ".png") contentType = "image/png"
+
+        res.writeHead(200, {"Content-Type":contentType})
+        fs.readFile(filePath, function(err, content) { res.end(content) })
+    }
+
+    getUnapproved = (req: any, res: express.Response)=>{
+        WorkshopModel.find({status:"unapproved"}, (err, data)=> {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let jsonArr = []
+            data.forEach(workshop => {
+                jsonArr.push(
+                    workshop.toJSON()
+                )
+            });
+
+            res.status(200).send(jsonArr);
+        })
+    }
+
+    getDetails = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id
+
+        WorkshopModel.findById(workshop_id, (err, workshop)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!workshop) {
+                res.status(404).send({ message: "Workshop not found!" });
+                return;
+            }
+
+            res.status(200).send(workshop);
+        })
+    }
+
+    getOrganizerWorkshops = (req: any, res: express.Response)=>{
+        let organizer_id = req.body.user_id;
+
+        WorkshopModel.find({organizer: new mongoose.Types.ObjectId(organizer_id)}, (err, workshops)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let jsonArr = []
+            workshops.forEach(workshop => {
+                jsonArr.push(
+                    workshop.toJSON()
+                )
+            });
+
+            res.status(200).send(jsonArr);
+        })
+    }
+
+    update = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+        let changedFields = req.body.changedFields;
+
+        WorkshopModel.findByIdAndUpdate(workshop_id, changedFields, {new: true}, (err, user)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            res.status(200).send(user);
+        });
+    }
+
+    getTop = async (req: any, res: express.Response)=>{
+        const sortBy = "likes";
+        let workshops = await WorkshopModel.aggregate().addFields({"length":{"$size":`$${sortBy}`}}).sort({"length": -1}).limit(5);
+        res.status(200).send(workshops);
     }
 }

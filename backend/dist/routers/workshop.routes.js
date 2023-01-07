@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const workshop_controller_1 = require("../controllers/workshop.controller");
 const multer_1 = __importDefault(require("multer"));
 const storage = multer_1.default.diskStorage({
-    destination: function (req, file, cb) { cb(null, __dirname); },
+    destination: function (req, file, cb) { cb(null, './uploads/'); },
     filename: function (req, file, cb) { cb(null, Date.now() + file.originalname); }
 });
 const fileFilter = (req, file, cb) => {
@@ -27,5 +27,12 @@ workshopRouter.use(function (req, res, next) {
 workshopRouter.route('/create').post(upload.array('photo', 1), (req, res) => new workshop_controller_1.WorkshopController().create(req, res));
 workshopRouter.route('/addGallery').post(upload.array('gallery', 5), (req, res) => new workshop_controller_1.WorkshopController().addGallery(req, res));
 workshopRouter.route('/all').get((req, res) => new workshop_controller_1.WorkshopController().getAll(req, res));
+workshopRouter.route('/unapproved').get((req, res) => new workshop_controller_1.WorkshopController().getUnapproved(req, res));
+workshopRouter.route('/details').get((req, res) => new workshop_controller_1.WorkshopController().getDetails(req, res));
+workshopRouter.route('/organizerWorkshops').get((req, res) => new workshop_controller_1.WorkshopController().getOrganizerWorkshops(req, res));
+workshopRouter.route('/delete').post((req, res) => new workshop_controller_1.WorkshopController().delete(req, res));
+workshopRouter.route('/update').post((req, res) => new workshop_controller_1.WorkshopController().update(req, res));
+workshopRouter.route('/image').get((req, res) => new workshop_controller_1.WorkshopController().getImage(req, res));
+workshopRouter.route('/top').get((req, res) => new workshop_controller_1.WorkshopController().getTop(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map

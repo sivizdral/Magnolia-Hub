@@ -189,4 +189,56 @@ export class UserController{
             
         })
     }
+
+    getMyData = (req: express.Request, res: express.Response) => {
+        let user_id = req.body.user_id;
+
+        UserModel.findById(user_id, (err, user)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+
+            if (user.type === "participant") {
+                res.status(200).send({
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    username: user.username,
+                    email: user.email,
+                    phone: user.phone
+                });
+            } else if (user.type === "organizer") {
+                res.status(200).send({
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    username: user.username,
+                    email: user.email,
+                    phone: user.phone,
+                    orgData: user.orgData
+                });
+            }
+        })
+    }
+
+    updateMyData = (req: express.Request, res: express.Response) => {
+        let user_id = req.body.user_id;
+        let changedFields = req.body.changedFields;
+
+        UserModel.findByIdAndUpdate(user_id, changedFields, {new: true}, (err, user)=>{
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+
+            res.status(200).send({message:"User data successfully updated!"});
+        })
+    }
 }

@@ -173,6 +173,51 @@ class UserController {
                 res.send({ message: "Password changed successfully!" });
             });
         };
+        this.getMyData = (req, res) => {
+            let user_id = req.body.user_id;
+            user_1.default.findById(user_id, (err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!user) {
+                    return res.status(404).send({ message: "User Not found." });
+                }
+                if (user.type === "participant") {
+                    res.status(200).send({
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        username: user.username,
+                        email: user.email,
+                        phone: user.phone
+                    });
+                }
+                else if (user.type === "organizer") {
+                    res.status(200).send({
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        username: user.username,
+                        email: user.email,
+                        phone: user.phone,
+                        orgData: user.orgData
+                    });
+                }
+            });
+        };
+        this.updateMyData = (req, res) => {
+            let user_id = req.body.user_id;
+            let changedFields = req.body.changedFields;
+            user_1.default.findByIdAndUpdate(user_id, changedFields, { new: true }, (err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!user) {
+                    return res.status(404).send({ message: "User Not found." });
+                }
+                res.status(200).send({ message: "User data successfully updated!" });
+            });
+        };
     }
 }
 exports.UserController = UserController;
