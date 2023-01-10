@@ -1,3 +1,4 @@
+import { Int32 } from "mongodb";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
@@ -37,6 +38,10 @@ let Workshop = new Schema({
     },
     status: {
         type: String,
+        required: true
+    },
+    capacity: {
+        type: Number,
         required: true
     },
     participantsList: [Schema.Types.ObjectId],

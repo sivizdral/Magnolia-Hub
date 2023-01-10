@@ -29,6 +29,7 @@ class WorkshopController {
             let short_description = req.body.short_description;
             let long_description = req.body.long_description;
             let photo = req.files;
+            let capacity = req.body.capacity;
             const [dateStr, timeStr] = date.split(' ');
             const [month, day, year] = dateStr.split('-');
             const [hours, minutes, seconds] = timeStr.split(':');
@@ -40,6 +41,7 @@ class WorkshopController {
                 organizer: new mongoose_1.default.Types.ObjectId(organizer),
                 short_description: short_description,
                 long_description: long_description,
+                capacity: capacity,
                 status: "unapproved",
                 photo: photo,
                 gallery: [],
@@ -177,6 +179,21 @@ class WorkshopController {
             let workshops = yield workshop_1.default.aggregate().addFields({ "length": { "$size": `$${sortBy}` } }).sort({ "length": -1 }).limit(5);
             res.status(200).send(workshops);
         });
+        this.getAvailablePlaces = (req, res) => {
+            let workshop_id = req.body.workshop_id;
+            workshop_1.default.findById(workshop_id, (err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!workshop) {
+                    res.status(500).send({ message: "Workshop not found!" });
+                    return;
+                }
+                let avail = workshop.capacity - workshop.pendingList.length;
+                res.status(200).send({ availablePlaces: avail });
+            });
+        };
     }
 }
 exports.WorkshopController = WorkshopController;

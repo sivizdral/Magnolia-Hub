@@ -68,5 +68,9 @@ workshopRouter.route('/top').get(
     (req, res)=>new WorkshopController().getTop(req, res)
 )
 
+workshopRouter.route('/availablePlaces').get(
+    (req, res)=>new WorkshopController().getAvailablePlaces(req, res)
+)
+
 
 export default workshopRouter

@@ -42,6 +42,10 @@ let Workshop = new Schema({
         type: String,
         required: true
     },
+    capacity: {
+        type: Number,
+        required: true
+    },
     participantsList: [Schema.Types.ObjectId],
     pendingList: [Schema.Types.ObjectId],
     waitingList: [Schema.Types.ObjectId],

@@ -34,5 +34,6 @@ workshopRouter.route('/delete').post((req, res) => new workshop_controller_1.Wor
 workshopRouter.route('/update').post((req, res) => new workshop_controller_1.WorkshopController().update(req, res));
 workshopRouter.route('/image').get((req, res) => new workshop_controller_1.WorkshopController().getImage(req, res));
 workshopRouter.route('/top').get((req, res) => new workshop_controller_1.WorkshopController().getTop(req, res));
+workshopRouter.route('/availablePlaces').get((req, res) => new workshop_controller_1.WorkshopController().getAvailablePlaces(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map

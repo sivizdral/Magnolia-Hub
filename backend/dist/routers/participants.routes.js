@@ -11,5 +11,10 @@ participantsRouter.use(function (req, res, next) {
     next();
 });
 participantsRouter.route('/myPastWorkshops').get((req, res) => new participant_controller_1.ParticipantController().myPastWorkshops(req, res));
+participantsRouter.route('/appliedWorkshops').get((req, res) => new participant_controller_1.ParticipantController().appliedWorkshops(req, res));
+participantsRouter.route('/cancelApplication').post((req, res) => new participant_controller_1.ParticipantController().cancelApplication(req, res));
+participantsRouter.route('/apply').post((req, res) => new participant_controller_1.ParticipantController().apply(req, res));
+participantsRouter.route('/workshopRequest').post((req, res) => new participant_controller_1.ParticipantController().workshopRequest(req, res));
+participantsRouter.route('/myLikes').get((req, res) => new participant_controller_1.ParticipantController().getMyLikes(req, res));
 exports.default = participantsRouter;
 //# sourceMappingURL=participants.routes.js.map
