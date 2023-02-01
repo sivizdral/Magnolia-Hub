@@ -24,6 +24,9 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  firstPage = true;
+  secondPage = false;
+  thirdPage = false;
 
   constructor(private authService: UserService) { }
 
@@ -51,6 +54,30 @@ export class RegisterComponent implements OnInit {
       this.isOrganizer = true;
     } else {
       this.isOrganizer = false;
+    }
+  }
+
+  next() {
+    if (this.firstPage) {
+      this.firstPage = false;
+      this.secondPage = true;
+      return;
+    }
+    if (this.secondPage) {
+      this.secondPage = false;
+      this.thirdPage = true;
+    }
+  }
+
+  prev() {
+    if (this.secondPage) {
+      this.secondPage = false;
+      this.firstPage = true;
+      return;
+    }
+    if (this.thirdPage) {
+      this.thirdPage = false;
+      this.secondPage = true;
     }
   }
 
