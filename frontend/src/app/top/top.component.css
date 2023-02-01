@@ -85,13 +85,14 @@ header {
 .container-fluid .post .body_post .post_content {
     width: 90%;
     height: 90%;
-    background: #222;
+    background: #333;
     position: relative;
 }
 
 .container-fluid .post .body_post .post_content h1 {
     font-size: 20px;
     font-weight: bold;
+    color: #d8d803;
 }
 
 .container-fluid .post .body_post .post_content p {
@@ -120,7 +121,7 @@ header {
 .container-fluid .post .body_post .post_content .container_infos .postedBy span {
     font-size: 12px;
     text-transform: uppercase;
-    opacity: 0.5;
+    color: #fa6900;
     letter-spacing: 1px;
     font-weight: bold;
 }
@@ -132,14 +133,15 @@ header {
 
 .container-fluid .post .body_post .post_content .container_infos .container_tags span {
     font-size: 12px;
+    color: #fa6900;
     text-transform: uppercase;
-    opacity: 0.5;
     letter-spacing: 1px;
     font-weight: bold;
 }
 
 .container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul {
     display: flex;
+    padding-left: 0;
 }
 
 .container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul li {
@@ -164,7 +166,7 @@ header {
     text-align: center;
     width: 100%;
     height: 5px;
-    background: #fc6042;
+    background: #fa6900;
     opacity: 0.5;
     position: absolute;
     bottom: 0;
