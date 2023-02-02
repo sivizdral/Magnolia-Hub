@@ -50,15 +50,18 @@ export class AdminController {
         })
     }
 
-    addUser = (req: express.Request, res: express.Response)=>{
+    addUser = (req, res: express.Response)=>{
         let username = req.body.username;
         let password = bcrypt.hashSync(req.body.password, 8);
         let email = req.body.email;
         let type = req.body.type;
         let firstname = req.body.firstname;
         let lastname = req.body.lastname;
+        let status = "approved";
         let phone = req.body.phone;
-        let orgData = req.body.orgData;
+        let organizationName = req.body.organizationName;
+        let organizationAddress = req.body.organizationAddress;
+        let taxNumber = req.body.taxNumber;
 
         UserModel.findOne({'email': email}, (err, user)=>{
             if (err) {
@@ -89,9 +92,18 @@ export class AdminController {
                     type: type,
                     firstname: firstname,
                     lastname: lastname,
-                    status: "active",
+                    status: status,
                     phone: phone,
-                    orgData: orgData
+                    orgData: {
+                        organizationName: organizationName,
+                        organizationAddress: organizationAddress,
+                        taxNumber: taxNumber
+                    },
+                    likes: [],
+                    comments: [],
+                    pastWorkshops: [],
+                    pendingWorkshops: [],
+                    photo: req.files
                 })
         
                 newUser.save((err, user) => {

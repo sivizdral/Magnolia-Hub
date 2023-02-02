@@ -27,4 +27,21 @@ export class AdminService {
     const data = {username: username}
     return this.http.post('http://localhost:4000/admin/deleteUser', data)
   }
+
+  create(username, password, firstname, lastname, email, phone, type, org_name, address, tin, photo) {
+    const formData =  new  FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("type", type == "1" ? "participant" : "organizer");
+    formData.append("organizationName", org_name);
+    formData.append("organizationAddress", address);
+    formData.append("taxNumber", tin);
+    formData.append("photo", photo, photo.name);
+
+    return this.http.post('http://localhost:4000/admin/addUser', formData)
+  }
 }

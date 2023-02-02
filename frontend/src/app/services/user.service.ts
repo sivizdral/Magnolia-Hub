@@ -32,22 +32,6 @@ export class UserService {
     formData.append("taxNumber", tin);
     formData.append("photo", photo, photo.name);
 
-    const data = {
-      username: username,
-      password: password,
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      type: type == "1" ? "participant" : "organizer",
-      phone: phone,
-      orgData: {
-        organizationName: org_name,
-        organizationAddress: address,
-        taxNumber: tin
-      },
-      photo: photo
-    }
-
     return this.http.post('http://localhost:4000/users/signup', formData)
   }
 

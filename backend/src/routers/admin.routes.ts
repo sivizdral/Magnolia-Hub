@@ -1,5 +1,18 @@
 import express from 'express'
 import { AdminController } from '../controllers/admin.controller';
+import multer from 'multer'
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) { cb(null, './uploads/') },
+  filename: function(req, file, cb) { cb(null, Date.now() + file.originalname) }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/png") { cb(null, true) }
+  else { cb(new Error("Image uploaded is not of type jpg/jpeg or png"), false) }
+}
+
+const upload = multer({storage: storage, fileFilter: fileFilter})
 
 const adminRouter = express.Router();
 
@@ -19,11 +32,12 @@ adminRouter.route('/changeUser').post(
     (req, res)=>new AdminController().changeUser(req, res)
 )
 
-adminRouter.route('/deleteUser').post(
+adminRouter.route('/deleteUser').post(  
     (req, res)=>new AdminController().deleteUser(req, res)
 )
 
 adminRouter.route('/addUser').post(
+    upload.array('photo', 1),
     (req, res)=>new AdminController().addUser(req, res)
 )
 

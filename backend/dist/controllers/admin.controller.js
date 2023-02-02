@@ -48,8 +48,11 @@ class AdminController {
             let type = req.body.type;
             let firstname = req.body.firstname;
             let lastname = req.body.lastname;
+            let status = "approved";
             let phone = req.body.phone;
-            let orgData = req.body.orgData;
+            let organizationName = req.body.organizationName;
+            let organizationAddress = req.body.organizationAddress;
+            let taxNumber = req.body.taxNumber;
             user_1.default.findOne({ 'email': email }, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -75,9 +78,18 @@ class AdminController {
                         type: type,
                         firstname: firstname,
                         lastname: lastname,
-                        status: "active",
+                        status: status,
                         phone: phone,
-                        orgData: orgData
+                        orgData: {
+                            organizationName: organizationName,
+                            organizationAddress: organizationAddress,
+                            taxNumber: taxNumber
+                        },
+                        likes: [],
+                        comments: [],
+                        pastWorkshops: [],
+                        pendingWorkshops: [],
+                        photo: req.files
                     });
                     newUser.save((err, user) => {
                         if (err) {

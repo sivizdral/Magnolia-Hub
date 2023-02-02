@@ -12,10 +12,11 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { TopComponent } from './top/top.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
-import { AdminUserRequestsComponent } from './admin/admin-user-requests/admin-user-requests.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AdminWorkshopListComponent } from './admin/admin-workshop-list/admin-workshop-list.component';
-import { AdminWorkshopRequestsComponent } from './admin/admin-workshop-requests/admin-workshop-requests.component'
+import { AdminWorkshopRequestsComponent } from './admin/admin-workshop-requests/admin-workshop-requests.component';
+import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-create.component';
+import { AllWorkshopsComponent } from './all-workshops/all-workshops.component'
 
 @NgModule({
   declarations: [
@@ -27,10 +28,11 @@ import { AdminWorkshopRequestsComponent } from './admin/admin-workshop-requests/
     PasswordChangeComponent,
     TopComponent,
     AdminLoginComponent,
-    AdminUserRequestsComponent,
     AdminUserListComponent,
     AdminWorkshopListComponent,
-    AdminWorkshopRequestsComponent
+    AdminWorkshopRequestsComponent,
+    AdminUserCreateComponent,
+    AllWorkshopsComponent
   ],
   imports: [
     BrowserModule,
