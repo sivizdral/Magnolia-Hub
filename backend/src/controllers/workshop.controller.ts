@@ -59,7 +59,27 @@ export class WorkshopController{
     }
 
     getAll = (req: express.Request, res: express.Response)=>{
-        WorkshopModel.find((err, data)=> {
+        let name = req.query.name;
+        let place = req.query.place;
+
+        let sort = {};
+        if (req.query.sort === 'name') {
+        sort['name'] = 1;
+        } else if (req.query.sort === 'date') {
+        sort['date'] = 1;
+        }
+
+        if (!name) name = "";
+        if (!place) place = "";
+
+        WorkshopModel.find(
+            {
+                name: { $regex: name, $options: 'i' },
+                location: { $regex: place, $options: 'i' }
+            },
+            null,
+            { sort: sort },
+            (err, data)=> {
             if (err) {
                 res.status(500).send({ message: err });
                 return;

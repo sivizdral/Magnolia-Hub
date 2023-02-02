@@ -16,4 +16,16 @@ export class WorkshopService {
   getPhoto(str): Observable<any> {
     return this.http.get('http://localhost:4000/workshops/image?path=' + str, { responseType: 'blob' })
   }
+
+  getAll(): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/all')
+  }
+
+  searchByCriteria(name, place): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/all?name=' + name + "&place=" + place)
+  }
+
+  sort(name, place, sort): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/all?name=' + name + "&place=" + place + "&sort=" + sort)
+  }
 }

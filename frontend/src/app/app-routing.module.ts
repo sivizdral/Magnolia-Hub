@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-create.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
+import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
@@ -13,6 +14,7 @@ import { TopComponent } from './top/top.component';
 const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "top", component:TopComponent},
+  {path: "all-workshops", component: AllWorkshopsComponent},
   {path: "login", component: LoginComponent},
   {path: "signup", component: RegisterComponent},
   {path: "password-reset/:userId/:token", component:PasswordResetComponent},
