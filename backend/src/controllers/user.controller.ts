@@ -44,29 +44,72 @@ export class UserController{
         })
     }
 
-    register = (req: express.Request, res: express.Response) => {
+    register = (req, res: express.Response) => {
         let username = req.body.username;
         let password = bcrypt.hashSync(req.body.password, 8);
         let email = req.body.email;
         let type = req.body.type;
+        let firstname = req.body.firstname;
+        let lastname = req.body.lastname;
+        let status = "unapproved";
+        let phone = req.body.phone;
+        let organizationName = req.body.organizationName;
+        let organizationAddress = req.body.organizationAddress;
+        let taxNumber = req.body.taxNumber;
 
-        const user = new UserModel({
-            username: username,
-            password: password,
-            email: email,
-            type: type,
-            firstname: "Pera",
-            lastname: "Peric"
-        })
-
-        user.save((err, user) => {
+        UserModel.findOne({'username': username}, (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
             }
 
-            res.send({ message: "User was registered successfully!" });
+            if (user) {
+                return res.status(404).send({ message: "Username already taken!" });
+            }
+
+            UserModel.findOne({'email': email}, (err, user)=>{
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+    
+                if (user) {
+                    return res.status(404).send({ message: "Email already taken!" });
+                }
+
+                const userNew = new UserModel({
+                    username: username,
+                    password: password,
+                    email: email,
+                    type: type,
+                    firstname: firstname,
+                    lastname: lastname,
+                    status: status,
+                    phone: phone,
+                    orgData: {
+                        organizationName: organizationName,
+                        organizationAddress: organizationAddress,
+                        taxNumber: taxNumber
+                    },
+                    likes: [],
+                    comments: [],
+                    pastWorkshops: [],
+                    pendingWorkshops: [],
+                    photo: req.files
+                })
+        
+                userNew.save((err, user) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+        
+                    res.send({ message: "User was registered successfully!" });
+                })
+            })
         })
+
+        
     }
 
     passwordReset = (req: express.Request, res: express.Response) => {

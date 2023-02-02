@@ -52,6 +52,9 @@ let User = new Schema({
     },
     pendingWorkshops: {
         type: Array
+    },
+    photo: {
+        type: Object
     }
 });
 exports.default = mongoose_1.default.model('UserModel', User, 'Users');

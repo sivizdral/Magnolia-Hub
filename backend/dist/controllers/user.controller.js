@@ -56,20 +56,57 @@ class UserController {
             let password = bcrypt.hashSync(req.body.password, 8);
             let email = req.body.email;
             let type = req.body.type;
-            const user = new user_1.default({
-                username: username,
-                password: password,
-                email: email,
-                type: type,
-                firstname: "Pera",
-                lastname: "Peric"
-            });
-            user.save((err, user) => {
+            let firstname = req.body.firstname;
+            let lastname = req.body.lastname;
+            let status = "unapproved";
+            let phone = req.body.phone;
+            let organizationName = req.body.organizationName;
+            let organizationAddress = req.body.organizationAddress;
+            let taxNumber = req.body.taxNumber;
+            user_1.default.findOne({ 'username': username }, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;
                 }
-                res.send({ message: "User was registered successfully!" });
+                if (user) {
+                    return res.status(404).send({ message: "Username already taken!" });
+                }
+                user_1.default.findOne({ 'email': email }, (err, user) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    if (user) {
+                        return res.status(404).send({ message: "Email already taken!" });
+                    }
+                    const userNew = new user_1.default({
+                        username: username,
+                        password: password,
+                        email: email,
+                        type: type,
+                        firstname: firstname,
+                        lastname: lastname,
+                        status: status,
+                        phone: phone,
+                        orgData: {
+                            organizationName: organizationName,
+                            organizationAddress: organizationAddress,
+                            taxNumber: taxNumber
+                        },
+                        likes: [],
+                        comments: [],
+                        pastWorkshops: [],
+                        pendingWorkshops: [],
+                        photo: req.files
+                    });
+                    userNew.save((err, user) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                        res.send({ message: "User was registered successfully!" });
+                    });
+                });
             });
         };
         this.passwordReset = (req, res) => {

@@ -49,6 +49,9 @@ let User = new Schema({
     },
     pendingWorkshops: {
         type: Array
+    },
+    photo: {
+        type: Object
     }
 })
 
