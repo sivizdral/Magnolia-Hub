@@ -32,8 +32,8 @@ class AdminController {
             });
         };
         this.deleteUser = (req, res) => {
-            let user_id = req.body.user_id;
-            user_1.default.findByIdAndDelete(user_id, (err, user) => {
+            let username = req.body.username;
+            user_1.default.findOneAndDelete({ 'username': username }, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;
@@ -91,8 +91,8 @@ class AdminController {
         };
         this.changeRequestStatus = (req, res) => {
             let status = req.body.status;
-            let user_id = req.body.user_id;
-            user_1.default.findById(user_id, (err, user) => {
+            let username = req.body.username;
+            user_1.default.findOne({ 'username': username }, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;

@@ -1,1 +1,70 @@
-<p>admin-user-list works!</p>
+<header>
+    <nav>
+        <div class="container-up">
+            <h3 class="logo">Magnolia<span>Hub</span></h3>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let user of users; index as i">
+                <div class="post">
+                    <div class="header_post">
+                        <img [src]="photos[i]" alt="">
+                    </div>
+
+                    <div class="body_post">
+                        <div class="post_content">
+
+                            <h1>{{user.firstname}} {{user.lastname}}</h1>
+                            <p><span>Username: </span>{{user.username}}</p>
+                            <p><span>Email: </span>{{user.email}}</p>
+                            <p><span>Type: </span>{{user.type}}</p>
+                            <div class="container_infos">
+                                <div class="postedBy">
+                                    <span>status</span> {{user.status}}
+                                </div>
+
+                                <div class="container_tags row display-flex">
+                                    <div class="col-sm-6" *ngIf="user.status == 'unapproved'" (click)="approve(users[i])">
+                                        <span class="material-icons-outlined material-symbols-outlined correct">
+                                        check
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6" *ngIf="user.status == 'unapproved'" (click)="reject(users[i])">
+                                        <span class="material-icons-outlined material-symbols-outlined delete">
+                                        close
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6" *ngIf="user.status != 'unapproved'">
+                                        <span class="material-icons-outlined material-symbols-outlined update">
+                                            upgrade
+                                            </span>
+                                    </div>
+                                    <div class="col-sm-6" *ngIf="user.status != 'unapproved'" (click)="delete(users[i])">
+                                        <span class="material-icons-outlined material-symbols-outlined delete">
+                                            delete
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <label>
+        <input type="checkbox">
+        <span class="menu"> <span class="hamburger"></span> </span>
+        <ul>
+          <li> <a href="#">home</a> </li>
+          <li> <a href="#">about</a> </li>
+          <li> <a href="#">contact</a> </li>
+        </ul>
+        </label>
+
+</header>

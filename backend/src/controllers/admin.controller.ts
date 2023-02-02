@@ -38,9 +38,9 @@ export class AdminController {
     }
 
     deleteUser = (req: express.Request, res: express.Response)=>{
-        let user_id = req.body.user_id;
+        let username = req.body.username;
 
-        UserModel.findByIdAndDelete(user_id, (err, user)=>{
+        UserModel.findOneAndDelete({'username': username}, (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
@@ -110,9 +110,9 @@ export class AdminController {
 
     changeRequestStatus = (req: express.Request, res: express.Response)=>{
         let status = req.body.status;   
-        let user_id = req.body.user_id;
+        let username = req.body.username;
 
-        UserModel.findById(user_id, (err, user)=>{
+        UserModel.findOne({'username': username}, (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
