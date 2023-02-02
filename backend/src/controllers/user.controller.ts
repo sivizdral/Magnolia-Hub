@@ -138,11 +138,11 @@ export class UserController{
                 const link = `http://localhost:4200/password-reset/${user._id}/${token.token}`;
                 try {
                     this.sendEmail(user.email, "Password reset", link);
-                    res.send("password reset link sent to your email account");
+                    res.status(200).send("password reset link sent to your email account");
                 }
                 catch(err) {
                     console.log(err);
-                    res.send("an error occured");
+                    res.status(400).send("an error occured");
                 }
                 
             });

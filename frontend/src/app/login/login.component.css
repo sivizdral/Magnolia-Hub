@@ -12,6 +12,10 @@ header {
     background-size: cover;
 }
 
+label ul {
+    top: 15vh;
+}
+
 .loginWrapper {
     margin-top: 6rem;
     padding: 2rem;

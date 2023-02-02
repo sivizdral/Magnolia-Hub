@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         next: data => {
           this.tokenService.saveToken(data.accessToken);
           this.tokenService.saveUser(data);
-          this.router.navigate(['/passch']);
+          this.router.navigate(['']);
         },
         error: err => {
           this.message = err.error.message;
@@ -45,12 +45,14 @@ export class LoginComponent implements OnInit {
     this.forgotPass = false;
   }
 
-  submitEmail() {
+  async submitEmail() {
     this.userService.forgotPass(this.email).subscribe({
       error: err => {
         this.message = err.error.message;
       }
     })
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (!this.message) this.message = "Email successfully sent!";
   }
 
 }

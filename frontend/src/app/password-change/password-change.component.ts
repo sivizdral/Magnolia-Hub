@@ -45,7 +45,7 @@ export class PasswordChangeComponent implements OnInit {
     this.userService.changePass(this.old, this.password, this.tokenService.getUser().username).subscribe({
       next: data => {
           this.tokenService.signOut();
-          this.router.navigate(['/login']);
+          this.router.navigate(['']);
       },
       error: err => {
         this.message = err.error.message;
