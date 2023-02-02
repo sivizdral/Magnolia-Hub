@@ -18,7 +18,7 @@ export class PasswordResetComponent implements OnInit {
   password: String = "";
   confirm: String = "";
 
-  submitPassword() {
+  async submitPassword() {
 
     if (this.password == "") {
       this.message = "Password is required!";
@@ -47,6 +47,9 @@ export class PasswordResetComponent implements OnInit {
         this.message = err.error.message;
       }
     })
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (!this.message) this.message = "Password successfully changed! Remember your secrets better next time ;)!";
   }
 
 }
