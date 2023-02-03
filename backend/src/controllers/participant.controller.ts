@@ -291,6 +291,5 @@ export class ParticipantController {
         })
     }
 
-    getWorkshopLikes = (req: express.Request, res: express.Response)=>{
-    }
+    
 }
