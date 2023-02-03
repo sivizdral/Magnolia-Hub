@@ -41,7 +41,7 @@ export class ParticipantController {
     }
 
     appliedWorkshops = (req: express.Request, res: express.Response)=>{
-        let user_id = req.body.user_id;
+        let user_id = req.query.id;
 
         UserModel.findById(user_id, async (err, user)=>{
             if (err) {
@@ -57,9 +57,19 @@ export class ParticipantController {
             let array = user.pendingWorkshops;
             let workshops = [];
 
+            
+
             for (let i = 0; i < array.length; i++) {
                 let workshop = await WorkshopModel.findById(array[i])
-                workshops.push(workshop.toJSON())
+                let jsonWorkshop = workshop.toJSON();
+                workshops.push({
+                    workshop_id: jsonWorkshop._id,
+                    name: jsonWorkshop.name,
+                    date: jsonWorkshop.date,
+                    location: jsonWorkshop.location,
+                    photo : jsonWorkshop.photo,
+                    short_description: jsonWorkshop.short_description,
+                })
             }
 
             res.status(200).send(workshops)
@@ -140,7 +150,6 @@ export class ParticipantController {
                 UserModel.findById(waitlist[i], (err, user)=>{
                     try {
                         new UserController().sendEmail(user.email, "Workshop opening", text);
-                        res.send("Opening notification sent to your email account");
                     }
                     catch(err) {
                         console.log(err);
@@ -280,5 +289,8 @@ export class ParticipantController {
             });
             res.status(200).send(likes);
         })
+    }
+
+    getWorkshopLikes = (req: express.Request, res: express.Response)=>{
     }
 }

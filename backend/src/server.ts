@@ -5,6 +5,7 @@ import userRouter from './routers/user.routes';
 import adminRouter from './routers/admin.routes';
 import workshopRouter from './routers/workshop.routes';
 import participantsRouter from './routers/participants.routes';
+import actionsRouter from './routers/actions.routes'
 
 const app = express();
 app.use(cors())
@@ -22,6 +23,7 @@ const router = express.Router();
 router.use('/users', userRouter);
 router.use('/admin', adminRouter);
 router.use('/workshops', workshopRouter);
+router.use('/actions', actionsRouter);
 router.use('/participants', participantsRouter);
 
 app.use('/', router)

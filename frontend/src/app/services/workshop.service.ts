@@ -44,4 +44,16 @@ export class WorkshopService {
     }
     return this.http.post('http://localhost:4000/participants/apply', data)
   }
+
+  getApplied(id): Observable<any> {
+    return this.http.get('http://localhost:4000/participants/appliedWorkshops?id='+id)
+  }
+
+  cancel(user_id, workshop_id): Observable<any> {
+    const data = {
+      user_id: user_id,
+      workshop_id: workshop_id
+    }
+    return this.http.post('http://localhost:4000/participants/cancelApplication', data);
+  }
 }

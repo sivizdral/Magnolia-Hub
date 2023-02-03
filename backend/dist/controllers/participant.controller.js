@@ -42,7 +42,7 @@ class ParticipantController {
             }));
         };
         this.appliedWorkshops = (req, res) => {
-            let user_id = req.body.user_id;
+            let user_id = req.query.id;
             user_1.default.findById(user_id, (err, user) => __awaiter(this, void 0, void 0, function* () {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -56,7 +56,15 @@ class ParticipantController {
                 let workshops = [];
                 for (let i = 0; i < array.length; i++) {
                     let workshop = yield workshop_1.default.findById(array[i]);
-                    workshops.push(workshop.toJSON());
+                    let jsonWorkshop = workshop.toJSON();
+                    workshops.push({
+                        workshop_id: jsonWorkshop._id,
+                        name: jsonWorkshop.name,
+                        date: jsonWorkshop.date,
+                        location: jsonWorkshop.location,
+                        photo: jsonWorkshop.photo,
+                        short_description: jsonWorkshop.short_description,
+                    });
                 }
                 res.status(200).send(workshops);
             }));
@@ -120,7 +128,6 @@ class ParticipantController {
                     user_1.default.findById(waitlist[i], (err, user) => {
                         try {
                             new user_controller_1.UserController().sendEmail(user.email, "Workshop opening", text);
-                            res.send("Opening notification sent to your email account");
                         }
                         catch (err) {
                             console.log(err);

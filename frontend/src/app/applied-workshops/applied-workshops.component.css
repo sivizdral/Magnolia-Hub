@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:300,400,800&display=swap');
+body {
+    height: 150vh;
+}
+
+header {
+    height: 100%;
+    background-image: url(../../assets/img/nighthawks.jpg);
+    background-size: cover;
+}
+
+.row {
+    margin-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.container-fluid {
+    padding-top: 2rem;
+    width: 100vw;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3rem;
+    min-height: 100vh;
+}
+
+.container-fluid .post {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    position: relative;
+    border-radius: 1rem;
+    margin-top: 3rem;
+}
+
+.container-fluid .post:hover .header_post {
+    margin-top: -20px;
+}
+
+.container-fluid .post:hover .body_post {
+    height: 50%;
+}
+
+.container-fluid .post:hover img {
+    transform: translatey(-10px) translatex(-5px) scale(1.05);
+}
+
+.container-fluid .post .header_post {
+    width: 100%;
+    height: 40%;
+    background: #ddd;
+    position: absolute;
+    top: 0;
+    -webkit-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -moz-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -ms-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -o-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    transition: all 320ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.container-fluid .post .header_post img {
+    max-width: 100%;
+    height: auto;
+    transition: ease-in-out 600ms;
+}
+
+.container-fluid .post .body_post {
+    width: 100%;
+    height: 60%;
+    background: #333;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -moz-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -ms-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -o-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    cursor: pointer;
+}
+
+.container-fluid .post .body_post .post_content {
+    width: 90%;
+    height: 90%;
+    background: #333;
+    position: relative;
+}
+
+.container-fluid .post .body_post .post_content h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d8d803;
+}
+
+.container-fluid .post .body_post .post_content p {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.container-fluid .post .body_post .post_content .container_infos {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, .2);
+    padding-top: 15px;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .postedBy {
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .postedBy span {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #fa6900;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags span {
+    font-size: 12px;
+    color: #fa6900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul {
+    display: flex;
+    padding-left: 0;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul li {
+    font-size: 12px;
+    letter-spacing: 2px;
+    list-style: none;
+    margin-left: 8px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul li:first-child {
+    margin-left: 0px;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul li:before {
+    content: '';
+    text-align: center;
+    width: 100%;
+    height: 5px;
+    background: #fa6900;
+    opacity: 0.5;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    padding: 0px 1px;
+    -webkit-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -moz-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -ms-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    -o-transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+    transition: cubic-bezier(0.68, -0.55, 0.27, 1.55) 320ms;
+}
+
+.container-fluid .post .body_post .post_content .container_infos .container_tags .tags ul li:hover:before {
+    height: 18px;
+}
+
+
+/* FONT */
+
+.texture-font {
+    color: white;
+    height: 450px;
+    width: 100%;
+}
+
+.texture-font h1 {
+    margin-top: 10rem;
+    font-size: 8rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.row-first {
+    margin-top: 3rem;
+}
+
+.resize-text {
+    font-size: 7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+    .resize-text {
+        font-size: 5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .resize-text {
+        font-size: 4rem;
+    }
+}
+
+
+/* SORT */
+
+.sort {
+    height: 300px;
+}
+
+label ul {
+    top: 15vh;
+}
+
+.background {
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+form {
+    width: 400px;
+    background-color: rgba(51, 51, 51, 0.9);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 20px 35px;
+    margin-top: 2rem;
+}
+
+form * {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+label {
+    display: block;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #d8d803 !important;
+}
+
+input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+::placeholder {
+    color: #e5e5e5;
+}
+
+button {
+    width: 95px;
+    background-color: #fa6900;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+.sort-button {
+    background-color: #d8d803;
+}

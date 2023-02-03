@@ -22,6 +22,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 import { SafePipe } from './safe.pipe';
+import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SafePipe } from './safe.pipe';
     AdminUserCreateComponent,
     AllWorkshopsComponent,
     WorkshopSingleComponent,
-    SafePipe
+    SafePipe,
+    AppliedWorkshopsComponent
   ],
   imports: [
     BrowserModule,

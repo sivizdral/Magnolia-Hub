@@ -4,6 +4,7 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-create.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
+import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
   {path: "admin/user-listing", component: AdminUserListComponent},
-  {path: "workshop-details", component: WorkshopSingleComponent}
+  {path: "workshop-details", component: WorkshopSingleComponent},
+  {path: "my-workshops", component: AppliedWorkshopsComponent}
 ];
 
 @NgModule({

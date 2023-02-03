@@ -1,0 +1,58 @@
+<header>
+    <nav>
+        <div class="container-up">
+            <h3 class="logo">Magnolia<span>Hub</span></h3>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row row-first">
+            <div class="col-lg-12 text-center resize-text">My workshops</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let workshop of workshops; index as i">
+                <div class="post" (click)="click(workshop.workshop_id)">
+                    <div class="header_post">
+                        <img [src]="photos[i]" alt="">
+                    </div>
+
+                    <div class="body_post">
+                        <div class="post_content">
+
+                            <h1>{{workshop.name}}</h1>
+                            <p>{{workshop.short_description}}</p>
+                            <div class="container_infos">
+                                <div class="postedBy" *ngIf="late[i]">
+                                    <span>location</span> {{workshop.location}}
+                                </div>
+                                <div class="container_tags">
+                                    <span>date</span>
+                                    <div class="tags">
+                                        <ul>
+                                            <li>{{workshop.date}}</li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <button *ngIf="!late[i]" (click)="cancel(workshop.workshop_id)">Cancel reservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <label>
+        <input type="checkbox" style="display:none">
+        <span class="menu"> <span class="hamburger"></span> </span>
+        <ul>
+          <li> <a href="#">home</a> </li>
+          <li> <a href="#">about</a> </li>
+          <li> <a href="#">contact</a> </li>
+        </ul>
+        </label>
+
+</header>
