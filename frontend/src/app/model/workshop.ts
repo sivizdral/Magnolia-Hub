@@ -1,4 +1,5 @@
 export class Workshop {
+    workshop_id: string;
     name: string;
     date: Date;
     location: string;

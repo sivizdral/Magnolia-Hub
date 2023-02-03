@@ -24,11 +24,13 @@
                         ],
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/baguettebox.js/dist/baguetteBox.min.css",
                             "src/styles.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "node_modules/baguettebox.js/dist/baguetteBox.min.js",
                             "src/assets/js/custom.js"
                         ]
                     },

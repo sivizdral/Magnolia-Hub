@@ -10,6 +10,7 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { RegisterComponent } from './register/register.component';
 import { TopComponent } from './top/top.component';
+import { WorkshopSingleComponent } from './workshop-single/workshop-single.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path:"passch", component:PasswordChangeComponent},
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
-  {path: "admin/user-listing", component: AdminUserListComponent}
+  {path: "admin/user-listing", component: AdminUserListComponent},
+  {path: "workshop", component: WorkshopSingleComponent}
 ];
 
 @NgModule({

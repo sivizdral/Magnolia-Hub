@@ -16,7 +16,11 @@ import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.
 import { AdminWorkshopListComponent } from './admin/admin-workshop-list/admin-workshop-list.component';
 import { AdminWorkshopRequestsComponent } from './admin/admin-workshop-requests/admin-workshop-requests.component';
 import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-create.component';
-import { AllWorkshopsComponent } from './all-workshops/all-workshops.component'
+import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
+import { WorkshopSingleComponent } from './workshop-single/workshop-single.component'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { GalleryModule } from  'ng-gallery';
+import { LightboxModule } from  'ng-gallery/lightbox';
 
 @NgModule({
   declarations: [
@@ -32,13 +36,17 @@ import { AllWorkshopsComponent } from './all-workshops/all-workshops.component'
     AdminWorkshopListComponent,
     AdminWorkshopRequestsComponent,
     AdminUserCreateComponent,
-    AllWorkshopsComponent
+    AllWorkshopsComponent,
+    WorkshopSingleComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    GalleryModule,
+    LightboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
