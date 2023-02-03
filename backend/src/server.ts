@@ -6,6 +6,7 @@ import adminRouter from './routers/admin.routes';
 import workshopRouter from './routers/workshop.routes';
 import participantsRouter from './routers/participants.routes';
 import actionsRouter from './routers/actions.routes'
+import chatsRouter from './routers/chars.routes';
 
 const app = express();
 app.use(cors())
@@ -25,6 +26,7 @@ router.use('/admin', adminRouter);
 router.use('/workshops', workshopRouter);
 router.use('/actions', actionsRouter);
 router.use('/participants', participantsRouter);
+router.use('/chats', chatsRouter);
 
 app.use('/', router)
 app.listen(4000, () => console.log(`Express server running on port 4000`));
