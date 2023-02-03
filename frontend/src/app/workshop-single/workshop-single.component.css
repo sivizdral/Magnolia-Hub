@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:300,400,800&display=swap');
 header {
     background-image: url(../../assets/img/mondrian.jpg);
     background-size: cover;
+    height: 200vh;
 }
 
 body {
@@ -10,82 +12,117 @@ body {
     padding: 40px 0;
 }
 
-.container.gallery-container {
-    color: #35373a;
-    min-height: 100vh;
-    padding: 30px 50px;
+.row-first {
+    margin-top: 6rem;
 }
 
-.gallery-container h1 {
-    text-align: center;
-    margin-top: 50px;
-    font-family: 'Droid Sans', sans-serif;
-    font-weight: bold;
+.resize-text {
+    font: 'Poppins';
+    font-size: 8rem;
+    font-weight: bolder;
+    text-transform: uppercase;
+    line-height: 8rem;
+    text-align: left;
+    letter-spacing: 5px;
 }
 
-.gallery-container p.page-description {
-    text-align: center;
-    margin: 25px auto;
-    font-size: 18px;
-    color: #999;
+.text-row-1 {
+    text-align: left;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 4rem;
+    line-height: 4rem;
+    letter-spacing: 8px;
 }
 
-.tz-gallery {
-    padding: 40px;
+.text-row-3 {
+    text-align: left;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 2rem;
+    line-height: 2rem;
+    letter-spacing: 2px;
 }
 
-
-/* Override bootstrap column paddings */
-
-.tz-gallery .row>div {
-    padding: 2px;
-}
-
-.tz-gallery .lightbox img {
-    width: 100%;
-    border-radius: 0;
-    position: relative;
-}
-
-.tz-gallery .lightbox:before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -13px;
-    margin-left: -13px;
-    opacity: 0;
-    color: #fff;
-    font-size: 26px;
-    font-family: 'Glyphicons Halflings';
-    content: '\e003';
-    pointer-events: none;
-    z-index: 9000;
-    transition: 0.4s;
-}
-
-.tz-gallery .lightbox:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    background-color: rgba(173, 199, 25, 0.7);
-    content: '';
-    transition: 0.4s;
-}
-
-.tz-gallery .lightbox:hover:after,
-.tz-gallery .lightbox:hover:before {
-    opacity: 1;
-}
-
-.baguetteBox-button {
-    background-color: transparent !important;
-}
-
-@media(max-width: 768px) {
-    body {
-        padding: 0;
+@media (max-width: 1000px) {
+    .resize-text {
+        font-size: 6.5rem;
+        line-height: 6.5rem;
     }
+    .text-row-1 {
+        font-size: 3.5rem;
+        line-height: 3.5rem;
+    }
+    .text-row-3 {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .resize-text {
+        font-size: 5rem;
+        line-height: 5rem;
+    }
+    .text-row-1 {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+    .text-row-3 {
+        font-size: 1.8rem;
+        line-height: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .resize-text {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+    .text-row-1 {
+        font-size: 2.5rem;
+        line-height: 2.5rem;
+    }
+    .text-row-3 {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+}
+
+.text-box {
+    text-align: left;
+    font-size: 1.7rem;
+    line-height: 1.7rem;
+}
+
+button {
+    margin-top: 20px;
+    width: 60%;
+    background-color: #fa6900;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+form {
+    width: 500px;
+    background-color: rgba(51, 51, 51, 0.9);
+    position: absolute;
+    min-height: 200px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 20px 35px;
+    margin-bottom: 1rem;
+}
+
+.text-message {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin-top: 2rem;
 }

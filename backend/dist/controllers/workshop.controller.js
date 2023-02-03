@@ -152,7 +152,7 @@ class WorkshopController {
             });
         };
         this.getDetails = (req, res) => {
-            let workshop_id = req.body.workshop_id;
+            let workshop_id = req.query.id;
             workshop_1.default.findById(workshop_id, (err, workshop) => {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -162,7 +162,7 @@ class WorkshopController {
                     res.status(404).send({ message: "Workshop not found!" });
                     return;
                 }
-                res.status(200).send(workshop);
+                res.status(200).send([workshop]);
             });
         };
         this.getOrganizerWorkshops = (req, res) => {
@@ -196,7 +196,7 @@ class WorkshopController {
             res.status(200).send(workshops);
         });
         this.getAvailablePlaces = (req, res) => {
-            let workshop_id = req.body.workshop_id;
+            let workshop_id = req.query.id;
             workshop_1.default.findById(workshop_id, (err, workshop) => {
                 if (err) {
                     res.status(500).send({ message: err });

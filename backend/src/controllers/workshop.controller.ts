@@ -177,7 +177,7 @@ export class WorkshopController{
     }
 
     getDetails = (req: any, res: express.Response)=>{
-        let workshop_id = req.body.workshop_id
+        let workshop_id = req.query.id
 
         WorkshopModel.findById(workshop_id, (err, workshop)=>{
             if (err) {
@@ -190,7 +190,7 @@ export class WorkshopController{
                 return;
             }
 
-            res.status(200).send(workshop);
+            res.status(200).send([workshop]);
         })
     }
 
@@ -235,7 +235,7 @@ export class WorkshopController{
     }
 
     getAvailablePlaces = (req: any, res: express.Response)=>{
-        let workshop_id = req.body.workshop_id;
+        let workshop_id = req.query.id;
 
         WorkshopModel.findById(workshop_id, (err, workshop)=>{
             if (err) {

@@ -142,13 +142,25 @@ class ParticipantController {
                     res.status(500).send({ message: "Workshop not found!" });
                     return;
                 }
-                let participants = workshop.pendingList.concat(workshop.participantsList);
-                if (participants.includes(new mongoose_1.default.Types.ObjectId(user_id))) {
-                    res.status(500).send({ message: "This user has already applied for this workshop!" });
-                    return;
+                let participants = workshop.pendingList.concat(workshop.participantsList).concat(workshop.waitingList);
+                for (let i = 0; i < participants.length; i++) {
+                    if (participants[i].toHexString() === user_id) {
+                        res.status(500).send({ message: "This user has already applied for this workshop!" });
+                        return;
+                    }
                 }
+                // if (participants.includes(new mongoose.Types.ObjectId(user_id))) {
+                //     res.status(500).send({ message: "This user has already applied for this workshop!" });
+                //     return;
+                // }
                 if (participants.length >= workshop.capacity) {
                     workshop.waitingList.push(new mongoose_1.default.Types.ObjectId(user_id));
+                    workshop.save((err, workshop) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                    });
                     res.status(200).send({ message: "No more places, the user has been added to the waiting list!" });
                 }
                 else {

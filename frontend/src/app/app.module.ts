@@ -21,6 +21,7 @@ import { WorkshopSingleComponent } from './workshop-single/workshop-single.compo
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LightboxModule } from  'ng-gallery/lightbox';
     AdminWorkshopRequestsComponent,
     AdminUserCreateComponent,
     AllWorkshopsComponent,
-    WorkshopSingleComponent
+    WorkshopSingleComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

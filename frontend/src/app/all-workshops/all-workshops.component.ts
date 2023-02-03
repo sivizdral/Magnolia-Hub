@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Workshop } from '../model/workshop';
 import { WorkshopService } from '../services/workshop.service';
 
@@ -19,7 +20,7 @@ export class SafeUrlPipe implements PipeTransform {
 })
 export class AllWorkshopsComponent implements OnInit {
 
-  constructor(private wService: WorkshopService, private readonly sanitizer: DomSanitizer) { }
+  constructor(private wService: WorkshopService, private readonly sanitizer: DomSanitizer, private router: Router) { }
 
   workshops: Workshop[] = [];
   photos: any[] = [];
@@ -97,6 +98,11 @@ export class AllWorkshopsComponent implements OnInit {
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
     }
+  }
+
+  click(id) {
+    localStorage.setItem('workshop', id);
+    this.router.navigate(['workshop-details']);
   }
 
 }

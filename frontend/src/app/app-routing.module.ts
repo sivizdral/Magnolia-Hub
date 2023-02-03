@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
   {path: "admin/user-listing", component: AdminUserListComponent},
-  {path: "workshop", component: WorkshopSingleComponent}
+  {path: "workshop-details", component: WorkshopSingleComponent}
 ];
 
 @NgModule({
