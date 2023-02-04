@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row" style="margin-top: 3rem">
-            <div class="col-lg-6 col-sm-12" style="min-height: 200px; margin-bottom: 2rem;">
+            <!--<div class="col-lg-6 col-sm-12" style="min-height: 200px; margin-bottom: 2rem;">
                 <form>
                     <div>
                         <p class="text-box">{{workshop.long_description}}</p>
@@ -56,6 +56,47 @@
             </div>
             <div class="col-lg-6 col-sm-12">
                 <gallery [items]="images" thumbPosition="left" [thumb]="false"></gallery>
+            </div>-->
+            <div *ngFor="let chat of chats" class="chat-form">
+                <div class="msgs">
+                    <div *ngFor="let message of chat.messages" class="msg-block">
+                        <div class="yellow-msg" *ngIf="message.sender == 'organizer'">
+                            <div class="timestamp">
+                                <span>{{organizerName}},</span> {{message.timestamp}}
+                            </div>
+                            <div class="text-photo">
+                                <div class="photo">
+                                    <img [src]="organizerPhoto" class="user-img">
+                                </div>
+                                <div class="msg-text">
+                                    {{message.text}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="orange-msg" *ngIf="message.sender == 'participant'">
+                            <div class="timestamp-orange">
+                                <span>{{myName}},</span> {{message.timestamp}}
+                            </div>
+                            <div class="text-photo-orange">
+                                <div class="msg-text msg-text-orange">
+                                    {{message.text}}
+                                </div>
+                                <div class="photo">
+                                    <img [src]="myPhoto" class="user-img">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="msg-send">
+                    <div class="msg-send-wrap">
+                        <input type="text" class="msg-send-text" [(ngModel)]="msgText">
+                        <div class="msg-btn-wrap">
+                            <button class="msg-btn" (click)="sendMsg()">SEND</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

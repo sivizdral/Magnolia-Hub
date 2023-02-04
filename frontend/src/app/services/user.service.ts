@@ -64,5 +64,9 @@ export class UserService {
 
     return this.http.post('http://localhost:4000/users/password-change', data)
   }
+
+  getData(user_id) {
+    return this.http.get('http://localhost:4000/users/myData?user_id=' + user_id)
+  }
   
 }

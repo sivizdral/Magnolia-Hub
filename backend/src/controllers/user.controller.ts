@@ -7,6 +7,7 @@ import nodemailer from 'nodemailer'
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 import { Config } from "../config/auth.config"
+import { ObjectId } from 'mongodb'
 
 export class UserController{
     login = (req: express.Request, res: express.Response)=>{
@@ -39,7 +40,10 @@ export class UserController{
                 username: user.username,
                 email: user.email,
                 type: user.type,
-                accessToken: token
+                accessToken: token,
+                photo: user.photo,
+                firstname: user.firstname,
+                lastname: user.lastname
               });
         })
     }
@@ -234,9 +238,11 @@ export class UserController{
     }
 
     getMyData = (req: express.Request, res: express.Response) => {
-        let user_id = req.body.user_id;
+        let user_id = req.query.user_id;
 
-        UserModel.findById(user_id, (err, user)=>{
+        let id = new ObjectId(user_id.toString())
+
+        UserModel.findById(id, (err, user)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
@@ -252,8 +258,10 @@ export class UserController{
                     lastname: user.lastname,
                     username: user.username,
                     email: user.email,
-                    phone: user.phone
+                    phone: user.phone,
+                    photo: user.photo
                 });
+                return;
             } else if (user.type === "organizer") {
                 res.status(200).send({
                     firstname: user.firstname,
@@ -261,8 +269,10 @@ export class UserController{
                     username: user.username,
                     email: user.email,
                     phone: user.phone,
-                    orgData: user.orgData
+                    orgData: user.orgData,
+                    photo: user.photo
                 });
+                return;
             }
         })
     }

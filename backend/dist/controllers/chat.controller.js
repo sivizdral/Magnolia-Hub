@@ -49,7 +49,7 @@ class ChatController {
                     res.status(500).send({ message: err });
                     return;
                 }
-                if (!chat) {
+                if (chat.length == 0) {
                     res.status(500).send({ message: "Chat not found!" });
                     return;
                 }

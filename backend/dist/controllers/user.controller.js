@@ -20,6 +20,7 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const auth_config_1 = require("../config/auth.config");
+const mongodb_1 = require("mongodb");
 class UserController {
     constructor() {
         this.login = (req, res) => {
@@ -47,7 +48,10 @@ class UserController {
                     username: user.username,
                     email: user.email,
                     type: user.type,
-                    accessToken: token
+                    accessToken: token,
+                    photo: user.photo,
+                    firstname: user.firstname,
+                    lastname: user.lastname
                 });
             });
         };
@@ -211,8 +215,9 @@ class UserController {
             });
         };
         this.getMyData = (req, res) => {
-            let user_id = req.body.user_id;
-            user_1.default.findById(user_id, (err, user) => {
+            let user_id = req.query.user_id;
+            let id = new mongodb_1.ObjectId(user_id.toString());
+            user_1.default.findById(id, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;
@@ -226,8 +231,10 @@ class UserController {
                         lastname: user.lastname,
                         username: user.username,
                         email: user.email,
-                        phone: user.phone
+                        phone: user.phone,
+                        photo: user.photo
                     });
+                    return;
                 }
                 else if (user.type === "organizer") {
                     res.status(200).send({
@@ -236,8 +243,10 @@ class UserController {
                         username: user.username,
                         email: user.email,
                         phone: user.phone,
-                        orgData: user.orgData
+                        orgData: user.orgData,
+                        photo: user.photo
                     });
+                    return;
                 }
             });
         };

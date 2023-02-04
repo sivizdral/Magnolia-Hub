@@ -125,18 +125,22 @@ class WorkshopController {
         this.getImage = (req, res) => {
             let serverPath = req.query.path;
             var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
+            let ex = false;
             fs_1.default.exists(filePath, function (exists) {
                 if (!exists) {
                     res.status(404).send({ message: "Image not found!" });
+                    ex = true;
                     return;
                 }
             });
+            if (ex)
+                return;
             var ext = path.extname(serverPath);
             var contentType = "text/plain";
             if (ext === ".png")
                 contentType = "image/png";
-            res.writeHead(200, { "Content-Type": contentType });
-            fs_1.default.readFile(filePath, function (err, content) { res.end(content); });
+            //res.writeHead(200, {"Content-Type":contentType})
+            fs_1.default.readFile(filePath, function (err, content) { res.status(200).contentType(contentType).send(content); });
         };
         this.getUnapproved = (req, res) => {
             workshop_1.default.find({ status: "unapproved" }, (err, data) => {
