@@ -57,7 +57,7 @@
             <div class="col-lg-6 col-sm-12">
                 <gallery [items]="images" thumbPosition="left" [thumb]="false"></gallery>
             </div>-->
-            <div *ngFor="let chat of chats" class="chat-form">
+            <!--<div *ngFor="let chat of chats" class="chat-form">
                 <div class="msgs">
                     <div *ngFor="let message of chat.messages" class="msg-block">
                         <div class="yellow-msg" *ngIf="message.sender == 'organizer'">
@@ -95,6 +95,56 @@
                         <div class="msg-btn-wrap">
                             <button class="msg-btn" (click)="sendMsg()">SEND</button>
                         </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="chat-form">
+                <div class="msgs">
+                    <div *ngFor="let comment of comments; index as i" class="msg-block">
+                        <div class="yellow-msg">
+                            <div class="timestamp">
+                                <span>{{firstnames[i]}},</span> {{comment.timestamp}}
+                            </div>
+                            <div class="text-photo">
+                                <div class="photo">
+                                    <img [src]="photos[i]" class="user-img">
+                                </div>
+                                <div class="msg-text">
+                                    {{comment.text}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="msg-send">
+                    <div class="msg-send-wrap">
+                        <input type="text" class="msg-send-text" [(ngModel)]="commentText">
+                        <div class="msg-btn-wrap">
+                            <button class="msg-btn" (click)="sendComment()">SEND</button>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="like-form">
+                <div class="msgs">
+                    <div *ngFor="let like of likes" class="like-block">
+                        <div class="yellow-msg">
+                            <div class="text-photo">
+                                <img src="assets/img/heart.png" class="heart-img">
+                                <div class="like-text">
+                                    {{like}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="msg-send">
+                    <div class="msg-send-wrap justify-content-center">
+                        <img *ngIf="liked" src="assets/img/heart.png" class="heart-img" (click)="removeLike()">
+                        <img *ngIf="!liked" src="assets/img/heart-white.png" class="heart-img" (click)="like()">
                     </div>
                 </div>
             </div>

@@ -49,7 +49,7 @@ let Workshop = new Schema({
     participantsList: [Schema.Types.ObjectId],
     pendingList: [Schema.Types.ObjectId],
     waitingList: [Schema.Types.ObjectId],
-    likes: [Schema.Types.ObjectId],
+    likes: [String],
     comments: [Schema.Types.ObjectId]
 });
 exports.default = mongoose_1.default.model('WorkshopModel', Workshop, 'Workshops');

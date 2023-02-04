@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 let Comment = new Schema({
-    userId: {
+    user: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Users",
     },
-    workshopId: {
+    workshop: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Workshops"

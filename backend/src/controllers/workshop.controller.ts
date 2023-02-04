@@ -138,30 +138,54 @@ export class WorkshopController{
         })
     }
 
-    getImage = (req: any, res: express.Response)=>{
+    // getImage = (req: any, res: express.Response)=>{
+    //     let serverPath = req.query.path;
+    //     var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
+
+    //     let ex = false;
+        
+    //     fs.exists(filePath, function(exists) {
+    //         if (!exists) {
+    //             res.status(404).send({message: "Image not found!"});
+    //             ex = true;
+    //             return;
+    //         }
+    //     })
+
+    //     if (ex) return;
+
+    //     var ext = path.extname(serverPath)
+
+    //     var contentType = "text/plain"
+    //     if (ext === ".png") contentType = "image/png"
+
+    //     //res.writeHead(200, {"Content-Type":contentType})
+    //     fs.readFile(filePath, function(err, content) { res.status(200).contentType(contentType).send(content); })
+    // }
+
+    getImage = (req: any, res: express.Response) => {
         let serverPath = req.query.path;
         var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
-
-        let ex = false;
-        
+      
         fs.exists(filePath, function(exists) {
-            if (!exists) {
-                res.status(404).send({message: "Image not found!"});
-                ex = true;
-                return;
+          if (!exists) {
+            return res.status(404).send({message: "Image not found!"});
+          }
+      
+          var ext = path.extname(serverPath);
+          var contentType = "text/plain";
+      
+          if (ext === ".png") contentType = "image/png";
+      
+          fs.readFile(filePath, function(err, content) {
+            if (err) {
+              return res.status(500).send({message: "Error reading image"});
             }
-        })
-
-        if (ex) return;
-
-        var ext = path.extname(serverPath)
-
-        var contentType = "text/plain"
-        if (ext === ".png") contentType = "image/png"
-
-        //res.writeHead(200, {"Content-Type":contentType})
-        fs.readFile(filePath, function(err, content) { res.status(200).contentType(contentType).send(content); })
-    }
+      
+            res.status(200).contentType(contentType).send(content);
+          });
+        });
+      };
 
     getUnapproved = (req: any, res: express.Response)=>{
         WorkshopModel.find({status:"unapproved"}, (err, data)=> {

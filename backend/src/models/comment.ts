@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 let Comment = new Schema({
-    userId: {
+    user: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Users",
     },
-    workshopId: {
+    workshop: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Workshops"

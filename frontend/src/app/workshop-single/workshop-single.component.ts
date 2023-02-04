@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { Chat } from '../model/chat';
+import { CommentMy } from '../model/comment';
 import { User } from '../model/user';
 import { UserFull } from '../model/userFull';
 import { Workshop } from '../model/workshop';
@@ -35,6 +36,12 @@ export class WorkshopSingleComponent implements OnInit {
   myName: string = "";
   myPhoto;
   msgText: string = "";
+  commentText: string = "";
+  comments: CommentMy[] = [];
+  photos: any[] = [];
+  firstnames: string[] = [];
+  likes: string[] = [];
+  liked: boolean = false;
 
   async ngOnInit() {
     let wString = localStorage.getItem('workshop');
@@ -68,7 +75,6 @@ export class WorkshopSingleComponent implements OnInit {
     })
 
     await new Promise(resolve => setTimeout(resolve, 100));
-    console.log(this.organizerPhoto)
 
     this.wService.getPhoto(this.organizerPhoto).subscribe(data => {
       this.organizerPhoto = URL.createObjectURL(new Blob([data]));
@@ -79,17 +85,45 @@ export class WorkshopSingleComponent implements OnInit {
       this.chats = c;
     })
 
+    await this.chatService.getComments(wString).subscribe(data => {
+      const dat = data as any;
+      this.comments = dat.comments;
+      this.photos = dat.photos;
+      this.firstnames = dat.firstnames;
+    })
+
+    await this.chatService.getLikes(wString).subscribe(data => {
+      this.likes = data.likes;
+    })
+
     await new Promise(resolve => setTimeout(resolve, 100));
+
+    if (this.likes.includes(user.username)) this.liked = true;
+
+    console.log(this.likes)
+
+    for (let i = 0; i < this.photos.length; i++) {
+      await this.wService.getPhoto(this.photos[i]).subscribe(data => {
+        this.photos[i] = URL.createObjectURL(new Blob([data]));
+        this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
+      })
+    }
+
+    console.log(this.photos)
 
     for (let i = 0; i < this.chats[0].messages.length; i++) {
       const formattedDate = (new Date(this.chats[0].messages[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
       this.chats[0].messages[i].timestamp = formattedDate;
     }
+
+    for (let i = 0; i < this.comments.length; i++) {
+      const formattedDate = (new Date(this.comments[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.comments[i].timestamp = formattedDate;
+    }
   }
 
   getMapURL() {
-    //let address: string[] = this.workshop.location.split(' ')
-    let address: string[] = ['Belgrade'];
+    let address: string[] = this.workshops[0].location.split(' ')
     let address2 = address.join('%20')
     return `https://maps.google.com/maps?q=${address2}&t=&z=13&ie=UTF8&iwloc=&output=embed`
   }
@@ -125,6 +159,65 @@ export class WorkshopSingleComponent implements OnInit {
       const formattedDate = (new Date(this.chats[0].messages[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
       this.chats[0].messages[i].timestamp = formattedDate;
     }
+    this.msgText = "";
+  }
+
+  async sendComment() {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    let wString = localStorage.getItem('workshop');
+
+    this.chatService.comment(user.id, wString, this.commentText).subscribe()
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await this.chatService.getComments(wString).subscribe(data => {
+      const dat = data as any;
+      this.comments = dat.comments;
+      this.photos = dat.photos;
+      this.firstnames = dat.firstnames;
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    for (let i = 0; i < this.photos.length; i++) {
+      await this.wService.getPhoto(this.photos[i]).subscribe(data => {
+        this.photos[i] = URL.createObjectURL(new Blob([data]));
+        this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
+      })
+    }
+
+    for (let i = 0; i < this.comments.length; i++) {
+      const formattedDate = (new Date(this.comments[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.comments[i].timestamp = formattedDate;
+    }
+
+    this.commentText = "";
+  }
+
+  async like() {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    let wString = localStorage.getItem('workshop');
+    this.liked = true;
+    await this.chatService.like(wString, user.username).subscribe();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await this.chatService.getLikes(wString).subscribe(data => {
+      this.likes = data.likes;
+    })
+  }
+
+  async removeLike() {
+    this.liked = false;
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    let wString = localStorage.getItem('workshop');
+    await this.chatService.removeLike(wString, user.username).subscribe();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await this.chatService.getLikes(wString).subscribe(data => {
+      this.likes = data.likes;
+    })
   }
   
 

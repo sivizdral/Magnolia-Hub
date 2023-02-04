@@ -122,25 +122,42 @@ class WorkshopController {
                 res.status(200).send(workshop);
             });
         };
+        // getImage = (req: any, res: express.Response)=>{
+        //     let serverPath = req.query.path;
+        //     var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
+        //     let ex = false;
+        //     fs.exists(filePath, function(exists) {
+        //         if (!exists) {
+        //             res.status(404).send({message: "Image not found!"});
+        //             ex = true;
+        //             return;
+        //         }
+        //     })
+        //     if (ex) return;
+        //     var ext = path.extname(serverPath)
+        //     var contentType = "text/plain"
+        //     if (ext === ".png") contentType = "image/png"
+        //     //res.writeHead(200, {"Content-Type":contentType})
+        //     fs.readFile(filePath, function(err, content) { res.status(200).contentType(contentType).send(content); })
+        // }
         this.getImage = (req, res) => {
             let serverPath = req.query.path;
             var filePath = path.join(__dirname, "\\..\\..\\" + serverPath).split("%20").join(" ");
-            let ex = false;
             fs_1.default.exists(filePath, function (exists) {
                 if (!exists) {
-                    res.status(404).send({ message: "Image not found!" });
-                    ex = true;
-                    return;
+                    return res.status(404).send({ message: "Image not found!" });
                 }
+                var ext = path.extname(serverPath);
+                var contentType = "text/plain";
+                if (ext === ".png")
+                    contentType = "image/png";
+                fs_1.default.readFile(filePath, function (err, content) {
+                    if (err) {
+                        return res.status(500).send({ message: "Error reading image" });
+                    }
+                    res.status(200).contentType(contentType).send(content);
+                });
             });
-            if (ex)
-                return;
-            var ext = path.extname(serverPath);
-            var contentType = "text/plain";
-            if (ext === ".png")
-                contentType = "image/png";
-            //res.writeHead(200, {"Content-Type":contentType})
-            fs_1.default.readFile(filePath, function (err, content) { res.status(200).contentType(contentType).send(content); });
         };
         this.getUnapproved = (req, res) => {
             workshop_1.default.find({ status: "unapproved" }, (err, data) => {

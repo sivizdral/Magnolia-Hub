@@ -23,4 +23,40 @@ export class ChatService {
     }
     return this.http.post('http://localhost:4000/chats/sendMessage', data)
   }
+
+  comment(user, workshop, text): Observable<any> {
+    const data = {
+      workshop_id: workshop,
+      user_id: user,
+      text: text
+    }
+
+    return this.http.post('http://localhost:4000/actions/comment', data)
+  }
+
+  getComments(workshop): Observable<any> {
+    return this.http.get('http://localhost:4000/actions/allWorkshopComments?id='+ workshop)
+  }
+
+  like(workshop, user): Observable<any> {
+    const data = {
+      workshop_id: workshop,
+      username: user
+    }
+
+    return this.http.post('http://localhost:4000/actions/like', data)
+  }
+
+  removeLike(workshop, user): Observable<any> {
+    const data = {
+      workshop_id: workshop,
+      username: user
+    }
+
+    return this.http.post('http://localhost:4000/actions/removeLike', data)
+  }
+
+  getLikes(workshop): Observable<any> {
+    return this.http.get('http://localhost:4000/actions/allWorkshopLikes?id='+ workshop)
+  }
 }
