@@ -69,6 +69,53 @@ class ChatController {
                 });
             });
         };
+        this.organizerSendMessage = (req, res) => {
+            let organizer_id = req.body.organizer_id;
+            let user_id = req.body.user_id;
+            let workshop_id = req.body.workshop_id;
+            let text = req.body.text;
+            let sender = "organizer";
+            let timestamp = Date.now();
+            chat_1.default.find({ 'organizer': organizer_id, 'participant': user_id, 'workshop': workshop_id }, (err, chat) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (chat.length == 0) {
+                    res.status(500).send({ message: "Chat not found!" });
+                    return;
+                }
+                let message = {
+                    text: text,
+                    sender: sender,
+                    timestamp: timestamp
+                };
+                chat = chat[0];
+                chat.messages.push(message);
+                chat.save((err, chat) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    return res.send({ message: "Message sent!" });
+                });
+            });
+        };
+        this.getWorkshopOrganizerChats = (req, res) => {
+            let workshop_id = req.query.workshop_id.toString();
+            let organizer_id = req.query.organizer_id.toString();
+            chat_1.default.find({ 'organizer': organizer_id, 'workshop': workshop_id }, (err, chats) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                let jsonArr = [];
+                chats.forEach(chat => {
+                    jsonArr.push(chat.toJSON());
+                });
+                res.status(200).send(jsonArr);
+            });
+        };
     }
 }
 exports.ChatController = ChatController;

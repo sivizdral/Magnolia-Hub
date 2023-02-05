@@ -23,6 +23,8 @@ import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 import { SafePipe } from './safe.pipe';
 import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
+import { WorkshopSingleOrganizerComponent } from './organizer/workshop-single-organizer/workshop-single-organizer.component';
+import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/organizer-workshops.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops
     AllWorkshopsComponent,
     WorkshopSingleComponent,
     SafePipe,
-    AppliedWorkshopsComponent
+    AppliedWorkshopsComponent,
+    WorkshopSingleOrganizerComponent,
+    OrganizerWorkshopsComponent
   ],
   imports: [
     BrowserModule,

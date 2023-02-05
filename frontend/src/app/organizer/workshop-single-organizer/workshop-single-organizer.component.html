@@ -1,0 +1,100 @@
+<header>
+    <nav>
+        <div class="container-up">
+            <h3 class="logo">Magnolia<span>Hub</span></h3>
+        </div>
+    </nav>
+
+    <div class="container" *ngFor="let workshop of workshops">
+        <div class="row row-first">
+            <div class="col-lg-8 col-md-12 col-sm-12 text-center">
+                <div class="text-row-1">
+                    First
+                </div>
+                <div class="resize-text">
+                    {{workshop.name}}
+                </div>
+                <div class="text-row-3">
+                    Rest of name
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 3rem">
+            <div class="col-lg-4 col-sm-12" style="height:700px; margin-bottom: 1rem">
+                <div class="like-form">
+                    <div class="msgs">
+                        <div *ngFor="let user of users" class="like-block" (click)="chosen(user)">
+                            <div class="yellow-msg">
+                                <div class="text-photo">
+                                    <img src="assets/img/chat.png" class="heart-img">
+                                    <div class="like-text">
+                                        {{user.username}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12" *ngFor="let chat of selectedChats; index as i" style="height:700px; margin-bottom: 1rem">
+                <div class="chat-form">
+                    <div class="msgs">
+                        <div *ngFor="let message of chat.messages" class="msg-block">
+                            <div class="yellow-msg" *ngIf="message.sender == 'participant'">
+                                <div class="timestamp">
+                                    <span>{{users[i].firstname}},</span> {{message.timestamp}}
+                                </div>
+                                <div class="text-photo">
+                                    <div class="photo">
+                                        <img [src]="photos[i]" class="user-img">
+                                    </div>
+                                    <div class="msg-text">
+                                        {{message.text}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="orange-msg" *ngIf="message.sender == 'organizer'">
+                                <div class="timestamp-orange">
+                                    <span>{{myName}},</span> {{message.timestamp}}
+                                </div>
+                                <div class="text-photo-orange">
+                                    <div class="msg-text msg-text-orange">
+                                        {{message.text}}
+                                    </div>
+                                    <div class="photo">
+                                        <img [src]="myPhoto" class="user-img">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="msg-send">
+                        <div class="msg-send-wrap">
+                            <input type="text" class="msg-send-text" [(ngModel)]="msgs[i]">
+                            <div class="msg-btn-wrap">
+                                <button class="msg-btn" (click)="sendMsg(users[i], i)">SEND</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <label>
+    <input type="checkbox" style="display:none">
+    <span class="menu"> <span class="hamburger"></span> </span>
+    <ul>
+      <li> <a href="#">home</a> </li>
+      <li> <a href="#">about</a> </li>
+      <li> <a href="#">contact</a> </li>
+    </ul>
+    </label>
+
+</header>

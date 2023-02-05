@@ -24,6 +24,17 @@ export class ChatService {
     return this.http.post('http://localhost:4000/chats/sendMessage', data)
   }
 
+  organizerSendMsg(participant, organizer, workshop, text): Observable<any> {
+    const data = {
+      user_id: participant,
+      workshop_id: workshop,
+      text: text,
+      organizer_id: organizer,
+      timestamp: Date.now()
+    }
+    return this.http.post('http://localhost:4000/chats/organizerSendMessage', data)
+  }
+
   comment(user, workshop, text): Observable<any> {
     const data = {
       workshop_id: workshop,
@@ -59,4 +70,10 @@ export class ChatService {
   getLikes(workshop): Observable<any> {
     return this.http.get('http://localhost:4000/actions/allWorkshopLikes?id='+ workshop)
   }
+
+  getOrganizerWorkshopChats(workshop, organizer): Observable<any> {
+    return this.http.get('http://localhost:4000/chats/organizerWorkshopChats?workshop_id=' + workshop + "&organizer_id=" + organizer)
+  }
+
+  
 }

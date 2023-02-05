@@ -225,8 +225,9 @@ class UserController {
                 if (!user) {
                     return res.status(404).send({ message: "User Not found." });
                 }
-                if (user.type === "participant") {
+                if (user.type === "participant" || user.type === "admin") {
                     res.status(200).send({
+                        user_id: user._id,
                         firstname: user.firstname,
                         lastname: user.lastname,
                         username: user.username,
@@ -238,6 +239,7 @@ class UserController {
                 }
                 else if (user.type === "organizer") {
                     res.status(200).send({
+                        user_id: user._id,
                         firstname: user.firstname,
                         lastname: user.lastname,
                         username: user.username,

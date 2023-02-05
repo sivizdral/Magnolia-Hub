@@ -56,4 +56,10 @@ export class WorkshopService {
     }
     return this.http.post('http://localhost:4000/participants/cancelApplication', data);
   }
+
+  getAllOrganizer(id): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/organizerWorkshops?id='+id)
+  }
+
+  
 }

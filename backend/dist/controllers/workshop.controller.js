@@ -187,15 +187,22 @@ class WorkshopController {
             });
         };
         this.getOrganizerWorkshops = (req, res) => {
-            let organizer_id = req.body.user_id;
-            workshop_1.default.find({ organizer: new mongoose_1.default.Types.ObjectId(organizer_id) }, (err, workshops) => {
+            let organizer_id = req.query.id;
+            workshop_1.default.find({ 'organizer': new mongoose_1.default.Types.ObjectId(organizer_id) }, (err, workshops) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;
                 }
                 let jsonArr = [];
                 workshops.forEach(workshop => {
-                    jsonArr.push(workshop.toJSON());
+                    jsonArr.push({
+                        workshop_id: workshop._id,
+                        name: workshop.name,
+                        date: workshop.date,
+                        location: workshop.location,
+                        photo: workshop.photo,
+                        short_description: workshop.short_description,
+                    });
                 });
                 res.status(200).send(jsonArr);
             });
