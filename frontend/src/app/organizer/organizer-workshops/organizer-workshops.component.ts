@@ -40,7 +40,8 @@ export class OrganizerWorkshopsComponent implements OnInit {
   }
 
   async save(id) {
-    await this.wService.saveJSON(id).subscribe();
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    await this.wService.saveJSON(id, user.id).subscribe();
     await new Promise(resolve => setTimeout(resolve, 100));
     window.location.reload();
   }

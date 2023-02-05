@@ -1,0 +1,30 @@
+{
+  "_id": "63dff7219d8c2923e49235d7",
+  "name": "Pera",
+  "date": "2023-02-02T18:35:00.000Z",
+  "location": "a",
+  "organizer": "63dc20213a641c82248b218f",
+  "photo": [
+    {
+      "fieldname": "photo",
+      "originalname": "chat.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "1675622177598chat.png",
+      "path": "uploads\\1675622177598chat.png",
+      "size": 3865
+    }
+  ],
+  "short_description": "abc",
+  "long_description": "abc",
+  "gallery": [],
+  "status": "unapproved",
+  "capacity": 10,
+  "participantsList": [],
+  "pendingList": [],
+  "waitingList": [],
+  "likes": [],
+  "comments": [],
+  "__v": 0
+}

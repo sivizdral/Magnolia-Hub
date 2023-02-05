@@ -302,21 +302,44 @@ class WorkshopController {
         };
         this.saveAsJson = (req, res) => {
             let workshop_id = req.body.workshop_id;
-            workshop_1.default.findById(workshop_id, (err, workshop) => {
-                fs_1.default.writeFile("json_workshops/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+            let organizer_id = req.body.organizer_id;
+            if (!fs_1.default.existsSync("json_workshops/" + organizer_id)) {
+                fs_1.default.mkdir("json_workshops/" + organizer_id, { recursive: true }, (err) => {
                     if (err) {
-                        console.error(err);
+                        res.status(500).send({ message: err });
+                        return;
                     }
-                    else {
-                        console.log(`File created successfully.`);
-                    }
+                    workshop_1.default.findById(workshop_id, (err, workshop) => {
+                        fs_1.default.writeFile("json_workshops/" + organizer_id + "/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                            if (err) {
+                                console.error(err);
+                            }
+                            else {
+                                console.log(`File created successfully.`);
+                            }
+                        });
+                        return res.status(200).send("Model saved to file successfully.");
+                    });
                 });
-                return res.status(200).send("Model saved to file successfully.");
-            });
+            }
+            else {
+                workshop_1.default.findById(workshop_id, (err, workshop) => {
+                    fs_1.default.writeFile("json_workshops/" + organizer_id + "/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                        if (err) {
+                            console.error(err);
+                        }
+                        else {
+                            console.log(`File created successfully.`);
+                        }
+                    });
+                    return res.status(200).send("Model saved to file successfully.");
+                });
+            }
         };
         this.loadJSON = (req, res) => {
             let workshop_id = req.query.id;
-            const filePath = "json_workshops/" + workshop_id + ".json";
+            let organizer_id = req.query.organizer_id;
+            const filePath = "json_workshops/" + organizer_id + "/" + workshop_id + ".json";
             fs_1.default.readFile(filePath, "utf-8", (err, data) => {
                 if (err) {
                     console.error(err);
@@ -329,7 +352,8 @@ class WorkshopController {
             });
         };
         this.allJSON = (req, res) => {
-            fs_1.default.readdir("json_workshops", (err, files) => {
+            let organizer_id = req.query.id;
+            fs_1.default.readdir("json_workshops/" + organizer_id, (err, files) => {
                 if (err) {
                     console.error(err);
                 }

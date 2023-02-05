@@ -365,24 +365,49 @@ export class WorkshopController{
 
     saveAsJson = (req: any, res: express.Response)=>{
         let workshop_id = req.body.workshop_id;
+        let organizer_id = req.body.organizer_id;
 
-        WorkshopModel.findById(workshop_id, (err, workshop) => {
-            fs.writeFile("json_workshops/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+        if (!fs.existsSync("json_workshops/" + organizer_id)) {
+            fs.mkdir("json_workshops/" + organizer_id, { recursive: true }, (err) => {
                 if (err) {
-                  console.error(err);
-                } else {
-                  console.log(`File created successfully.`);
+                    res.status(500).send({ message: err });
+                    return;
                 }
-              });
 
-            return res.status(200).send("Model saved to file successfully.");
-        })
+                WorkshopModel.findById(workshop_id, (err, workshop) => {
+                    fs.writeFile("json_workshops/" + organizer_id + "/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                        if (err) {
+                          console.error(err);
+                        } else {
+                          console.log(`File created successfully.`);
+                        }
+                      });
+        
+                    return res.status(200).send("Model saved to file successfully.");
+                })
+            })
+        } else {
+            WorkshopModel.findById(workshop_id, (err, workshop) => {
+                fs.writeFile("json_workshops/" + organizer_id + "/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                    if (err) {
+                      console.error(err);
+                    } else {
+                      console.log(`File created successfully.`);
+                    }
+                  });
+    
+                return res.status(200).send("Model saved to file successfully.");
+            })
+        }
+
+        
     }
 
     loadJSON = (req: any, res: express.Response)=>{
         let workshop_id = req.query.id;
+        let organizer_id = req.query.organizer_id;
 
-        const filePath = "json_workshops/" + workshop_id + ".json"
+        const filePath = "json_workshops/" + organizer_id + "/" + workshop_id + ".json"
 
         fs.readFile(filePath, "utf-8", (err, data) => {
             if (err) {
@@ -396,7 +421,8 @@ export class WorkshopController{
     }
 
     allJSON = (req: any, res: express.Response)=>{
-        fs.readdir("json_workshops", (err, files) => {
+        let organizer_id = req.query.id;
+        fs.readdir("json_workshops/" + organizer_id, (err, files) => {
             if (err) {
               console.error(err);
             } else {
@@ -419,7 +445,6 @@ export class WorkshopController{
 
                     res.status(200).send({'names': names, 'ids': ids})
                 })
-              console.log(files);
             }
           });
     }

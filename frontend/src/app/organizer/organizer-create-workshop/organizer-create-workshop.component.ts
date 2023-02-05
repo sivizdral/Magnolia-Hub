@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { WorkshopService } from 'src/app/services/workshop.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-organizer-create-workshop',
@@ -30,11 +31,14 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
   workshop: string = "";
   names: string[] = [];
   ids: string[] = [];
+  pho: any[] = [];
+  gal: any[] = [];
 
   constructor(private wService: WorkshopService) { }
 
   async ngOnInit() {
-    await this.wService.getAllJSON().subscribe(data => {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    await this.wService.getAllJSON(user.id).subscribe(data => {
       this.names = data.names;
       this.ids = data.ids;
     })
@@ -128,6 +132,31 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
     for (let i = 0; i < list.length; i++) {
       this.gallery.push(list[i]);
     }
+  }
+
+  async getDataFromJSON(i) {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    await this.wService.loadJSON(this.ids[i], user.id).subscribe(data => {
+      this.form.name = data.name;
+      this.form.date = moment(data.date).format("YYYY-MM-DDTHH:mm:ss.SSS");;
+      console.log(data.date)
+      this.form.location = data.location;
+      this.form.short = data.short_description;
+      this.form.long = data.long_description;
+      this.form.capacity = data.capacity;
+      this.pho = data.photo[0].path;
+      this.gal = data.gallery;
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await this.wService.getPhoto(this.pho).subscribe(data => {
+      this.file = data;
+    })
+
+    await this.wService.getPhoto(this.gal[0].path).subscribe(data => {
+      this.form.gallery = data;
+    })
   }
 
 }
