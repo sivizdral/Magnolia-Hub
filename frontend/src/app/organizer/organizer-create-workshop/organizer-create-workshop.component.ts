@@ -28,10 +28,20 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
   file: File;
   gallery: File[] = [];
   workshop: string = "";
+  names: string[] = [];
+  ids: string[] = [];
 
   constructor(private wService: WorkshopService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.wService.getAllJSON().subscribe(data => {
+      this.names = data.names;
+      this.ids = data.ids;
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log(this.names);
+    console.log(this.ids);
   }
 
   async onSubmit() {
@@ -56,6 +66,8 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
     const { name, date, location, short, long, photo, gallery, capacity } = this.form;
 
     console.log(date)
+
+    
 
     await this.wService.create(name, date, location, short, long, user.id, this.file, capacity).subscribe({
       next: data => {

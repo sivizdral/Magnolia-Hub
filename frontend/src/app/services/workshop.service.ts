@@ -75,6 +75,14 @@ export class WorkshopService {
     return this.http.post('http://localhost:4000/workshops/saveJSON', data)
   }
 
+  loadJSON(id): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/loadJSON?id=' + id)
+  }
+
+  getAllJSON(): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/allJSON')
+  }
+
   create(name, date, location, short, long, organizer, photo, capacity): Observable<any> {
     const formData =  new  FormData();
     formData.append("name", name);
@@ -96,6 +104,8 @@ export class WorkshopService {
     }
     return this.http.post('http://localhost:4000/workshops/addGallery', formData)
   }
+
+
 
   
 }

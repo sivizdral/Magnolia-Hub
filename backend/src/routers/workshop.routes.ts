@@ -80,5 +80,13 @@ workshopRouter.route('/saveJSON').post(
     (req, res)=>new WorkshopController().saveAsJson(req, res)
 )
 
+workshopRouter.route('/loadJSON').get(
+    (req, res)=>new WorkshopController().loadJSON(req, res)
+)
+
+workshopRouter.route('/allJSON').get(
+    (req, res)=>new WorkshopController().allJSON(req, res)
+)
+
 
 export default workshopRouter

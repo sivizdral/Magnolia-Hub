@@ -378,4 +378,49 @@ export class WorkshopController{
             return res.status(200).send("Model saved to file successfully.");
         })
     }
+
+    loadJSON = (req: any, res: express.Response)=>{
+        let workshop_id = req.query.id;
+
+        const filePath = "json_workshops/" + workshop_id + ".json"
+
+        fs.readFile(filePath, "utf-8", (err, data) => {
+            if (err) {
+              console.error(err);
+            } else {
+              const model = JSON.parse(data);
+              console.log(`File loaded successfully.`);
+              res.status(200).send(model);
+            }
+          });
+    }
+
+    allJSON = (req: any, res: express.Response)=>{
+        fs.readdir("json_workshops", (err, files) => {
+            if (err) {
+              console.error(err);
+            } else {
+                let ids = []
+                for (let i = 0; i < files.length; i++) {
+                    const id = files[i].split('.')[0];
+                    ids.push(id)
+                }
+                WorkshopModel.find({ _id: { $in: ids } }, (err, data) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+
+                    let names = []
+
+                    data.forEach(workshop => {
+                        names.push(workshop.name)
+                    })
+
+                    res.status(200).send({'names': names, 'ids': ids})
+                })
+              console.log(files);
+            }
+          });
+    }
 }
