@@ -11,6 +11,8 @@ const path = require('path')
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 import { Config } from "../config/auth.config"
+import { UserController } from './user.controller'
+import workshop from '../models/workshop'
 
 
 
@@ -285,6 +287,93 @@ export class WorkshopController{
             let avail = workshop.capacity - workshop.pendingList.length
 
             res.status(200).send({availablePlaces: avail})
+        })
+    }
+
+    cancelWorkshop = (req: any, res: express.Response)=>{
+        let id = req.body.workshop_id;
+
+        WorkshopModel.findById(id, (err, workshop)=> {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!workshop) {
+                res.status(500).send({ message: "Workshop not found!" });
+                return;
+            }
+
+            let currentTime = Date.now()
+            let workshopTime = workshop.date.getTime();
+
+            let diff = workshopTime - currentTime
+
+            if (diff < 0) {
+                res.status(500).send({ message: "Too late to cancel!" });
+                return;
+            }
+
+            let waitlist = workshop.waitingList.concat(workshop.participantsList).concat(workshop.pendingList);
+            const text = "Unfortunately, the workshop " + workshop.name + " has been canceled! Feel free to go to our website and explore the abundance of other workshops and choose some that you like!";
+
+            for (let i = 0; i < waitlist.length; i++) {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                UserModel.findById(waitlist[i], (err, user)=>{
+                    let index = user.pastWorkshops.indexOf(new mongoose.Types.ObjectId(id))
+                    if (index != -1) user.pastWorkshops.splice(index, 1);
+                    index = user.pendingWorkshops.indexOf(new mongoose.Types.ObjectId(id))
+                    if (index != -1) user.pendingWorkshops.splice(index, 1);
+
+                    try {
+                        new UserController().sendEmail(user.email, "Workshop cancellation", text);
+                    }
+                    catch(err) {
+                        console.log(err);
+                        res.send("an error occured");
+                    }
+
+                    user.save((err, user)=>{
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                    })
+                })
+                
+            }
+
+            workshop.status = "cancelled";
+            workshop.waitingList = []
+            workshop.pendingList = []
+            workshop.participantsList = []
+            workshop.save((err, workshop)=>{
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+            })
+        })
+
+    }
+
+    saveAsJson = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            fs.writeFile("json_workshops/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                if (err) {
+                  console.error(err);
+                } else {
+                  console.log(`File created successfully.`);
+                }
+              });
+
+            return res.status(200).send("Model saved to file successfully.");
         })
     }
 }

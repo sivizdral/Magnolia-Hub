@@ -35,5 +35,7 @@ workshopRouter.route('/update').post((req, res) => new workshop_controller_1.Wor
 workshopRouter.route('/image').get((req, res) => new workshop_controller_1.WorkshopController().getImage(req, res));
 workshopRouter.route('/top').get((req, res) => new workshop_controller_1.WorkshopController().getTop(req, res));
 workshopRouter.route('/availablePlaces').get((req, res) => new workshop_controller_1.WorkshopController().getAvailablePlaces(req, res));
+workshopRouter.route('/cancelWorkshop').post((req, res) => new workshop_controller_1.WorkshopController().cancelWorkshop(req, res));
+workshopRouter.route('/saveJSON').post((req, res) => new workshop_controller_1.WorkshopController().saveAsJson(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map

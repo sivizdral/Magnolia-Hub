@@ -34,8 +34,30 @@ export class OrganizerWorkshopsComponent implements OnInit {
     }
   }
 
-  click(id) {
+  chat(id) {
     localStorage.setItem('workshop', id);
     this.router.navigate(['organizer/workshop-details']);
+  }
+
+  async save(id) {
+    await this.wService.saveJSON(id).subscribe();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    window.location.reload();
+  }
+
+  manage(id) {
+    localStorage.setItem('workshop', id);
+    this.router.navigate(['organizer/workshop-details']);
+  }
+
+  update(id) {
+    localStorage.setItem('workshop', id);
+    this.router.navigate(['organizer/workshop-details']);
+  }
+
+  async cancel(id) {
+    await this.wService.cancelWorkshop(id).subscribe();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    window.location.reload();
   }
 }

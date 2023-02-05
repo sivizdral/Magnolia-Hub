@@ -72,5 +72,13 @@ workshopRouter.route('/availablePlaces').get(
     (req, res)=>new WorkshopController().getAvailablePlaces(req, res)
 )
 
+workshopRouter.route('/cancelWorkshop').post(
+    (req, res)=>new WorkshopController().cancelWorkshop(req, res)
+)
+
+workshopRouter.route('/saveJSON').post(
+    (req, res)=>new WorkshopController().saveAsJson(req, res)
+)
+
 
 export default workshopRouter

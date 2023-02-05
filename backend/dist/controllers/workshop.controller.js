@@ -13,12 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkshopController = void 0;
+const user_1 = __importDefault(require("../models/user"));
 const workshop_1 = __importDefault(require("../models/workshop"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const fs_1 = __importDefault(require("fs"));
 const path = require('path');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const user_controller_1 = require("./user.controller");
 class WorkshopController {
     constructor() {
         this.create = (req, res) => {
@@ -236,6 +238,79 @@ class WorkshopController {
                 }
                 let avail = workshop.capacity - workshop.pendingList.length;
                 res.status(200).send({ availablePlaces: avail });
+            });
+        };
+        this.cancelWorkshop = (req, res) => {
+            let id = req.body.workshop_id;
+            workshop_1.default.findById(id, (err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!workshop) {
+                    res.status(500).send({ message: "Workshop not found!" });
+                    return;
+                }
+                let currentTime = Date.now();
+                let workshopTime = workshop.date.getTime();
+                let diff = workshopTime - currentTime;
+                if (diff < 0) {
+                    res.status(500).send({ message: "Too late to cancel!" });
+                    return;
+                }
+                let waitlist = workshop.waitingList.concat(workshop.participantsList).concat(workshop.pendingList);
+                const text = "Unfortunately, the workshop " + workshop.name + " has been canceled! Feel free to go to our website and explore the abundance of other workshops and choose some that you like!";
+                for (let i = 0; i < waitlist.length; i++) {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    user_1.default.findById(waitlist[i], (err, user) => {
+                        let index = user.pastWorkshops.indexOf(new mongoose_1.default.Types.ObjectId(id));
+                        if (index != -1)
+                            user.pastWorkshops.splice(index, 1);
+                        index = user.pendingWorkshops.indexOf(new mongoose_1.default.Types.ObjectId(id));
+                        if (index != -1)
+                            user.pendingWorkshops.splice(index, 1);
+                        try {
+                            new user_controller_1.UserController().sendEmail(user.email, "Workshop cancellation", text);
+                        }
+                        catch (err) {
+                            console.log(err);
+                            res.send("an error occured");
+                        }
+                        user.save((err, user) => {
+                            if (err) {
+                                res.status(500).send({ message: err });
+                                return;
+                            }
+                        });
+                    });
+                }
+                workshop.status = "cancelled";
+                workshop.waitingList = [];
+                workshop.pendingList = [];
+                workshop.participantsList = [];
+                workshop.save((err, workshop) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                });
+            });
+        };
+        this.saveAsJson = (req, res) => {
+            let workshop_id = req.body.workshop_id;
+            workshop_1.default.findById(workshop_id, (err, workshop) => {
+                fs_1.default.writeFile("json_workshops/" + workshop_id + ".json", JSON.stringify(workshop, null, 2), (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+                        console.log(`File created successfully.`);
+                    }
+                });
+                return res.status(200).send("Model saved to file successfully.");
             });
         };
     }

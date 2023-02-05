@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let workshop of workshops; index as i">
-                <div class="post" (click)="click(workshop.workshop_id)">
+                <div class="post">
                     <div class="header_post">
                         <img [src]="photos[i]" alt="">
                     </div>
@@ -22,18 +22,34 @@
                             <h1>{{workshop.name}}</h1>
                             <p>{{workshop.short_description}}</p>
                             <div class="container_infos">
-                                <div class="postedBy">
-                                    <span>location</span> {{workshop.location}}
-                                </div>
-
-                                <div class="container_tags">
-                                    <span>date</span>
-                                    <div class="tags">
-                                        <ul>
-                                            <li>{{workshop.date}}</li>
-                                        </ul>
+                                <div class="container_tags row row-icons display-flex">
+                                    <div class="column">
                                     </div>
-
+                                    <div class="column" (click)="chat(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined chat">
+                                        chat
+                                        </span>
+                                    </div>
+                                    <div class="column" (click)="save(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined correct">
+                                        save_as
+                                        </span>
+                                    </div>
+                                    <div class="column" (click)="manage(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined manage">
+                                        manage_accounts
+                                        </span>
+                                    </div>
+                                    <div class="column" (click)="update(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined update">
+                                            upgrade
+                                            </span>
+                                    </div>
+                                    <div class="column" (click)="cancel(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined delete">
+                                            close
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

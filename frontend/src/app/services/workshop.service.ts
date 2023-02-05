@@ -61,5 +61,19 @@ export class WorkshopService {
     return this.http.get('http://localhost:4000/workshops/organizerWorkshops?id='+id)
   }
 
+  cancelWorkshop(id): Observable<any> {
+    const data = {
+      workshop_id: id
+    }
+    return this.http.post('http://localhost:4000/workshops/cancelWorkshop', data)
+  }
+
+  saveJSON(id): Observable<any> {
+    const data = {
+      workshop_id: id
+    }
+    return this.http.post('http://localhost:4000/workshops/saveJSON', data)
+  }
+
   
 }

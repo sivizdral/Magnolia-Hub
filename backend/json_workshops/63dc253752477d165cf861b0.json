@@ -1,0 +1,93 @@
+{
+  "_id": "63dc253752477d165cf861b0",
+  "name": "Workshop3",
+  "date": "2023-06-06T10:34:56.000Z",
+  "location": "Belgrade",
+  "organizer": "63dc20213a641c82248b218f",
+  "photo": [
+    {
+      "fieldname": "photo",
+      "originalname": "linkedin-27.jpg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "./uploads/",
+      "filename": "1673119880101linkedin-27.jpg",
+      "path": "uploads\\babylon.jpg",
+      "size": 73994
+    }
+  ],
+  "short_description": "abc",
+  "long_description": "abcde",
+  "gallery": [
+    {
+      "fieldname": "gallery",
+      "originalname": "1.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "16731199097981.png",
+      "path": "uploads\\16731199097981.png",
+      "size": 50596
+    },
+    {
+      "fieldname": "gallery",
+      "originalname": "2.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "16731199098002.png",
+      "path": "uploads\\16731199098002.png",
+      "size": 619839
+    },
+    {
+      "fieldname": "gallery",
+      "originalname": "3.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "16731199098103.png",
+      "path": "uploads\\16731199098103.png",
+      "size": 207731
+    },
+    {
+      "fieldname": "gallery",
+      "originalname": "4.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "16731199098144.png",
+      "path": "uploads\\16731199098144.png",
+      "size": 641201
+    },
+    {
+      "fieldname": "gallery",
+      "originalname": "5.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "./uploads/",
+      "filename": "16731199098255.png",
+      "path": "uploads\\16731199098255.png",
+      "size": 199614
+    }
+  ],
+  "status": "approved",
+  "participantsList": [],
+  "pendingList": [
+    "63b2e0d03052419c44861690",
+    "63b2e0d03052419c44861690",
+    "63b2e0d03052419c44861690",
+    "63b2e0d03052419c44861690"
+  ],
+  "waitingList": [
+    "63b2e0d03052419c44861690",
+    "63dbdf265189db52f3113aa3",
+    "63dbdf265189db52f3113aa3"
+  ],
+  "likes": [
+    "user23",
+    "ivancvetic87"
+  ],
+  "comments": [],
+  "__v": 30,
+  "capacity": 3
+}

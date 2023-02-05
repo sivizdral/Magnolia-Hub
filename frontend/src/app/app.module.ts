@@ -25,6 +25,7 @@ import { SafePipe } from './safe.pipe';
 import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
 import { WorkshopSingleOrganizerComponent } from './organizer/workshop-single-organizer/workshop-single-organizer.component';
 import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/organizer-workshops.component';
+import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-workshop/organizer-create-workshop.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/org
     SafePipe,
     AppliedWorkshopsComponent,
     WorkshopSingleOrganizerComponent,
-    OrganizerWorkshopsComponent
+    OrganizerWorkshopsComponent,
+    OrganizerCreateWorkshopComponent
   ],
   imports: [
     BrowserModule,
