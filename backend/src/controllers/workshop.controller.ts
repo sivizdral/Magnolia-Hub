@@ -28,14 +28,14 @@ export class WorkshopController{
         let photo = req.files;
         let capacity = req.body.capacity;
 
-        const [dateStr, timeStr] = date.split(' ')
+        /*const [dateStr, timeStr] = date.split(' ')
         const [month, day, year] = dateStr.split('-')
         const [hours, minutes, seconds] = timeStr.split(':')
-        const dat = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds)
+        const dat = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds)*/
 
         const workshop = new WorkshopModel({
             name: name,
-            date: dat,
+            date: date,
             location: location,
             organizer: new mongoose.Types.ObjectId(organizer),
             short_description: short_description,
@@ -107,6 +107,8 @@ export class WorkshopController{
     addGallery = (req: any, res: express.Response)=>{
         let gallery = req.files;
         let workshop_id = req.body.workshop_id;
+
+        console.log(gallery)
 
         const change = {
             gallery: gallery

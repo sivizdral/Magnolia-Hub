@@ -32,13 +32,13 @@ class WorkshopController {
             let long_description = req.body.long_description;
             let photo = req.files;
             let capacity = req.body.capacity;
-            const [dateStr, timeStr] = date.split(' ');
-            const [month, day, year] = dateStr.split('-');
-            const [hours, minutes, seconds] = timeStr.split(':');
-            const dat = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds);
+            /*const [dateStr, timeStr] = date.split(' ')
+            const [month, day, year] = dateStr.split('-')
+            const [hours, minutes, seconds] = timeStr.split(':')
+            const dat = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds)*/
             const workshop = new workshop_1.default({
                 name: name,
-                date: dat,
+                date: date,
                 location: location,
                 organizer: new mongoose_1.default.Types.ObjectId(organizer),
                 short_description: short_description,
@@ -100,6 +100,7 @@ class WorkshopController {
         this.addGallery = (req, res) => {
             let gallery = req.files;
             let workshop_id = req.body.workshop_id;
+            console.log(gallery);
             const change = {
                 gallery: gallery
             };

@@ -75,5 +75,27 @@ export class WorkshopService {
     return this.http.post('http://localhost:4000/workshops/saveJSON', data)
   }
 
+  create(name, date, location, short, long, organizer, photo, capacity): Observable<any> {
+    const formData =  new  FormData();
+    formData.append("name", name);
+    formData.append("date", date);
+    formData.append("location", location);
+    formData.append("short_description", short);
+    formData.append("long_description", long);
+    formData.append("organizer", organizer);
+    formData.append("capacity", capacity);
+    formData.append("photo", photo, photo.name);
+    return this.http.post('http://localhost:4000/workshops/create', formData)
+  }
+
+  addGallery(workshop_id, photos): Observable<any> {
+    const formData =  new  FormData();
+    formData.append("workshop_id", workshop_id);
+    for (let i = 0; i < photos.length; i++) {
+      formData.append("gallery", photos[i], photos[i].name);
+    }
+    return this.http.post('http://localhost:4000/workshops/addGallery', formData)
+  }
+
   
 }
