@@ -26,7 +26,8 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
   secondPage = false;
   myImage: Observable<any>;
   base64code: any;
-  file: File;
+  file!: File;
+  realfile: File;
   gallery: File[] = [];
   workshop: string = "";
   names: string[] = [];
@@ -44,8 +45,6 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
     })
 
     await new Promise(resolve => setTimeout(resolve, 100));
-    console.log(this.names);
-    console.log(this.ids);
   }
 
   async onSubmit() {
@@ -70,6 +69,8 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
     const { name, date, location, short, long, photo, gallery, capacity } = this.form;
 
     console.log(date)
+    console.log(this.file)
+    console.log(this.realfile)
 
     
 
@@ -100,7 +101,7 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
       if (!this.form.location) {
         this.errorMessage += "Location is required!\n";
       }
-      if (!this.form.photo) {
+      if (!this.form.photo && !this.file) {
         this.errorMessage += "Photo is required!\n";
       }
       if (this.errorMessage != "") {
@@ -127,6 +128,7 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
   }
 
   onUploadGallery($event: Event) {
+    this.gallery = [];
     const target = $event.target as HTMLInputElement
     let list = (target.files as FileList)
     for (let i = 0; i < list.length; i++) {
@@ -150,13 +152,33 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
+    console.log(this.gal)
+
     await this.wService.getPhoto(this.pho).subscribe(data => {
       this.file = data;
     })
 
-    await this.wService.getPhoto(this.gal[0].path).subscribe(data => {
-      this.form.gallery = data;
-    })
+    await new Promise(resolve => setTimeout(resolve, 100));
+    this.file = new File([this.file], "photo.png", {lastModified: 1534584790000, type: 'image/png'});
+    
+
+    for (let i = 0; i < this.gal.length; i++) {
+      await this.wService.getPhoto(this.gal[i].path).subscribe(data => {
+        this.gallery[i] = data;
+        this.gallery[i] = new File([this.gallery[i]], "gallery_item.png", {lastModified: 1534584790000, type: 'image/png'});
+      })
+    }
+    
   }
+
+  blobToFile(theBlob: Blob, fileName:string): File {
+    var b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return <File>theBlob;
+}
 
 }

@@ -374,7 +374,6 @@ class WorkshopController {
                         });
                         res.status(200).send({ 'names': names, 'ids': ids });
                     });
-                    console.log(files);
                 }
             });
         };
