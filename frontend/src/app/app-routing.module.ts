@@ -5,6 +5,7 @@ import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-c
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
 import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
+import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-workshop/organizer-create-workshop.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: "my-workshops", component: AppliedWorkshopsComponent},
   {path: "organizer/my-workshops", component: OrganizerWorkshopsComponent},
   {path: "organizer/workshop-details", component: WorkshopSingleOrganizerComponent},
-  {path: "organizer/create-workshop", component: OrganizerCreateWorkshopComponent}
+  {path: "organizer/create-workshop", component: OrganizerCreateWorkshopComponent},
+  {path: "propose-workshop", component: BecomeOrganizerComponent}
 ];
 
 @NgModule({

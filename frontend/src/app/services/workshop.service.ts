@@ -106,7 +106,15 @@ export class WorkshopService {
     return this.http.post('http://localhost:4000/workshops/addGallery', formData)
   }
 
-
+  updateStatus(workshop_id, status): Observable<any> {
+    const data = {
+      workshop_id: workshop_id,
+      changedFields: {
+        status: status
+      }
+    }
+    return this.http.post('http://localhost:4000/workshops/update', data)
+  }
 
   
 }
