@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscriber } from 'rxjs';
 import { UserService } from '../services/user.service';
 
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit {
   base64code: any;
   file: File;
 
-  constructor(private authService: UserService) { }
+  constructor(private authService: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -61,6 +62,8 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     });
+
+    this.router.navigate([''])
   }
 
   changeType() {

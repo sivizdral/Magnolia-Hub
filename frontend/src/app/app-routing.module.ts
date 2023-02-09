@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "signup", component: RegisterComponent},
   {path: "password-reset/:userId/:token", component:PasswordResetComponent},
-  {path:"passch", component:PasswordChangeComponent},
+  {path: "passch", component:PasswordChangeComponent},
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
   {path: "admin/user-listing", component: AdminUserListComponent},
