@@ -121,6 +121,8 @@ export class AllWorkshopsComponent implements OnInit {
   }
 
   click(id) {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    if (user == null) return;
     localStorage.setItem('workshop', id);
     this.router.navigate(['workshop-details']);
   }

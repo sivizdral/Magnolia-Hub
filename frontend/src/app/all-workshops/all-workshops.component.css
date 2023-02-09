@@ -225,6 +225,12 @@ header {
     }
 }
 
+@media (max-width: 450px) {
+    .resize-text {
+        font-size: 3rem;
+    }
+}
+
 
 /* SORT */
 
