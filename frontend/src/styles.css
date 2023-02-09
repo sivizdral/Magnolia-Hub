@@ -164,7 +164,7 @@ label input:checked+.menu+ul {
     opacity: 1;
 }
 
-label ul {
+ul {
     z-index: 200;
     position: absolute;
     top: 50vh;
@@ -180,7 +180,7 @@ label ul {
 label a {
     margin-bottom: 1em;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 2px;

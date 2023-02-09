@@ -3,15 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Workshop } from '../model/workshop';
 import { WorkshopService } from '../services/workshop.service';
 
-@Pipe({ name: 'safeResourceUrl' })
-export class SafeUrlPipe implements PipeTransform {
-  constructor(private readonly sanitizer: DomSanitizer) {}
-
-  public transform(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-}
-
 @Component({
   selector: 'app-top',
   templateUrl: './top.component.html',
@@ -21,10 +12,14 @@ export class TopComponent implements OnInit {
 
   constructor(private wService: WorkshopService, private readonly sanitizer: DomSanitizer) { }
 
+  log: boolean = false;
   workshops: Workshop[] = [];
   photos: any[] = [];
+  
 
   async ngOnInit(): Promise<void> {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.log = !(user == null);
     await this.wService.getMostLiked().subscribe((w: Workshop[]) => {
       this.workshops = w;
     })

@@ -27,8 +27,11 @@ export class AllWorkshopsComponent implements OnInit {
   name: string = "";
   place: string = "";
   searched: boolean = false;
+  log: boolean = true;
 
   async ngOnInit(): Promise<void> {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.log = !(user == null);
     await this.wService.getAll().subscribe((w: Workshop[]) => {
       this.workshops = w;
     })

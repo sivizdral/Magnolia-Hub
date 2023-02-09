@@ -19,9 +19,11 @@ export class AppliedWorkshopsComponent implements OnInit {
   place: string = "";
   searched: boolean = false;
   late: boolean[] = [];
+  log: boolean = true;
 
   async ngOnInit(): Promise<void> {
-    let user = JSON.parse(sessionStorage.getItem('auth-user'))
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.log = !(user == null);
     await this.wService.getApplied(user.id).subscribe((w: Workshop[]) => {
       this.workshops = w;
     })
@@ -59,6 +61,11 @@ export class AppliedWorkshopsComponent implements OnInit {
       }
     )
     window.location.reload();
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    console.log("OK")
   }
 
 }
