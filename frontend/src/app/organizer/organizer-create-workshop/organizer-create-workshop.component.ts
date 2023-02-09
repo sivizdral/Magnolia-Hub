@@ -87,6 +87,10 @@ export class OrganizerCreateWorkshopComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 100));
 
     await this.wService.addGallery(this.workshop, this.gallery).subscribe();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    if (this.errorMessage == "") this.errorMessage = "Successfully submitted!"
   }
 
   next() {

@@ -67,7 +67,7 @@
                         <label for="gallery">Gallery</label>
                         <input type="file" (change)="onUploadGallery($event)" name="gallery" [(ngModel)]="form.gallery" #gallery="ngModel" required accept="image/*, .jpeg, .png" multiple>
                     </div>
-                    <h2 class="error" style="margin-top:0.2rem; font-size:1rem; margin-bottom: 0rem">{{gal[0].path}}</h2>
+                    <h2 *ngFor="let g of gal" class="error" style="margin-top:0.2rem; font-size:1rem; margin-bottom: 0rem">{{g.path}}</h2>
                     <h2 class="error">{{errorMessage}}</h2>
 
                     <div class="form-group">

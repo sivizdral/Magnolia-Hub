@@ -35,7 +35,7 @@ export class AppliedWorkshopsComponent implements OnInit {
     }
     for (let i = 0; i < this.workshops.length; i++) {
       let currentTime = Date.now()
-      let workshopTime = this.workshops[i].date.getTime();
+      let workshopTime = new Date(this.workshops[i].date).getTime();
 
       let diff = workshopTime - currentTime
 

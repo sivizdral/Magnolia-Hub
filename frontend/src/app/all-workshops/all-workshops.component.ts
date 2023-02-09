@@ -34,11 +34,15 @@ export class AllWorkshopsComponent implements OnInit {
     })
     await new Promise(resolve => setTimeout(resolve, 100));
     for(let i = 0; i < this.workshops.length; i++) {
-      const str = this.workshops[4].photo[0].path;
+      const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
         this.photos[i] = URL.createObjectURL(new Blob([data]));
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
+    }
+    for (let i = 0; i < this.workshops.length; i++) {
+      const formattedDate = (new Date(this.workshops[i].date)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.workshops[i].date = formattedDate;
     }
   }
 
@@ -49,11 +53,15 @@ export class AllWorkshopsComponent implements OnInit {
     })
     await new Promise(resolve => setTimeout(resolve, 100));
     for(let i = 0; i < this.workshops.length; i++) {
-      const str = this.workshops[4].photo[0].path;
+      const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
         this.photos[i] = URL.createObjectURL(new Blob([data]));
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
+    }
+    for (let i = 0; i < this.workshops.length; i++) {
+      const formattedDate = (new Date(this.workshops[i].date)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.workshops[i].date = formattedDate;
     }
   }
 
@@ -64,11 +72,15 @@ export class AllWorkshopsComponent implements OnInit {
     })
     await new Promise(resolve => setTimeout(resolve, 100));
     for(let i = 0; i < this.workshops.length; i++) {
-      const str = this.workshops[4].photo[0].path;
+      const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
         this.photos[i] = URL.createObjectURL(new Blob([data]));
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
+    }
+    for (let i = 0; i < this.workshops.length; i++) {
+      const formattedDate = (new Date(this.workshops[i].date)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.workshops[i].date = formattedDate;
     }
   }
 
@@ -78,11 +90,15 @@ export class AllWorkshopsComponent implements OnInit {
     })
     await new Promise(resolve => setTimeout(resolve, 100));
     for(let i = 0; i < this.workshops.length; i++) {
-      const str = this.workshops[4].photo[0].path;
+      const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
         this.photos[i] = URL.createObjectURL(new Blob([data]));
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
+    }
+    for (let i = 0; i < this.workshops.length; i++) {
+      const formattedDate = (new Date(this.workshops[i].date)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.workshops[i].date = formattedDate;
     }
   }
 
@@ -92,11 +108,15 @@ export class AllWorkshopsComponent implements OnInit {
     })
     await new Promise(resolve => setTimeout(resolve, 100));
     for(let i = 0; i < this.workshops.length; i++) {
-      const str = this.workshops[4].photo[0].path;
+      const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
         this.photos[i] = URL.createObjectURL(new Blob([data]));
         this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
       })
+    }
+    for (let i = 0; i < this.workshops.length; i++) {
+      const formattedDate = (new Date(this.workshops[i].date)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      this.workshops[i].date = formattedDate;
     }
   }
 

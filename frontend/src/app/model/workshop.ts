@@ -1,7 +1,7 @@
 export class Workshop {
     workshop_id: string;
     name: string;
-    date: Date;
+    date: string;
     location: string;
     organizer: string;
     photo: Object;

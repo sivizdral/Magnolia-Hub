@@ -5,36 +5,45 @@
         </div>
     </nav>
 
-    <body>
-        <form *ngIf="!forgotPass">
-            <h3>Login Here</h3>
+    <div class="row">
+        <div class="col-lg-4 col-md-2">
 
-            <label for="username">Username</label>
-            <input type="text" placeholder="Username" id="username" name="username" [(ngModel)]="username">
+        </div>
+        <div class="col-lg-4 col-md-8 col-sm-12">
 
-            <label for="password">Password</label>
-            <input type="password" placeholder="Password" id="password" name="password" [(ngModel)]="password">
+            <body>
+                <form *ngIf="!forgotPass">
+                    <h3>Login Here</h3>
 
-            <h2>{{message}}</h2>
+                    <label for="username">Username</label>
+                    <input type="text" placeholder="Username" id="username" name="username" [(ngModel)]="username">
 
-            <button (click)="login()">Log In</button>
-            <button (click)="forgotPassword()">Forgot password?</button>
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Password" id="password" name="password" [(ngModel)]="password">
+
+                    <h2>{{message}}</h2>
+
+                    <button (click)="login()">Log In</button>
+                    <button (click)="forgotPassword()">Forgot password?</button>
 
 
-        </form>
-        <form *ngIf="forgotPass">
-            <h3>Forgot password?</h3>
+                </form>
+                <form *ngIf="forgotPass">
+                    <h3>Forgot password?</h3>
 
-            <label for="email">Email</label>
-            <input type="text" placeholder="Email" id="email" name="email" [(ngModel)]="email">
+                    <label for="email">Email</label>
+                    <input type="text" placeholder="Email" id="email" name="email" [(ngModel)]="email">
 
-            <h2>{{message}}</h2>
+                    <h2>{{message}}</h2>
 
-            <button (click)="submitEmail()">Send email</button>
-            <button (click)="backToLogin()">Back to login</button>
+                    <button (click)="submitEmail()">Send email</button>
+                    <button (click)="backToLogin()">Back to login</button>
 
-        </form>
-    </body>
+                </form>
+            </body>
+        </div>
+    </div>
+
 
     <!--<div class="container-fluid">
         <div class="row">
@@ -67,9 +76,11 @@
     <input type="checkbox" style="display:none">
     <span class="menu"> <span class="hamburger"></span> </span>
     <ul>
-      <li> <a href="#">home</a> </li>
-      <li> <a href="#">about</a> </li>
-      <li> <a href="#">contact</a> </li>
+      <li> <a href="">home</a> </li>
+      <li> <a href="login">login</a> </li>
+      <li> <a href="signup">sign up</a> </li>
+      <li> <a href="top">top 5</a> </li>
+      <li> <a href="all-workshops">all workshops</a> </li>
     </ul>
     </label>
 
