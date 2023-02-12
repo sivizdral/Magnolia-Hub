@@ -88,5 +88,9 @@ workshopRouter.route('/allJSON').get(
     (req, res)=>new WorkshopController().allJSON(req, res)
 )
 
+workshopRouter.route('/participatedBefore').get(
+    (req, res)=>new WorkshopController().participatedBefore(req, res)
+)
+
 
 export default workshopRouter

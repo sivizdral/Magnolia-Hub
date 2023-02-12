@@ -7,20 +7,18 @@
 
     <div class="container" *ngFor="let workshop of workshops">
         <div class="row row-first">
-            <div class="col-lg-8 col-md-12 col-sm-12 text-center">
+            <div class="col-lg-10 col-md-12 col-sm-12 text-center">
                 <div class="text-row-1">
-                    First
                 </div>
                 <div class="resize-text">
                     {{workshop.name}}
                 </div>
                 <div class="text-row-3">
-                    Rest of name
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top: 3rem">
-            <!--<div class="col-lg-6 col-sm-12" style="min-height: 200px; margin-bottom: 2rem;">
+            <div class="col-lg-6 col-sm-12" style="height: 800px; margin-bottom: 2rem;">
                 <form>
                     <div>
                         <p class="text-box">{{workshop.long_description}}</p>
@@ -29,16 +27,61 @@
                     <button *ngIf="!available" (click)="reserve()">Sign up for waiting list</button>
                     <p class="text-message">{{message}}</p>
                 </form>
+
+            </div>
+            <div class="col-lg-6 col-sm-12" style="height: 700px; margin-bottom: 2rem;">
+                <div *ngFor="let chat of chats" class="chat-form">
+                    <div class="msgs">
+                        <div *ngFor="let message of chat.messages" class="msg-block">
+                            <div class="yellow-msg" *ngIf="message.sender == 'organizer'">
+                                <div class="timestamp">
+                                    <span>{{organizerName}},</span> {{message.timestamp}}
+                                </div>
+                                <div class="text-photo">
+                                    <div class="photo">
+                                        <img [src]="organizerPhoto" class="user-img">
+                                    </div>
+                                    <div class="msg-text">
+                                        {{message.text}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="orange-msg" *ngIf="message.sender == 'participant'">
+                                <div class="timestamp-orange">
+                                    <span>{{myName}},</span> {{message.timestamp}}
+                                </div>
+                                <div class="text-photo-orange">
+                                    <div class="msg-text msg-text-orange">
+                                        {{message.text}}
+                                    </div>
+                                    <div class="photo">
+                                        <img [src]="myPhoto" class="user-img">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="msg-send">
+                        <div class="msg-send-wrap">
+                            <input type="text" class="msg-send-text" [(ngModel)]="msgText">
+                            <div class="msg-btn-wrap">
+                                <button class="msg-btn" (click)="sendMsg()">SEND</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12" style="height: 500px; margin-bottom: 2rem;">
                 <div class="mapouter">
-                    <div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" [src]='getMapURL() | safe' frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-i.net">123movies-i.net</a><br>
+                    <div class="gmap_canvas"><iframe width="350" height="500" id="gmap_canvas" [src]='getMapURL() | safe' frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br>
                         <style>
                             .mapouter {
                                 position: relative;
                                 text-align: right;
                                 height: 500px;
-                                width: 600px;
+                                width: 100%;
                                 border-radius: 5px;
-                                box-shadow: 5px 10px 8px #d4d4d4;
                             }
                         </style><a href="https://www.embedgooglemap.net">embed google maps html</a>
                         <style>
@@ -46,105 +89,102 @@
                                 overflow: hidden;
                                 background: none!important;
                                 height: 500px;
-                                width: 600px;
+                                width: 80%;
+                                margin-left: 10%;
                                 border-radius: 5px;
-                                box-shadow: 5px 10px 8px #d4d4d4;
                             }
                         </style>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-12">
-                <gallery [items]="images" thumbPosition="left" [thumb]="false"></gallery>
-            </div>-->
-            <!--<div *ngFor="let chat of chats" class="chat-form">
-                <div class="msgs">
-                    <div *ngFor="let message of chat.messages" class="msg-block">
-                        <div class="yellow-msg" *ngIf="message.sender == 'organizer'">
-                            <div class="timestamp">
-                                <span>{{organizerName}},</span> {{message.timestamp}}
-                            </div>
-                            <div class="text-photo">
-                                <div class="photo">
-                                    <img [src]="organizerPhoto" class="user-img">
-                                </div>
-                                <div class="msg-text">
-                                    {{message.text}}
-                                </div>
-                            </div>
+            <div class="col-lg-6 col-sm-12" style="height: 700px; margin-bottom: 2rem;">
+                <!--<gallery [items]="images" thumbPosition="left" [thumb]="false"></gallery>-->
+                <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 80%; margin-left: 10%; height: 400px;">
+                    <div class=" carousel-indicators ">
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active">
+                        </button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img [src]="galleryImages[0]" alt="Los Angeles " class="d-block w-100">
                         </div>
-                        <div class="orange-msg" *ngIf="message.sender == 'participant'">
-                            <div class="timestamp-orange">
-                                <span>{{myName}},</span> {{message.timestamp}}
-                            </div>
-                            <div class="text-photo-orange">
-                                <div class="msg-text msg-text-orange">
-                                    {{message.text}}
-                                </div>
-                                <div class="photo">
-                                    <img [src]="myPhoto" class="user-img">
-                                </div>
-                            </div>
+                        <div class=" carousel-item">
+                            <img [src]="galleryImages[1]" alt="Chicago " class="d-block w-100 ">
                         </div>
+                        <div class="carousel-item">
+                            <img [src]="galleryImages[2]" alt="New York " class="d-block w-100 ">
+                        </div>
+                        <div class="carousel-item">
+                            <img [src]="galleryImages[3]" alt="New Yor " class="d-block w-100 ">
+                        </div>
+                        <div class="carousel-item">
+                            <img [src]="galleryImages[4]" alt="New Yo " class="d-block w-100 ">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type=" button " data-bs-target="#demo" data-bs-slide="prev "> 
+                        <span class="carousel-control-prev-icon "></span> 
+                    </button>
+                    <button class="carousel-control-next" type=" button " data-bs-target="#demo " data-bs-slide="next">
+                         <span class=" carousel-control-next-icon "></span>
+                         </button>
+                </div>
+            </div>
 
-                    </div>
-                </div>
-                <div class="msg-send">
-                    <div class="msg-send-wrap">
-                        <input type="text" class="msg-send-text" [(ngModel)]="msgText">
-                        <div class="msg-btn-wrap">
-                            <button class="msg-btn" (click)="sendMsg()">SEND</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <!--<div class="chat-form">
-                <div class="msgs">
-                    <div *ngFor="let comment of comments; index as i" class="msg-block">
-                        <div class="yellow-msg">
-                            <div class="timestamp">
-                                <span>{{firstnames[i]}},</span> {{comment.timestamp}}
-                            </div>
-                            <div class="text-photo">
-                                <div class="photo">
-                                    <img [src]="photos[i]" class="user-img">
+            <div class="col-lg-6 col-sm-12 " style="height: 700px; margin-bottom: 2rem; " *ngIf="participatedBefore ">
+                <div class="chat-form ">
+                    <div class="msgs ">
+                        <div *ngFor="let comment of comments; index as i " class="msg-block ">
+                            <div class="yellow-msg ">
+                                <div class="timestamp ">
+                                    <span>{{firstnames[i]}},</span> {{comment.timestamp}}
                                 </div>
-                                <div class="msg-text">
-                                    {{comment.text}}
-                                </div>
+                                <div class="text-photo ">
+                                    <div class="photo ">
+                                        <img [src]="photos[i] " class="user-img ">
+                                    </div>
+                                    <div class="msg-text ">
+                                        {{comment.text}}
+                                    </div>
 
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="msg-send">
-                    <div class="msg-send-wrap">
-                        <input type="text" class="msg-send-text" [(ngModel)]="commentText">
-                        <div class="msg-btn-wrap">
-                            <button class="msg-btn" (click)="sendComment()">SEND</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <div class="like-form">
-                <div class="msgs">
-                    <div *ngFor="let like of likes" class="like-block">
-                        <div class="yellow-msg">
-                            <div class="text-photo">
-                                <img src="assets/img/heart.png" class="heart-img">
-                                <div class="like-text">
-                                    {{like}}
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
+                    </div>
+                    <div class="msg-send ">
+                        <div class="msg-send-wrap ">
+                            <input type="text " class="msg-send-text " [(ngModel)]="commentText ">
+                            <div class="msg-btn-wrap ">
+                                <button class="msg-btn " (click)="sendComment() ">SEND</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="msg-send">
-                    <div class="msg-send-wrap justify-content-center">
-                        <img *ngIf="liked" src="assets/img/heart.png" class="heart-img" (click)="removeLike()">
-                        <img *ngIf="!liked" src="assets/img/heart-white.png" class="heart-img" (click)="like()">
+            </div>
+            <div class="col-lg-6 col-sm-12 " style="height: 700px; margin-bottom: 2rem; " *ngIf="participatedBefore ">
+                <div class="like-form ">
+                    <div class="msgs ">
+                        <div *ngFor="let like of likes " class="like-block ">
+                            <div class="yellow-msg ">
+                                <div class="text-photo ">
+                                    <img src="assets/img/heart.png " class="heart-img ">
+                                    <div class="like-text ">
+                                        {{like}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="msg-send ">
+                        <div class="msg-send-wrap justify-content-center ">
+                            <img *ngIf="liked " src="assets/img/heart.png " class="heart-img " (click)="removeLike() ">
+                            <img *ngIf="!liked " src="assets/img/heart-white.png " class="heart-img " (click)="like() ">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,12 +194,12 @@
 
 
     <label>
-    <input type="checkbox" style="display:none">
-    <span class="menu"> <span class="hamburger"></span> </span>
+    <input type="checkbox " style="display:none ">
+    <span class="menu "> <span class="hamburger "></span> </span>
     <ul>
-      <li> <a href="#">home</a> </li>
-      <li> <a href="#">about</a> </li>
-      <li> <a href="#">contact</a> </li>
+      <li> <a href="# ">home</a> </li>
+      <li> <a href="# ">about</a> </li>
+      <li> <a href="# ">contact</a> </li>
     </ul>
     </label>
 

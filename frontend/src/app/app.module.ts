@@ -27,6 +27,7 @@ import { WorkshopSingleOrganizerComponent } from './organizer/workshop-single-or
 import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/organizer-workshops.component';
 import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-workshop/organizer-create-workshop.component';
 import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { BecomeOrganizerComponent } from './become-organizer/become-organizer.co
     WorkshopSingleOrganizerComponent,
     OrganizerWorkshopsComponent,
     OrganizerCreateWorkshopComponent,
-    BecomeOrganizerComponent
+    BecomeOrganizerComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,

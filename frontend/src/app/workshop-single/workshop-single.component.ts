@@ -10,6 +10,7 @@ import { ChatService } from '../services/chat.service';
 import { TokenService } from '../services/token.service';
 import { UserService } from '../services/user.service';
 import { WorkshopService } from '../services/workshop.service';
+import {ɵunwrapSafeValue} from "@angular/core"
 
 declare var baguetteBox: any;
 
@@ -26,7 +27,7 @@ export class WorkshopSingleComponent implements OnInit {
     private readonly sanitizer: DomSanitizer,
     private uService: UserService) { }
   
-  images: GalleryItem[];
+  images: GalleryItem[] = [];
   workshops: Workshop[] = [];
   available: boolean = false;
   message: string = "";
@@ -42,6 +43,8 @@ export class WorkshopSingleComponent implements OnInit {
   firstnames: string[] = [];
   likes: string[] = [];
   liked: boolean = false;
+  participatedBefore: boolean = false;
+  galleryImages: any[] = [];
 
   async ngOnInit() {
     let wString = localStorage.getItem('workshop');
@@ -53,13 +56,26 @@ export class WorkshopSingleComponent implements OnInit {
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
+    this.wService.participatedBefore(this.workshops[0].name, user.id).subscribe(data => {
+      const avail = data['message'];
+      this.participatedBefore = avail == 'true';
+    })
+
     this.wService.getAvailablePlaces(wString).subscribe(data => {
       const avail = data['availablePlaces'];
       this.available = avail > 0;
     })
 
+    console.log(this.workshops[0].gallery.length)
+
+    for (let i = 0; i < this.workshops[0].gallery.length; i++) {
+      this.wService.getPhoto(this.workshops[0].gallery[i].path).subscribe(data => {
+        this.galleryImages[i] = URL.createObjectURL(new Blob([data]));
+        this.galleryImages[i] = this.sanitizer.bypassSecurityTrustUrl(this.galleryImages[i]);  
+      })
+    }
+
     this.images = [
-      new ImageItem({ src: 'assets/img/admin2.jpg', thumb: 'Alpha' }),
       new ImageItem({ src: 'assets/img/admin2.jpg', thumb: 'Alpha' })
     ];
 
@@ -74,7 +90,15 @@ export class WorkshopSingleComponent implements OnInit {
       this.organizerPhoto = dat.photo[0].path;
     })
 
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    console.log(this.galleryImages.length)
+
+    for (let i = 0; i < this.galleryImages.length; i++) {
+      this.images.push(new ImageItem({src: this.galleryImages[i].toString(), thumb: 'Alpha'}))
+    }
+
+    console.log(this.images)
 
     this.wService.getPhoto(this.organizerPhoto).subscribe(data => {
       this.organizerPhoto = URL.createObjectURL(new Blob([data]));
@@ -137,6 +161,10 @@ export class WorkshopSingleComponent implements OnInit {
     }, error => {
       this.message = error.error.message;
     })
+  }
+
+  getImageUrl(image: any): string {
+    return URL.createObjectURL(image);
   }
 
   async sendMsg() {
@@ -205,6 +233,7 @@ export class WorkshopSingleComponent implements OnInit {
     await this.chatService.getLikes(wString).subscribe(data => {
       this.likes = data.likes;
     })
+
   }
 
   async removeLike() {

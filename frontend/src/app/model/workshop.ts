@@ -7,7 +7,7 @@ export class Workshop {
     photo: Object;
     short_description: string;
     long_description: string;
-    gallery: [];
+    gallery: [any];
     status: string;
     capacity: number;
     participantsList: [];

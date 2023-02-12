@@ -2,7 +2,7 @@
 header {
     background-image: url(../../assets/img/mondrian.jpg);
     background-size: cover;
-    height: 200vh;
+    height: 100%;
 }
 
 body {
@@ -16,14 +16,22 @@ body {
     margin-top: 6rem;
 }
 
+.text-center {
+    background-size: 100vw;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
 .resize-text {
     font: 'Poppins';
-    font-size: 8rem;
+    font-size: 9rem;
     font-weight: bolder;
     text-transform: uppercase;
     line-height: 8rem;
     text-align: left;
     letter-spacing: 5px;
+    color: #0e3647;
+    text-shadow: #434c50 7px 7px;
 }
 
 .text-row-1 {
@@ -74,6 +82,12 @@ body {
     }
 }
 
+.text-box {
+    text-align: left;
+    font-size: 1.7rem;
+    line-height: 2rem;
+}
+
 @media (max-width: 576px) {
     .resize-text {
         font-size: 4rem;
@@ -87,16 +101,13 @@ body {
         font-size: 1.5rem;
         line-height: 1.5rem;
     }
-}
-
-.text-box {
-    text-align: left;
-    font-size: 1.7rem;
-    line-height: 1.7rem;
+    .text-box {
+        font-size: 1.2rem;
+        line-height: 1.4rem;
+    }
 }
 
 button {
-    margin-top: 20px;
     width: 60%;
     background-color: #fa6900;
     padding: 15px 0;
@@ -109,10 +120,10 @@ button {
 }
 
 form {
-    width: 500px;
+    width: 80%;
+    margin-left: 10%;
     background-color: rgba(51, 51, 51, 0.9);
     position: absolute;
-    min-height: 200px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -131,7 +142,8 @@ form {
 /* CHAT */
 
 .chat-form {
-    width: 500px;
+    width: 86%;
+    margin-left: 7%;
     background-color: rgba(51, 51, 51, 0.9);
     position: absolute;
     min-height: 200px;
@@ -276,11 +288,10 @@ form {
 /* LIKES */
 
 .like-form {
-    width: 350px;
+    width: 80%;
+    margin-left: 10%;
     background-color: rgba(51, 51, 51, 0.9);
     position: absolute;
-    min-height: 200px;
-    max-height: 680px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -307,4 +318,24 @@ form {
     height: 4rem;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.carousel-control-prev {
+    background: none;
+    width: 10%;
+}
+
+.carousel-control-next {
+    background: none;
+    width: 10%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.carousel-inner {
+    height: 400px;
 }

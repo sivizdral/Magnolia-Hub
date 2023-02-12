@@ -377,6 +377,17 @@ class WorkshopController {
                 }
             });
         };
+        this.participatedBefore = (req, res) => {
+            let name = req.query.name;
+            let id = req.query.id;
+            workshop_1.default.find({ 'name': name }, (err, data) => {
+                data.forEach(workshop => {
+                    if (workshop.participantsList.includes(new mongoose_1.default.Types.ObjectId(id)))
+                        return res.status(200).send({ message: 'true' });
+                });
+            });
+            res.status(200).send({ message: 'false' });
+        };
     }
 }
 exports.WorkshopController = WorkshopController;

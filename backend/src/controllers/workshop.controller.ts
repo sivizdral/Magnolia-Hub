@@ -13,6 +13,7 @@ var bcrypt = require("bcryptjs");
 import { Config } from "../config/auth.config"
 import { UserController } from './user.controller'
 import workshop from '../models/workshop'
+import { ObjectId } from 'mongodb'
 
 
 
@@ -448,4 +449,18 @@ export class WorkshopController{
             }
           });
     }
+
+    participatedBefore = (req: any, res: express.Response)=>{
+        let name = req.query.name;
+        let id = req.query.id;
+
+        WorkshopModel.find({'name': name}, (err, data) => {
+            data.forEach(workshop => {
+                if (workshop.participantsList.includes(new mongoose.Types.ObjectId(id))) return res.status(200).send({message: 'true'});
+            })
+        })
+
+        res.status(200).send({message: 'false'});
+    }
+
 }
