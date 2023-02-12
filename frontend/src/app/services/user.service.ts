@@ -68,5 +68,22 @@ export class UserService {
   getData(user_id) {
     return this.http.get('http://localhost:4000/users/myData?user_id=' + user_id)
   }
+
+  update(id, firstname, lastname, email, phone, photo) {
+    const formData =  new  FormData();
+    formData.append("user_id", id);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("email", email);
+    formData.append("phone", phone);
+
+    if (photo == null) {
+      formData.append("photoChange", "false");
+    } else {
+      formData.append("photoChange", "true");
+      formData.append("photo", photo, photo.name);
+    }
+    return this.http.post('http://localhost:4000/users/updateMyData', formData)
+  }
   
 }

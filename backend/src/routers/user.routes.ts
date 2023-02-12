@@ -39,6 +39,6 @@ userRouter.route('/password-change').post((req, res)=>new UserController().norma
 
 userRouter.route('/myData').get((req, res)=>new UserController().getMyData(req,res))
 
-userRouter.route('/updateMyData').post((req, res)=>new UserController().updateMyData(req,res))
+userRouter.route('/updateMyData').post(upload.array('photo', 1), (req, res)=>new UserController().updateMyData(req,res))
 
 export default userRouter

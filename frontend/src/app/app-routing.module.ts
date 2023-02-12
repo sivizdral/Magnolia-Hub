@@ -8,6 +8,7 @@ import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops
 import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-workshop/organizer-create-workshop.component';
 import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/organizer-workshops.component';
 import { WorkshopSingleOrganizerComponent } from './organizer/workshop-single-organizer/workshop-single-organizer.component';
@@ -33,7 +34,8 @@ const routes: Routes = [
   {path: "organizer/my-workshops", component: OrganizerWorkshopsComponent},
   {path: "organizer/workshop-details", component: WorkshopSingleOrganizerComponent},
   {path: "organizer/create-workshop", component: OrganizerCreateWorkshopComponent},
-  {path: "propose-workshop", component: BecomeOrganizerComponent}
+  {path: "propose-workshop", component: BecomeOrganizerComponent},
+  {path: "my-profile", component: MyProfileComponent}
 ];
 
 @NgModule({

@@ -254,7 +254,17 @@ class UserController {
         };
         this.updateMyData = (req, res) => {
             let user_id = req.body.user_id;
-            let changedFields = req.body.changedFields;
+            let firstname = req.body.firstname;
+            let lastname = req.body.lastname;
+            let email = req.body.email;
+            let phone = req.body.phone;
+            let photoChange = req.body.photoChange;
+            let changedFields = {
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                email: email
+            };
             user_1.default.findByIdAndUpdate(user_id, changedFields, { new: true }, (err, user) => {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -263,7 +273,21 @@ class UserController {
                 if (!user) {
                     return res.status(404).send({ message: "User Not found." });
                 }
-                res.status(200).send({ message: "User data successfully updated!" });
+                if (photoChange == "true") {
+                    user.photo = req.files;
+                    user.save((err, usr) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                        res.status(200).send({ message: "User data successfully updated!" });
+                        return;
+                    });
+                }
+                else {
+                    res.status(200).send({ message: "User data successfully updated!" });
+                    return;
+                }
             });
         };
     }
