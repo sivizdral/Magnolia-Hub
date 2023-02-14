@@ -83,5 +83,16 @@ export class ChatService {
     return this.http.get('http://localhost:4000/actions/allUserLikes?id=' + id)
   }
 
+  getUserComments(id): Observable<any> {
+    return this.http.get('http://localhost:4000/actions/allUserComments?id=' + id)
+  }
+
+  removeComment(id): Observable<any> {
+    const data = {
+      comment_id: id
+    }
+    return this.http.post('http://localhost:4000/actions/removeComment', data)
+  }
+
   
 }

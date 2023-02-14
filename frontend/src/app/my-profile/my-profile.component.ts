@@ -57,6 +57,9 @@ export class MyProfileComponent {
 
   ids: string[] = [];
   names: string[] = [];
+  idsCom: string[] = [];
+  namesCom: string[] = [];
+  textsCom: string[] = [];
 
   constructor(private authService: UserService, private router: Router, private wService: WorkshopService, private sanitizer: DomSanitizer,
     private chatService: ChatService) { }
@@ -92,13 +95,19 @@ export class MyProfileComponent {
       this.names = data.names;
     })
 
+    this.chatService.getUserComments(user.id).subscribe(data => {
+      this.idsCom = data.ids;
+      this.namesCom = data.names;
+      this.textsCom = data.texts;
+    })
+
     await this.chatService.getAllUserChats(user.id).subscribe((c: Chat[]) => {
       this.chats = c;
     })
     
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    console.log(this.names, this.ids)
+    console.log(this.namesCom, this.idsCom, this.textsCom)
 
     for (let i = 0; i < this.chats.length; i++) {
       await this.authService.getData(this.chats[i].organizer).subscribe(data => {
@@ -323,6 +332,26 @@ export class MyProfileComponent {
     this.past = false;
     this.ch = true;
     this.update = false;
+  }
+
+  removeLike(id) {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.chatService.removeLike(id, user.username).subscribe();
+    this.chatService.getUserLikes(user.id).subscribe(data => {
+      this.ids = data.ids;
+      this.names = data.names;
+    })
+  }
+
+  removeComment(id) {
+    console.log(id)
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.chatService.removeComment(id).subscribe();
+    this.chatService.getUserComments(user.id).subscribe(data => {
+      this.idsCom = data.ids;
+      this.namesCom = data.names;
+      this.textsCom = data.texts;
+    })
   }
   
 

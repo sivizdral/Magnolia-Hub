@@ -182,7 +182,7 @@
                     <tr *ngFor="let n of names; index as i">
                         <td>{{n}}</td>
                         <td>
-                            <span class="material-icons-outlined material-symbols-outlined delete">
+                            <span class="material-icons-outlined material-symbols-outlined delete" (click)="removeLike(ids[i])">
                             close
                             </span>
                         </td>
@@ -195,16 +195,18 @@
             <div class="table_wrapper">
                 <table class="table" style="color: white">
                     <tr>
-                        <th (click)="sortByName()">Name</th>
-                        <th (click)="sortByDate()">Date</th>
-                        <th (click)="sortByLocation()">Location</th>
-                        <th (click)="sortByCapacity()">Capacity</th>
+                        <th>Workshop name</th>
+                        <th>Comment</th>
+                        <th>Remove comment</th>
                     </tr>
-                    <tr *ngFor="let w of pastWorkshops">
-                        <td>{{w.name}}</td>
-                        <td>{{w.date}}</td>
-                        <td>{{w.location}}</td>
-                        <td>{{w.capacity}}</td>
+                    <tr *ngFor="let n of namesCom; index as i">
+                        <td>{{n}}</td>
+                        <td>{{textsCom[i]}}</td>
+                        <td>
+                            <span class="material-icons-outlined material-symbols-outlined delete" (click)="removeComment(idsCom[i])">
+                            close
+                            </span>
+                        </td>
                     </tr>
                 </table>
             </div>

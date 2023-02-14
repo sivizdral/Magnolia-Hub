@@ -49,6 +49,39 @@ class ActionController {
                 });
             });
         };
+        this.allUserComments = (req, res) => {
+            let user_id = req.query.id;
+            comment_1.default.find({ 'user': user_id }, (err, data) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                let names = [];
+                let ids = [];
+                let idsCom = [];
+                let texts = [];
+                for (let i = 0; i < data.length; i++) {
+                    ids.push(data[i].workshop);
+                    texts.push(data[i].text);
+                    idsCom.push(data[i]._id);
+                }
+                workshop_1.default.find({ _id: { $in: ids } }, (err, workshops) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    for (let i = 0; i < ids.length; i++) {
+                        for (let j = 0; j < workshops.length; j++) {
+                            if (ids[i].equals(workshops[j]._id)) {
+                                names.push(workshops[j].name);
+                                break;
+                            }
+                        }
+                    }
+                    res.send({ 'ids': idsCom, 'names': names, 'texts': texts });
+                });
+            });
+        };
         this.like = (req, res) => {
             let workshop_id = req.body.workshop_id.toString();
             let username = req.body.username;
@@ -165,6 +198,16 @@ class ActionController {
                     return;
                 }
                 res.send({ message: "Comment was added successfully!" });
+            });
+        };
+        this.removeComment = (req, res) => {
+            let id = req.body.comment_id;
+            comment_1.default.findByIdAndDelete(id, (err, data) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                res.send({ message: "Comment was deleted successfully!" });
             });
         };
     }

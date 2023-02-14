@@ -23,8 +23,16 @@ actionsRouter.route('/allWorkshopComments').get(
     (req, res)=>new ActionController().allWorkshopComments(req, res)
 )
 
+actionsRouter.route('/allUserComments').get(
+    (req, res)=>new ActionController().allUserComments(req, res)
+)
+
 actionsRouter.route('/comment').post(
     (req, res)=>new ActionController().postComment(req, res)
+)
+
+actionsRouter.route('/removeComment').post(
+    (req, res)=>new ActionController().removeComment(req, res)
 )
 
 export default actionsRouter

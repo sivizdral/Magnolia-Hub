@@ -28,6 +28,7 @@ import { OrganizerWorkshopsComponent } from './organizer/organizer-workshops/org
 import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-workshop/organizer-create-workshop.component';
 import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { UpdateWorkshopComponent } from './organizer/update-workshop/update-workshop.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     OrganizerWorkshopsComponent,
     OrganizerCreateWorkshopComponent,
     BecomeOrganizerComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    UpdateWorkshopComponent
   ],
   imports: [
     BrowserModule,
