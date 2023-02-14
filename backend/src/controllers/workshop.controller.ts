@@ -255,15 +255,49 @@ export class WorkshopController{
 
     update = (req: any, res: express.Response)=>{
         let workshop_id = req.body.workshop_id;
-        let changedFields = req.body.changedFields;
+        let name = req.body.name;
+        let date = req.body.date;
+        let location = req.body.location;
+        let short_description = req.body.short_description;
+        let long_description = req.body.long_description;
+        let photo = req.files;
+        let capacity = req.body.capacity;
+        let photoChange = req.body.photoChange;
 
-        WorkshopModel.findByIdAndUpdate(workshop_id, changedFields, {new: true}, (err, user)=>{
+        let changedFields = {
+            name: name,
+            date: date,
+            location: location,
+            short_description: short_description,
+            long_description: long_description,
+            capacity: capacity
+        }
+
+        WorkshopModel.findByIdAndUpdate(workshop_id, changedFields, {new: true}, (err, workshop)=>{
             if (err) {
                 res.status(500).send({ message: err });
                 return;
             }
 
-            res.status(200).send(user);
+            if (!workshop) {
+                return res.status(404).send({ message: "Workshop Not found." });
+            }
+
+            if (photoChange == "true") {
+                workshop.photo = req.files;
+                workshop.save((err, wsp) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+
+                    res.status(200).send({message:"Workshop data successfully updated!"});
+                    return;
+                })
+            } else {
+                res.status(200).send({message:"Workshop data successfully updated!"});
+                return;
+            }
         });
     }
 

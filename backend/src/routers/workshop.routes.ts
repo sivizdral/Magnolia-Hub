@@ -57,6 +57,7 @@ workshopRouter.route('/delete').post(
 )
 
 workshopRouter.route('/update').post(
+    upload.array('photo', 1),
     (req, res)=>new WorkshopController().update(req, res)
 )
 

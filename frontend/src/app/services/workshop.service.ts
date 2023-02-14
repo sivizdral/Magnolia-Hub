@@ -124,5 +124,24 @@ export class WorkshopService {
     return this.http.get('http://localhost:4000/workshops/pastUserWorkshops?id=' + id)
   }
 
+  update(wString, name, date, location, short, long, capacity, file): Observable<any> {
+    const formData =  new  FormData();
+    formData.append("workshop_id", wString);
+    formData.append("name", name);
+    formData.append("date", date);
+    formData.append("location", location);
+    formData.append("short_description", short);
+    formData.append("long_description", long);
+    formData.append("capacity", capacity);
+
+    if (file == null) {
+      formData.append("photoChange", "false");
+    } else {
+      formData.append("photoChange", "true");
+      formData.append("photo", file, file.name);
+    }
+    return this.http.post('http://localhost:4000/workshops/update', formData)
+  }
+
   
 }

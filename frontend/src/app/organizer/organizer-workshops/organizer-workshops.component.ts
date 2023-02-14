@@ -53,7 +53,7 @@ export class OrganizerWorkshopsComponent implements OnInit {
 
   update(id) {
     localStorage.setItem('workshop', id);
-    this.router.navigate(['organizer/workshop-details']);
+    this.router.navigate(['organizer/update-workshop']);
   }
 
   async cancel(id) {
