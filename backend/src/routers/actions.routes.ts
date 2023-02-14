@@ -7,6 +7,10 @@ actionsRouter.route('/allWorkshopLikes').get(
     (req, res)=>new ActionController().allWorkshopLikes(req, res)
 )
 
+actionsRouter.route('/allUserLikes').get(
+    (req, res)=>new ActionController().allUserLikes(req, res)
+)
+
 actionsRouter.route('/like').post(
     (req, res)=>new ActionController().like(req, res)
 )

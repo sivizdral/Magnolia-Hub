@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subscriber } from 'rxjs';
+import { Chat } from '../model/chat';
+import { User } from '../model/user';
+import { Workshop } from '../model/workshop';
+import { ChatService } from '../services/chat.service';
 import { UserService } from '../services/user.service';
 import { WorkshopService } from '../services/workshop.service';
 
@@ -38,10 +42,26 @@ export class MyProfileComponent {
   phone: string = "";
   email: string = "";
   myPhoto: any;
+  chats: Chat[] = [];
+  organizers: User[] = [];
+  photos: any[] = [];
+  selectedChats: Chat[] = [];
+  msgs: string[] = [];
+  workshops: Workshop[] = [];
+  pastWorkshops: Workshop[] = [];
+  info: boolean = true;
+  past:boolean = false;
+  actions: boolean = false;
+  ch: boolean = false;
+  update: boolean = false;
 
-  constructor(private authService: UserService, private router: Router, private wService: WorkshopService, private sanitizer: DomSanitizer) { }
+  ids: string[] = [];
+  names: string[] = [];
 
-  ngOnInit(): void {
+  constructor(private authService: UserService, private router: Router, private wService: WorkshopService, private sanitizer: DomSanitizer,
+    private chatService: ChatService) { }
+
+  async ngOnInit() {
     let user = JSON.parse(sessionStorage.getItem('auth-user'));
     this.authService.getData(user.id).subscribe(data => {
       let dat = data as any;
@@ -62,6 +82,50 @@ export class MyProfileComponent {
       this.myPhoto = URL.createObjectURL(new Blob([data]));
       this.myPhoto = this.sanitizer.bypassSecurityTrustUrl(this.myPhoto);
     })
+
+    this.wService.pastUserWorkshops(user.id).subscribe((w: Workshop[]) => {
+      this.pastWorkshops = w;
+    })
+
+    this.chatService.getUserLikes(user.id).subscribe(data => {
+      this.ids = data.ids;
+      this.names = data.names;
+    })
+
+    await this.chatService.getAllUserChats(user.id).subscribe((c: Chat[]) => {
+      this.chats = c;
+    })
+    
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    console.log(this.names, this.ids)
+
+    for (let i = 0; i < this.chats.length; i++) {
+      await this.authService.getData(this.chats[i].organizer).subscribe(data => {
+        this.organizers.push(data as User);
+      })
+      await this.wService.getDetails(this.chats[i].workshop).subscribe(data => {
+        this.workshops[i] = data[0] as Workshop;
+        this.workshops[i].workshop_id = data[0]._id;
+      })
+    }
+    
+    
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    for (let i = 0; i < this.organizers.length; i++) {
+      this.wService.getPhoto(this.organizers[i].photo[0].path).subscribe(data => {
+        this.photos[i] = URL.createObjectURL(new Blob([data]));
+        this.photos[i] = this.sanitizer.bypassSecurityTrustUrl(this.photos[i]);
+      })
+    }
+
+    for (let k = 0; k < this.chats.length; k++) {
+      for (let i = 0; i < this.chats[k].messages.length; i++) {
+        const formattedDate = (new Date(this.chats[k].messages[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        this.chats[k].messages[i].timestamp = formattedDate;
+      }
+    }
   }
 
   onSubmit(): void {
@@ -164,5 +228,102 @@ export class MyProfileComponent {
       img.src = this.myImage.toString()
     })
   }
+
+  async sendMsg(workshop, i) {
+    if (this.msgs[i] == "") return;
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+
+    await this.chatService.sendMsg(user.id, workshop, this.msgs[i], "participant").subscribe(error => {
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await this.chatService.getAllUserChats(user.id).subscribe((c: Chat[]) => {
+      this.chats = c;
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    for (let k = 0; k < this.chats.length; k++) {
+      for (let i = 0; i < this.chats[k].messages.length; i++) {
+        const formattedDate = (new Date(this.chats[k].messages[i].timestamp)).toLocaleDateString("en-GB", { year: "numeric", month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        this.chats[k].messages[i].timestamp = formattedDate;
+      }
+      for (let i = 0; i < this.selectedChats.length; i++) {
+        if (this.selectedChats[i].workshop == this.chats[k].workshop) {
+          this.selectedChats[i]= this.chats[k];
+          break;
+        }
+      }
+    }
+
+    this.msgs[i] = "";
+  }
+
+  chosen(workshop) {
+    for (let i = 0; i < this.workshops.length; i++) {
+      if (this.workshops[i].workshop_id == workshop && !this.selectedChats.includes(this.chats[i])) {
+        this.selectedChats.push(this.chats[i]);
+        this.msgs.push("");
+      }
+    }
+  }
+
+  sortByName() {
+    this.pastWorkshops.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  sortByDate() {
+    this.pastWorkshops.sort((a, b) => (new Date(a.date)).getTime() - (new Date(b.date)).getTime());
+  }
+
+  sortByLocation() {
+    this.pastWorkshops.sort((a, b) => a.location.localeCompare(b.location));
+  }
+
+  sortByCapacity() {
+    this.pastWorkshops.sort((a, b) => b.capacity - a.capacity);
+  }
+
+  selectInfo() {
+    this.info = true;
+    this.actions = false;
+    this.past = false;
+    this.ch = false;
+    this.update = false;
+  }
+
+  selectActions() {
+    this.info = false;
+    this.actions = true;
+    this.past = false;
+    this.ch = false;
+    this.update = false;
+  }
+
+  selectUpdate() {
+    this.info = false;
+    this.actions = false;
+    this.past = false;
+    this.ch = false;
+    this.update = true;
+  }
+
+  selectPast() {
+    this.info = false;
+    this.actions = false;
+    this.past = true;
+    this.ch = false;
+    this.update = false;
+  }
+
+  selectChats() {
+    this.info = false;
+    this.actions = false;
+    this.past = false;
+    this.ch = true;
+    this.update = false;
+  }
+  
 
 }

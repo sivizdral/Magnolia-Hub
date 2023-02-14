@@ -143,5 +143,26 @@ export class ChatController {
             res.status(200).send(jsonArr)
         })
     }
+    
+
+    allUserChats = (req: express.Request, res: express.Response)=>{
+        let user_id = req.query.user_id.toString();
+
+        ChatModel.find({'participant': user_id}, (err, chats)=> {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let jsonArr = []
+            chats.forEach(chat => {
+                jsonArr.push(
+                    chat.toJSON()
+                )
+            });
+
+            res.status(200).send(jsonArr)
+        })
+    }
 
 }

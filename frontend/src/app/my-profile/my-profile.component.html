@@ -5,12 +5,19 @@
         </div>
     </nav>
 
+    <div class="upperrow justify-content-between" style="width:100%; margin-top: 4rem; height: 3rem; justify-content: space-between;">
+        <button style="width:15%; margin-left: 4%" (click)="selectInfo()">Info</button>
+        <button style="width:15%; margin-left: 4%" (click)="selectUpdate()">Update</button>
+        <button style="width:15%; margin-left: 4%" (click)="selectPast()">Past</button>
+        <button style="width:15%; margin-left: 4%" (click)="selectActions()">Actions</button>
+        <button style="width:15%; margin-left: 4%" (click)="selectChats()">Chats</button>
+    </div>
 
-    <div class="row">
+    <div class="row" *ngIf="update">
         <div class="col-lg-4 col-md-2">
 
         </div>
-        <div class="col-lg-4 col-md-8 col-sm-12">
+        <div class="col-lg-4 col-md-8 col-sm-12" style="height: 130vh">
 
             <body>
                 <form name="form" #f="ngForm" novalidate>
@@ -55,9 +62,16 @@
                 </form>
             </body>
         </div>
-        <div class="col-lg-4 col-md-8 col-sm-12">
+
+    </div>
+
+    <div class="row" *ngIf="info">
+        <div class="col-lg-4 col-md-2" style="height:0px">
+
+        </div>
+        <div class="col-lg-4 col-md-8 col-sm-12" style="height: 130vh">
             <form name="form" #f="ngForm" novalidate>
-                <div *ngIf="firstPage">
+                <div>
                     <h3>Your data</h3>
                     <img [src]="myPhoto" style="width: 40%; margin-left: 30%; margin-top: 2rem">
                     <label for="email">Email: </label>{{email}}
@@ -67,6 +81,134 @@
                     <label for="email">Phone: </label>{{phone}}
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 4rem" *ngIf="ch">
+        <div class="col-lg-4 col-sm-12" style="height:690px; margin-bottom: 1rem">
+            <div class="like-form">
+                <div class="msgs">
+                    <div *ngFor="let workshop of workshops" class="like-block" (click)="chosen(workshop.workshop_id)">
+                        <div class="yellow-msg">
+                            <div class="text-photo">
+                                <img src="assets/img/chat.png" class="heart-img">
+                                <div class="like-text">
+                                    {{workshop.name}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" *ngFor="let chat of selectedChats; index as i" style="height:700px; margin-bottom: 1rem">
+            <div class="chat-form">
+                <div class="msgs">
+                    <div *ngFor="let message of chat.messages" class="msg-block">
+                        <div class="yellow-msg" *ngIf="message.sender == 'organizer'">
+                            <div class="timestamp">
+                                <span>{{organizers[i].firstname}},</span> {{message.timestamp}}
+                            </div>
+                            <div class="text-photo">
+                                <div class="photo">
+                                    <img [src]="photos[i]" class="user-img">
+                                </div>
+                                <div class="msg-text">
+                                    {{message.text}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="orange-msg" *ngIf="message.sender == 'participant'">
+                            <div class="timestamp-orange">
+                                <span>{{firstname}},</span> {{message.timestamp}}
+                            </div>
+                            <div class="text-photo-orange">
+                                <div class="msg-text msg-text-orange">
+                                    {{message.text}}
+                                </div>
+                                <div class="photo">
+                                    <img [src]="myPhoto" class="user-img">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="msg-send">
+                    <div class="msg-send-wrap">
+                        <input type="text" class="msg-send-text" [(ngModel)]="msgs[i]">
+                        <div class="msg-btn-wrap">
+                            <button class="msg-btn" (click)="sendMsg(chat.workshop, i)">SEND</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row" *ngIf="past">
+        <div class="col-lg-12" style="height:100vh">
+            <div class="table_wrapper">
+                <table class="table" style="color: white">
+                    <tr>
+                        <th (click)="sortByName()">Name</th>
+                        <th (click)="sortByDate()">Date</th>
+                        <th (click)="sortByLocation()">Location</th>
+                        <th (click)="sortByCapacity()">Capacity</th>
+                    </tr>
+                    <tr *ngFor="let w of pastWorkshops">
+                        <td>{{w.name}}</td>
+                        <td>{{w.date}}</td>
+                        <td>{{w.location}}</td>
+                        <td>{{w.capacity}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" *ngIf="actions">
+        <div class="col-lg-6" style="height:100vh">
+            <div class="table_wrapper">
+                <table class="table" style="color: white">
+                    <tr>
+                        <th>Workshop name</th>
+                        <th>Remove like</th>
+                    </tr>
+                    <tr *ngFor="let n of names; index as i">
+                        <td>{{n}}</td>
+                        <td>
+                            <span class="material-icons-outlined material-symbols-outlined delete">
+                            close
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-lg-6" style="height:100vh">
+            <div class="table_wrapper">
+                <table class="table" style="color: white">
+                    <tr>
+                        <th (click)="sortByName()">Name</th>
+                        <th (click)="sortByDate()">Date</th>
+                        <th (click)="sortByLocation()">Location</th>
+                        <th (click)="sortByCapacity()">Capacity</th>
+                    </tr>
+                    <tr *ngFor="let w of pastWorkshops">
+                        <td>{{w.name}}</td>
+                        <td>{{w.date}}</td>
+                        <td>{{w.location}}</td>
+                        <td>{{w.capacity}}</td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
     </div>
 

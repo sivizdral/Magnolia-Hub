@@ -75,5 +75,13 @@ export class ChatService {
     return this.http.get('http://localhost:4000/chats/organizerWorkshopChats?workshop_id=' + workshop + "&organizer_id=" + organizer)
   }
 
+  getAllUserChats(id): Observable<any> {
+    return this.http.get('http://localhost:4000/chats/allUserChats?user_id=' + id)
+  }
+
+  getUserLikes(id): Observable<any> {
+    return this.http.get('http://localhost:4000/actions/allUserLikes?id=' + id)
+  }
+
   
 }

@@ -92,5 +92,9 @@ workshopRouter.route('/participatedBefore').get(
     (req, res)=>new WorkshopController().participatedBefore(req, res)
 )
 
+workshopRouter.route('/pastUserWorkshops').get(
+    (req, res)=>new WorkshopController().pastUserWorkshops(req, res)
+)
+
 
 export default workshopRouter

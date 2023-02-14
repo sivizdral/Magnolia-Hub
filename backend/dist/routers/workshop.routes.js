@@ -40,5 +40,6 @@ workshopRouter.route('/saveJSON').post((req, res) => new workshop_controller_1.W
 workshopRouter.route('/loadJSON').get((req, res) => new workshop_controller_1.WorkshopController().loadJSON(req, res));
 workshopRouter.route('/allJSON').get((req, res) => new workshop_controller_1.WorkshopController().allJSON(req, res));
 workshopRouter.route('/participatedBefore').get((req, res) => new workshop_controller_1.WorkshopController().participatedBefore(req, res));
+workshopRouter.route('/pastUserWorkshops').get((req, res) => new workshop_controller_1.WorkshopController().pastUserWorkshops(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map

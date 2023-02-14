@@ -19,4 +19,8 @@ chatsRouter.route('/organizerSendMessage').post(
     (req, res)=>new ChatController().organizerSendMessage(req, res)
 )
 
+chatsRouter.route('/allUserChats').get(
+    (req, res)=>new ChatController().allUserChats(req, res)
+)
+
 export default chatsRouter

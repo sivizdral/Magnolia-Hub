@@ -20,6 +20,35 @@ class ActionController {
                 res.send({ likes: workshop.likes });
             });
         };
+        this.allUserLikes = (req, res) => {
+            let user_id = req.query.id.toString();
+            user_1.default.findById(user_id, (err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                let ids = [];
+                let names = [];
+                for (let i = 0; i < user.likes.length; i++) {
+                    ids.push(user.likes[i]);
+                }
+                workshop_1.default.find({ _id: { $in: ids } }, (err, workshops) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    for (let i = 0; i < ids.length; i++) {
+                        for (let j = 0; j < workshops.length; j++) {
+                            if (ids[i].equals(workshops[j]._id)) {
+                                names.push(workshops[j].name);
+                                break;
+                            }
+                        }
+                    }
+                    res.send({ 'ids': ids, 'names': names });
+                });
+            });
+        };
         this.like = (req, res) => {
             let workshop_id = req.body.workshop_id.toString();
             let username = req.body.username;

@@ -116,6 +116,20 @@ class ChatController {
                 res.status(200).send(jsonArr);
             });
         };
+        this.allUserChats = (req, res) => {
+            let user_id = req.query.user_id.toString();
+            chat_1.default.find({ 'participant': user_id }, (err, chats) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                let jsonArr = [];
+                chats.forEach(chat => {
+                    jsonArr.push(chat.toJSON());
+                });
+                res.status(200).send(jsonArr);
+            });
+        };
     }
 }
 exports.ChatController = ChatController;

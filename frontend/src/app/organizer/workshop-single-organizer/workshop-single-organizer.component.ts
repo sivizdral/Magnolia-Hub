@@ -82,7 +82,7 @@ export class WorkshopSingleOrganizerComponent implements OnInit {
     let user = JSON.parse(sessionStorage.getItem('auth-user'));
     let wString = localStorage.getItem('workshop');
 
-    await this.chatService.organizerSendMsg(participant.user_id, user.id, wString, this.msgs[i]).subscribe(error => {
+    await this.chatService.organizerSendMsg(participant, user.id, wString, this.msgs[i]).subscribe(error => {
       this.message = error.error.message;
     })
 

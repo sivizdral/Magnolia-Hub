@@ -453,14 +453,42 @@ export class WorkshopController{
     participatedBefore = (req: any, res: express.Response)=>{
         let name = req.query.name;
         let id = req.query.id;
+        let sent = false;
 
         WorkshopModel.find({'name': name}, (err, data) => {
             data.forEach(workshop => {
-                if (workshop.participantsList.includes(new mongoose.Types.ObjectId(id))) return res.status(200).send({message: 'true'});
+                if (workshop.participantsList.includes(new mongoose.Types.ObjectId(id)) && !sent) {
+                    res.status(200).send({message: 'true'})
+                    sent = true
+                    return
+                }
             })
+
+            if (!sent) res.status(200).send({message: 'false'});
         })
 
-        res.status(200).send({message: 'false'});
+    }
+
+    pastUserWorkshops = (req: any, res: express.Response)=>{
+        let user_id = req.query.id;
+
+        WorkshopModel.find({
+            date: { $lt: new Date() },
+            participantsList: { $in: [user_id] }
+          }, (err, data) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let workshops = []
+
+            data.forEach(workshop => {
+                workshops.push(workshop.toJSON())
+            })
+
+            res.status(200).send(workshops)
+          })
     }
 
 }

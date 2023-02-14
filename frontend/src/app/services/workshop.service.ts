@@ -120,5 +120,9 @@ export class WorkshopService {
     return this.http.get('http://localhost:4000/workshops/participatedBefore?name=' + name + "&id=" + id)
   }
 
+  pastUserWorkshops(id): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/pastUserWorkshops?id=' + id)
+  }
+
   
 }

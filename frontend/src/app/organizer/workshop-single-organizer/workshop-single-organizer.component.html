@@ -74,7 +74,7 @@
                         <div class="msg-send-wrap">
                             <input type="text" class="msg-send-text" [(ngModel)]="msgs[i]">
                             <div class="msg-btn-wrap">
-                                <button class="msg-btn" (click)="sendMsg(users[i], i)">SEND</button>
+                                <button class="msg-btn" (click)="sendMsg(chat.participant, i)">SEND</button>
                             </div>
                         </div>
                     </div>

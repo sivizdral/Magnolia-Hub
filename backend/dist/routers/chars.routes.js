@@ -10,5 +10,6 @@ chatsRouter.route('/userChat').get((req, res) => new chat_controller_1.ChatContr
 chatsRouter.route('/organizerWorkshopChats').get((req, res) => new chat_controller_1.ChatController().getWorkshopOrganizerChats(req, res));
 chatsRouter.route('/sendMessage').post((req, res) => new chat_controller_1.ChatController().sendMessage(req, res));
 chatsRouter.route('/organizerSendMessage').post((req, res) => new chat_controller_1.ChatController().organizerSendMessage(req, res));
+chatsRouter.route('/allUserChats').get((req, res) => new chat_controller_1.ChatController().allUserChats(req, res));
 exports.default = chatsRouter;
 //# sourceMappingURL=chars.routes.js.map

@@ -22,6 +22,42 @@ export class ActionController {
         })
     }
 
+    allUserLikes = (req: express.Request, res: express.Response)=>{
+        let user_id = req.query.id.toString();
+
+        UserModel.findById(user_id, (err, user) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let ids = []
+            let names = []
+
+            for (let i = 0; i < user.likes.length; i++) {
+                ids.push(user.likes[i])
+            }
+
+            WorkshopModel.find({ _id: { $in: ids } }, (err, workshops)=>{
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                for (let i = 0; i < ids.length; i++) {
+                    for (let j = 0; j < workshops.length; j++) {
+                        if (ids[i].equals(workshops[j]._id)) {
+                            names.push(workshops[j].name)
+                            break;
+                        }
+                    }
+                }
+
+                res.send({'ids': ids, 'names': names});
+            })
+        })
+    }
+
     like = (req: express.Request, res: express.Response)=>{
         let workshop_id = req.body.workshop_id.toString();
         let username = req.body.username;
