@@ -143,5 +143,27 @@ export class WorkshopService {
     return this.http.post('http://localhost:4000/workshops/update', formData)
   }
 
+  acceptApplication(workshop_id, user_id): Observable<any> {
+    const data = {
+      workshop_id: workshop_id,
+      user_id: user_id
+    }
+
+    return this.http.post('http://localhost:4000/workshops/acceptApplication', data)
+  }
+
+  rejectApplication(workshop_id, user_id): Observable<any> {
+    const data = {
+      workshop_id: workshop_id,
+      user_id: user_id
+    }
+
+    return this.http.post('http://localhost:4000/workshops/rejectApplication', data)
+  }
+
+  getPendingApplicants (workshop_id): Observable<any> {
+    return this.http.get('http://localhost:4000/workshops/pendingApplicants?workshop_id=' + workshop_id)
+  }
+
   
 }

@@ -29,6 +29,7 @@ import { OrganizerCreateWorkshopComponent } from './organizer/organizer-create-w
 import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UpdateWorkshopComponent } from './organizer/update-workshop/update-workshop.component';
+import { ConsiderApplicationsComponent } from './organizer/consider-applications/consider-applications.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UpdateWorkshopComponent } from './organizer/update-workshop/update-work
     OrganizerCreateWorkshopComponent,
     BecomeOrganizerComponent,
     MyProfileComponent,
-    UpdateWorkshopComponent
+    UpdateWorkshopComponent,
+    ConsiderApplicationsComponent
   ],
   imports: [
     BrowserModule,

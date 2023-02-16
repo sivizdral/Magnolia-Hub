@@ -97,5 +97,17 @@ workshopRouter.route('/pastUserWorkshops').get(
     (req, res)=>new WorkshopController().pastUserWorkshops(req, res)
 )
 
+workshopRouter.route('/acceptApplication').post(
+    (req, res)=>new WorkshopController().acceptApplication(req, res)
+)
+
+workshopRouter.route('/rejectApplication').post(
+    (req, res)=>new WorkshopController().rejectApplication(req, res)
+)
+
+workshopRouter.route('/pendingApplicants').get(
+    (req, res)=>new WorkshopController().pendingApplicants(req, res)
+)
+
 
 export default workshopRouter

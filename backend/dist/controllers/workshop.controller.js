@@ -210,6 +210,114 @@ class WorkshopController {
                 res.status(200).send(jsonArr);
             });
         };
+        this.acceptApplication = (req, res) => {
+            let workshop_id = req.body.workshop_id;
+            let user_id = req.body.user_id;
+            workshop_1.default.findById(workshop_id, (err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!workshop) {
+                    return res.status(404).send({ message: "Workshop Not found." });
+                }
+                if (!workshop.pendingList.includes(new mongoose_1.default.Types.ObjectId(user_id))) {
+                    return res.status(404).send({ message: "User not found in pending list." });
+                }
+                workshop.pendingList.splice(workshop.pendingList.indexOf(new mongoose_1.default.Types.ObjectId(user_id)), 1);
+                workshop.participantsList.push(new mongoose_1.default.Types.ObjectId(user_id));
+                workshop.save((err, wsp) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    return res.status(200).send({ message: "Applicant accepted!" });
+                });
+            });
+        };
+        this.rejectApplication = (req, res) => {
+            let workshop_id = req.body.workshop_id;
+            let user_id = req.body.user_id;
+            workshop_1.default.findById(workshop_id, (err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!workshop) {
+                    return res.status(404).send({ message: "Workshop Not found." });
+                }
+                if (!workshop.pendingList.includes(new mongoose_1.default.Types.ObjectId(user_id))) {
+                    return res.status(404).send({ message: "User not found in pending list." });
+                }
+                workshop.pendingList.splice(workshop.pendingList.indexOf(new mongoose_1.default.Types.ObjectId(user_id)), 1);
+                workshop.save((err, wsp) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    let waitlist = workshop.waitingList;
+                    if (waitlist.length == 0)
+                        return;
+                    const text = "A place has opened up on the " + workshop.name + " workshop. This is your notification to take quick action and sign up before another participant takes the available place! Be quick!";
+                    for (let i = 0; i < waitlist.length; i++) {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                        user_1.default.findById(waitlist[i], (err, user) => {
+                            try {
+                                new user_controller_1.UserController().sendEmail(user.email, "Workshop opening", text);
+                            }
+                            catch (err) {
+                                console.log(err);
+                                res.send("an error occured");
+                            }
+                        });
+                    }
+                    user_1.default.findById(user_id, (err, user) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                        if (!user.pendingWorkshops.includes(new mongoose_1.default.Types.ObjectId(user_id))) {
+                            return res.status(404).send({ message: "Workshop not found in pending list." });
+                        }
+                        user.pendingWorkshops.splice(user.pendingWorkshops.indexOf(new mongoose_1.default.Types.ObjectId(user_id)), 1);
+                        user.save((err, user) => {
+                            if (err) {
+                                res.status(500).send({ message: err });
+                                return;
+                            }
+                            return res.status(200).send({ message: "Applicant rejected!" });
+                        });
+                    });
+                });
+            });
+        };
+        this.pendingApplicants = (req, res) => {
+            let workshop_id = req.query.workshop_id;
+            workshop_1.default.findById(workshop_id, (err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                let ids = [];
+                for (let i = 0; i < workshop.pendingList.length; i++) {
+                    ids.push(workshop.pendingList[i]);
+                }
+                user_1.default.find({ _id: { $in: ids } }, (err, data) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    let names = [];
+                    data.forEach(user => {
+                        names.push(user.username);
+                    });
+                    res.status(200).send({ 'names': names, 'ids': ids });
+                });
+            });
+        };
         this.update = (req, res) => {
             let workshop_id = req.body.workshop_id;
             let name = req.body.name;

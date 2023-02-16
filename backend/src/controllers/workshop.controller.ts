@@ -14,6 +14,7 @@ import { Config } from "../config/auth.config"
 import { UserController } from './user.controller'
 import workshop from '../models/workshop'
 import { ObjectId } from 'mongodb'
+import { TextDecoderStream } from 'stream/web'
 
 
 
@@ -250,6 +251,144 @@ export class WorkshopController{
             });
 
             res.status(200).send(jsonArr);
+        })
+    }
+
+    acceptApplication = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+        let user_id = req.body.user_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!workshop) {
+                return res.status(404).send({ message: "Workshop Not found." });
+            }
+
+            if (!workshop.pendingList.includes(new mongoose.Types.ObjectId(user_id))) {
+                return res.status(404).send({ message: "User not found in pending list." });
+            }
+
+            workshop.pendingList.splice(workshop.pendingList.indexOf(new mongoose.Types.ObjectId(user_id)), 1);
+            workshop.participantsList.push(new mongoose.Types.ObjectId(user_id));
+
+            workshop.save((err, wsp) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                return res.status(200).send({message: "Applicant accepted!"})
+            })
+        })
+    }
+
+    rejectApplication = (req: any, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+        let user_id = req.body.user_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!workshop) {
+                return res.status(404).send({ message: "Workshop Not found." });
+            }
+
+            if (!workshop.pendingList.includes(new mongoose.Types.ObjectId(user_id))) {
+                return res.status(404).send({ message: "User not found in pending list." });
+            }
+
+            workshop.pendingList.splice(workshop.pendingList.indexOf(new mongoose.Types.ObjectId(user_id)), 1);
+
+            workshop.save((err, wsp) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                let waitlist = workshop.waitingList;
+
+                if (waitlist.length == 0) return;
+                const text = "A place has opened up on the " + workshop.name + " workshop. This is your notification to take quick action and sign up before another participant takes the available place! Be quick!"
+
+                for (let i = 0; i < waitlist.length; i++) {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+
+                    UserModel.findById(waitlist[i], (err, user)=>{
+                        try {
+                            new UserController().sendEmail(user.email, "Workshop opening", text);
+                        }
+                        catch(err) {
+                            console.log(err);
+                            res.send("an error occured");
+                        }
+                    })
+                    
+                }
+
+                UserModel.findById(user_id, (err, user) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    
+                    if (!user.pendingWorkshops.includes(new mongoose.Types.ObjectId(user_id))) {
+                        return res.status(404).send({ message: "Workshop not found in pending list." });
+                    }
+
+                    user.pendingWorkshops.splice(user.pendingWorkshops.indexOf(new mongoose.Types.ObjectId(user_id)), 1);
+
+                    user.save((err, user) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+
+                        return res.status(200).send({message: "Applicant rejected!"})
+                    })
+                })
+            })
+        })
+    }
+
+    pendingApplicants = (req: any, res: express.Response)=>{
+        let workshop_id = req.query.workshop_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let ids = []
+
+            for (let i = 0; i < workshop.pendingList.length; i++) {
+                ids.push(workshop.pendingList[i])
+            }
+
+            UserModel.find({ _id: { $in: ids } }, (err, data) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                let names = []
+
+                data.forEach(user => {
+                    names.push(user.username)
+                })
+
+                res.status(200).send({'names': names, 'ids': ids})
+            })
         })
     }
 

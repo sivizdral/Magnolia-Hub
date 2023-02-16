@@ -48,7 +48,7 @@ export class OrganizerWorkshopsComponent implements OnInit {
 
   manage(id) {
     localStorage.setItem('workshop', id);
-    this.router.navigate(['organizer/workshop-details']);
+    this.router.navigate(['organizer/consider-applications']);
   }
 
   update(id) {

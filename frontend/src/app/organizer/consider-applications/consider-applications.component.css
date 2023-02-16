@@ -1,0 +1,41 @@
+.table_wrapper {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5rem;
+    background-color: rgba(51, 51, 51, 0.9);
+    position: absolute;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 30px 35px;
+}
+
+.container-fluid {
+    padding-top: 5rem;
+    width: 100vw;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+
+header {
+    background-image: url(../../../assets/img/starry.jpg);
+    background-size: cover;
+    height: 100%;
+}
+
+.delete {
+    color: red !important;
+    font-size: 30px !important;
+    font-weight: 200 !important;
+    cursor: pointer;
+}
+
+.accept {
+    color: green !important;
+    font-size: 30px !important;
+    font-weight: 200 !important;
+    cursor: pointer;
+}
