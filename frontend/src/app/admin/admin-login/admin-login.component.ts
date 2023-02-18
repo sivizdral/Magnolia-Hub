@@ -13,8 +13,8 @@ export class AdminLoginComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router, private tokenService: TokenService) { }
 
-  username: String;
-  password: String;
+  username: String = "";
+  password: String = "";
   message: String = "";
   email: String;
   user: User;
@@ -33,7 +33,7 @@ export class AdminLoginComponent implements OnInit {
             this.message = "You are not an administrator!";
             return;
           }
-          this.router.navigate(['']);
+          this.router.navigate(['admin/user-listing']);
         },
         error: err => {
           this.message = err.error.message;

@@ -1,1 +1,75 @@
-<p>admin-workshop-list works!</p>
+<header>
+    <nav>
+        <div class="container-up">
+            <h3 class="logo">Magnolia<span>Hub</span></h3>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let workshop of workshops; index as i">
+                <div class="post" (click)="click(workshop.workshop_id)">
+                    <div class="header_post">
+                        <img [src]="photos[i]" alt="" style="width:100%">
+                    </div>
+
+                    <div class="body_post">
+                        <div class="post_content">
+
+                            <h1>{{workshop.name}}</h1>
+                            <p>{{workshop.short_description}}</p>
+                            <div class="container_infos">
+                                <div class="container_tags display-flex">
+                                    <div style="display: inline" *ngIf="workshop.status == 'unapproved' && available[i]" (click)="approve(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined correct">
+                                        check
+                                        </span>
+                                    </div>
+                                    <div style="display: inline" *ngIf="workshop.status == 'unapproved'" (click)="reject(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined delete">
+                                        close
+                                        </span>
+                                    </div>
+                                    <div style="display: inline" *ngIf="workshop.status != 'unapproved'" (click)="update(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined update">
+                                            upgrade
+                                            </span>
+                                    </div>
+                                    <div style="display: inline" *ngIf="workshop.status != 'unapproved'" (click)="delete(workshop.workshop_id)">
+                                        <span class="material-icons-outlined material-symbols-outlined delete">
+                                            delete
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <label>
+        <input type="checkbox" style="display:none">
+        <span class="menu"> <span class="hamburger"></span> </span>
+        <ul>
+            <li *ngIf="!log"> <a href="">home</a> </li>
+            <li *ngIf="!log"> <a href="login">log in</a> </li>
+            <li *ngIf="!log"> <a href="signup">sign up</a> </li>
+            <li *ngIf="!log"> <a href="top">top 5</a> </li>
+            <li *ngIf="!log"> <a href="all-workshops">all workshops</a> </li>
+            <li *ngIf="log"> <a href="">home</a> </li>
+            <li *ngIf="log"> <a href="#">my profile</a> </li>
+            <li *ngIf="log"> <a href="my-workshops">my workshops</a> </li>
+            <li *ngIf="log"> <a href="all-workshops">all workshops</a> </li>
+            <li *ngIf="log"> <a href="top">top 5</a> </li>
+            <li *ngIf="log"> <a href="propose-workshop">become organizer</a> </li>
+            <li *ngIf="log"> <a href="#">log out</a> </li>
+            </ul>
+          
+        </label>
+
+</header>

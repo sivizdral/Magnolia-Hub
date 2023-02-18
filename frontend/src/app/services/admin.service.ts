@@ -44,4 +44,22 @@ export class AdminService {
 
     return this.http.post('http://localhost:4000/admin/addUser', formData)
   }
+
+  canApprove(workshop_id) {
+    return this.http.get('http://localhost:4000/admin/canApproveWorkshop?id=' + workshop_id)
+  }
+
+  approveProposal(workshop_id) {
+    const data = {
+      workshop_id: workshop_id
+    }
+    return this.http.post('http://localhost:4000/admin/approveProposal', data)
+  }
+
+  rejectProposal(workshop_id) {
+    const data = {
+      workshop_id: workshop_id
+    }
+    return this.http.post('http://localhost:4000/admin/rejectProposal', data)
+  }
 }

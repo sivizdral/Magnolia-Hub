@@ -98,6 +98,7 @@ export class WorkshopController{
                     date: jsonWorkshop.date,
                     location: jsonWorkshop.location,
                     photo : jsonWorkshop.photo,
+                    status: jsonWorkshop.status,
                     short_description: jsonWorkshop.short_description,
                 })
             });

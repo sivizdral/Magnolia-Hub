@@ -30,6 +30,7 @@ import { BecomeOrganizerComponent } from './become-organizer/become-organizer.co
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UpdateWorkshopComponent } from './organizer/update-workshop/update-workshop.component';
 import { ConsiderApplicationsComponent } from './organizer/consider-applications/consider-applications.component';
+import { AdminUserUpdateComponent } from './admin/admin-user-update/admin-user-update.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ConsiderApplicationsComponent } from './organizer/consider-applications
     BecomeOrganizerComponent,
     MyProfileComponent,
     UpdateWorkshopComponent,
-    ConsiderApplicationsComponent
+    ConsiderApplicationsComponent,
+    AdminUserUpdateComponent
   ],
   imports: [
     BrowserModule,

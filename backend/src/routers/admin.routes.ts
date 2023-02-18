@@ -45,4 +45,16 @@ adminRouter.route('/changeRequestStatus').post(
     (req, res)=>new AdminController().changeRequestStatus(req, res)
 )
 
+adminRouter.route('/canApproveWorkshop').get(
+  (req, res)=>new AdminController().canApproveWorkshop(req, res)
+)
+
+adminRouter.route('/approveProposal').post(
+  (req, res)=>new AdminController().approveProposal(req, res)
+)
+
+adminRouter.route('/rejectProposal').post(
+  (req, res)=>new AdminController().rejectProposal(req, res)
+)
+
 export default adminRouter

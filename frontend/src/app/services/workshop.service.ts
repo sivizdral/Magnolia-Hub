@@ -165,5 +165,13 @@ export class WorkshopService {
     return this.http.get('http://localhost:4000/workshops/pendingApplicants?workshop_id=' + workshop_id)
   }
 
+  delete(workshop_id) {
+    const data = {
+      workshop_id: workshop_id
+    }
+
+    return this.http.post('http://localhost:4000/workshops/delete', data)
+  }
+
   
 }

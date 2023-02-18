@@ -1,0 +1,72 @@
+<header>
+    <nav>
+        <div class="container-up">
+            <h3 class="logo">Magnolia<span>Hub</span></h3>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-2">
+
+        </div>
+        <div class="col-lg-4 col-md-8 col-sm-12" style="height: 130vh">
+
+            <body>
+                <form name="form" #f="ngForm" novalidate>
+                    <div *ngIf="firstPage">
+                        <h3>Update your data</h3>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="form.email" required email #email="ngModel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">Photo (optional)</label>
+                            <input type="file" (change)="onUpload($event)" name="photo" [(ngModel)]="form.photo" #photo="ngModel" accept="image/*, .jpeg, .png">
+                        </div>
+                        <h2 class="error">{{errorMessage}}</h2>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" (click)="next()">Next</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="secondPage">
+                        <div class="form-group">
+                            <label for="firstname">First name</label>
+                            <input type="text" class="form-control" name="firstname" [(ngModel)]="form.firstname" required #firstname="ngModel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last name</label>
+                            <input type="text" class="form-control" name="lastname" [(ngModel)]="form.lastname" required #lastname="ngModel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone number</label>
+                            <input type="text" class="form-control" name="phone" [(ngModel)]="form.phone" required #phone="ngModel" />
+                        </div>
+                        <h2 class="error">{{errorMessage}}</h2>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" (click)="onSubmit()">Submit</button>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" (click)="prev()">Previous</button>
+                        </div>
+                    </div>
+                </form>
+            </body>
+        </div>
+
+    </div>
+
+    <label>
+    <input type="checkbox" style="display:none">
+    <span class="menu"> <span class="hamburger"></span> </span>
+    <ul>
+      <li> <a href="">home</a> </li>
+      <li> <a href="login">login</a> </li>
+      <li> <a href="signup">sign up</a> </li>
+      <li> <a href="top">top 5</a> </li>
+      <li> <a href="all-workshops">all workshops</a> </li>
+    </ul>
+    </label>
+
+</header>

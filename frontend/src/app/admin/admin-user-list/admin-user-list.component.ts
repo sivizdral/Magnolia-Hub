@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { UserFull } from 'src/app/model/userFull';
 import { AdminService } from 'src/app/services/admin.service';
@@ -10,7 +11,7 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class AdminUserListComponent implements OnInit {
 
-  constructor(private aService: AdminService) { }
+  constructor(private aService: AdminService, private router: Router) { }
 
   users: UserFull[] = [];
   photos: any[] = [];
@@ -24,6 +25,7 @@ export class AdminUserListComponent implements OnInit {
       this.users = u;
     })
     await new Promise(resolve => setTimeout(resolve, 500));
+    console.log(this.users)
     for (let i = this.users.length; i--; ) {
       if (this.users[i].status == 'denied') this.users.splice(i, 1);
     }
@@ -51,6 +53,11 @@ export class AdminUserListComponent implements OnInit {
       }
     })
     window.location.reload();
+  }
+
+  update(user: UserFull) {
+    localStorage.setItem('user-update', user._id);
+    this.router.navigate(['admin/user-update'])
   }
 
   delete(user: UserFull) {

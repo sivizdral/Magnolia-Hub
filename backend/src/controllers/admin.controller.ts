@@ -1,6 +1,7 @@
 import express from 'express'
 import crypto from 'crypto'
 import UserModel from '../models/user'
+import WorkshopModel from '../models/workshop'
 import TokenModel from '../models/token'
 import nodemailer from 'nodemailer'
 
@@ -147,5 +148,90 @@ export class AdminController {
             })
         
         });
+    }
+
+    canApproveWorkshop = (req: express.Request, res: express.Response)=>{
+        let workshop_id = req.query.id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            let organizer_id = workshop.organizer;
+
+            UserModel.findById(organizer_id, (err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                if (user.pendingWorkshops.length == 0) return res.status(200).send({message: "Yes"});
+                else res.status(200).send({message: "No"});
+            })
+        })
+
+    }
+
+    approveProposal = (req: express.Request, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            workshop.status = "approved";
+
+            workshop.save((err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                UserModel.findById(workshop.organizer, (err, user) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+
+                    user.type = "organizer";
+
+                    user.save((err, user) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+
+                        return res.status(200).send({message: "User successfully promoted!"});
+                    })
+                })
+            })
+        })
+
+    }
+
+    rejectProposal = (req: express.Request, res: express.Response)=>{
+        let workshop_id = req.body.workshop_id;
+
+        WorkshopModel.findById(workshop_id, (err, workshop) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            workshop.status = "rejected";
+
+            workshop.save((err, workshop) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                return res.status(200).send({message: "Workshop proposal denied!"});
+            })
+        })
     }
 }

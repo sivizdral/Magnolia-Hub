@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminUserCreateComponent } from './admin/admin-user-create/admin-user-create.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
+import { AdminUserUpdateComponent } from './admin/admin-user-update/admin-user-update.component';
+import { AdminWorkshopListComponent } from './admin/admin-workshop-list/admin-workshop-list.component';
 import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
 import { AppliedWorkshopsComponent } from './applied-workshops/applied-workshops.component';
 import { BecomeOrganizerComponent } from './become-organizer/become-organizer.component';
@@ -30,7 +32,11 @@ const routes: Routes = [
   {path: "passch", component:PasswordChangeComponent},
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
+  {path: "admin/user-update", component: AdminUserUpdateComponent},
   {path: "admin/user-listing", component: AdminUserListComponent},
+  {path: "admin/workshop-listing", component: AdminWorkshopListComponent},
+  {path: "admin/update-workshop", component: UpdateWorkshopComponent},
+  {path: "admin/create-workshop", component: OrganizerCreateWorkshopComponent},
   {path: "workshop-details", component: WorkshopSingleComponent},
   {path: "my-workshops", component: AppliedWorkshopsComponent},
   {path: "organizer/my-workshops", component: OrganizerWorkshopsComponent},

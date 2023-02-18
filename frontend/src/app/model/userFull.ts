@@ -1,4 +1,5 @@
 export class UserFull {
+    _id: string;
     firstname: string;
     lastname: string;
     username: string;
