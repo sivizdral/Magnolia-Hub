@@ -52,4 +52,10 @@ export class PasswordChangeComponent implements OnInit {
       }
     })
   }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
+  }
+  
 }

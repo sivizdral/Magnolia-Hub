@@ -353,6 +353,11 @@ export class MyProfileComponent {
       this.textsCom = data.texts;
     })
   }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
+  }
   
 
 }

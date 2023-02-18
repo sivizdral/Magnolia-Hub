@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { WorkshopService } from '../services/workshop.service';
 
@@ -33,7 +34,7 @@ export class BecomeOrganizerComponent implements OnInit {
   pho: any[] = [];
   gal: any[] = [];
 
-  constructor(private wService: WorkshopService) { }
+  constructor(private wService: WorkshopService, private router: Router) { }
 
   async ngOnInit() {
   }
@@ -123,5 +124,10 @@ export class BecomeOrganizerComponent implements OnInit {
     for (let i = 0; i < list.length; i++) {
       this.gallery.push(list[i]);
     }
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 }

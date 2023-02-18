@@ -11,6 +11,7 @@ import { TokenService } from '../services/token.service';
 import { UserService } from '../services/user.service';
 import { WorkshopService } from '../services/workshop.service';
 import {ɵunwrapSafeValue} from "@angular/core"
+import { Router } from '@angular/router';
 
 declare var baguetteBox: any;
 
@@ -25,7 +26,8 @@ export class WorkshopSingleComponent implements OnInit {
     private tService: TokenService, 
     private chatService: ChatService, 
     private readonly sanitizer: DomSanitizer,
-    private uService: UserService) { }
+    private uService: UserService,
+    private router: Router) { }
   
   images: GalleryItem[] = [];
   workshops: Workshop[] = [];
@@ -247,6 +249,11 @@ export class WorkshopSingleComponent implements OnInit {
     await this.chatService.getLikes(wString).subscribe(data => {
       this.likes = data.likes;
     })
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
   
 

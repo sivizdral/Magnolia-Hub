@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  log: boolean = true;
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.log = !(user == null);
     const translate = document.querySelectorAll(".translate");
 const big_title = document.querySelector(".big-title") as HTMLElement;
 const header = document.querySelector("header") as HTMLElement;
@@ -44,6 +49,11 @@ window.addEventListener('scroll', () => {
 
     border.style.width = `${scroll / (sectionY.top + section_height) * 30}%`;
 })
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 
 }

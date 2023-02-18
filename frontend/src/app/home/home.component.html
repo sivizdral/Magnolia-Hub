@@ -16,10 +16,20 @@
         <input type="checkbox">
         <span class="menu"> <span class="hamburger"></span> </span>
         <ul>
-          <li> <a href="#">home</a> </li>
-          <li> <a href="#">about</a> </li>
-          <li> <a href="#">contact</a> </li>
-        </ul>
+            <li *ngIf="!log"> <a href="">home</a> </li>
+            <li *ngIf="!log"> <a href="login">log in</a> </li>
+            <li *ngIf="!log"> <a href="signup">sign up</a> </li>
+            <li *ngIf="!log"> <a href="top">top 5</a> </li>
+            <li *ngIf="!log"> <a href="all-workshops">all workshops</a> </li>
+            <li *ngIf="log"> <a href="">home</a> </li>
+            <li *ngIf="log"> <a href="my-profile">my profile</a> </li>
+            <li *ngIf="log"> <a href="my-workshops">my workshops</a> </li>
+            <li *ngIf="log"> <a href="all-workshops">all workshops</a> </li>
+            <li *ngIf="log"> <a href="top">top 5</a> </li>
+            <li *ngIf="log"> <a href="passch">change password</a> </li>
+            <li *ngIf="log"> <a href="propose-workshop">become organizer</a> </li>
+            <li *ngIf="log"> <a href="#" (click)="logOut()">log out</a> </li>
+            </ul>
         </label>
 </header>
 

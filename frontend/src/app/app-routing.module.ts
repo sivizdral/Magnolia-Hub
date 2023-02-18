@@ -30,6 +30,7 @@ const routes: Routes = [
   {path: "signup", component: RegisterComponent},
   {path: "password-reset/:userId/:token", component:PasswordResetComponent},
   {path: "passch", component:PasswordChangeComponent},
+
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/user-create", component: AdminUserCreateComponent},
   {path: "admin/user-update", component: AdminUserUpdateComponent},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: "admin/workshop-listing", component: AdminWorkshopListComponent},
   {path: "admin/update-workshop", component: UpdateWorkshopComponent},
   {path: "admin/create-workshop", component: OrganizerCreateWorkshopComponent},
+  
   {path: "workshop-details", component: WorkshopSingleComponent},
   {path: "my-workshops", component: AppliedWorkshopsComponent},
   {path: "organizer/my-workshops", component: OrganizerWorkshopsComponent},

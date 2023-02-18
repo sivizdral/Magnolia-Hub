@@ -35,7 +35,9 @@ export class AllWorkshopsComponent implements OnInit {
     await this.wService.getAll().subscribe((w: Workshop[]) => {
       this.workshops = w;
     })
+
     await new Promise(resolve => setTimeout(resolve, 100));
+    console.log(this.workshops)
     for(let i = 0; i < this.workshops.length; i++) {
       const str = this.workshops[i].photo[0].path;
       await this.wService.getPhoto(str).subscribe(data => {
@@ -128,6 +130,11 @@ export class AllWorkshopsComponent implements OnInit {
     if (user == null) return;
     localStorage.setItem('workshop', id);
     this.router.navigate(['workshop-details']);
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 
 }

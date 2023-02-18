@@ -164,7 +164,7 @@ label input:checked+.menu+ul {
     opacity: 1;
 }
 
-ul {
+label ul {
     z-index: 200;
     position: absolute;
     top: 50vh;

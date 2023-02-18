@@ -69,7 +69,7 @@ export class AppliedWorkshopsComponent implements OnInit {
 
   logOut() {
     sessionStorage.clear();
-    console.log("OK")
+    this.router.navigate(['']);
   }
 
 }
