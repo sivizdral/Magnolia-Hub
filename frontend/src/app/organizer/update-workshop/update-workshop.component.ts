@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { WorkshopService } from 'src/app/services/workshop.service';
 import * as moment from 'moment';
 import { Workshop } from 'src/app/model/workshop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-workshop',
@@ -35,10 +36,14 @@ export class UpdateWorkshopComponent implements OnInit {
   pho: any[] = [];
   gal: any[] = [];
   workshops: Workshop[] = [];
+  org: boolean = false;
 
-  constructor(private wService: WorkshopService) { }
+  constructor(private wService: WorkshopService, private router: Router) { }
 
   async ngOnInit() {
+    let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.org = (user.type == 'organizer');
+
     let wString = localStorage.getItem('workshop');
     this.wService.getDetails(wString).subscribe((w: Workshop[]) => {
       this.workshops = w;
@@ -182,6 +187,11 @@ export class UpdateWorkshopComponent implements OnInit {
 
     //Cast to a File() type
     return <File>theBlob;
+}
+
+logOut() {
+  sessionStorage.clear();
+  this.router.navigate(['']);
 }
 
 }

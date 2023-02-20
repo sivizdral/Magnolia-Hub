@@ -9,12 +9,14 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   log: boolean = true;
+  org: boolean = false;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem('auth-user'));
     this.log = !(user == null);
+    if (this.log) this.org = (user.type == 'organizer');
     const translate = document.querySelectorAll(".translate");
 const big_title = document.querySelector(".big-title") as HTMLElement;
 const header = document.querySelector("header") as HTMLElement;

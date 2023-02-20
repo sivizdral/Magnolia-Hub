@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Chat } from 'src/app/model/chat';
 import { User } from 'src/app/model/user';
 import { UserFull } from 'src/app/model/userFull';
@@ -18,7 +19,8 @@ export class WorkshopSingleOrganizerComponent implements OnInit {
   constructor(private wService: WorkshopService, 
     private chatService: ChatService, 
     private readonly sanitizer: DomSanitizer,
-    private uService: UserService) { }
+    private uService: UserService,
+    private router: Router) { }
   
   workshops: Workshop[] = [];
   message: string = "";
@@ -30,10 +32,12 @@ export class WorkshopSingleOrganizerComponent implements OnInit {
   firstnames: string[] = [];
   selectedChats: Chat[] = [];
   msgs: string[] = [];
+  org: boolean = false;
  
   async ngOnInit() {
     let wString = localStorage.getItem('workshop');
     let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.org = (user.type == 'organizer');
     this.myName = user.firstname;
     await this.wService.getDetails(wString).subscribe((w: Workshop[]) => {
       this.workshops = w;
@@ -117,6 +121,11 @@ export class WorkshopSingleOrganizerComponent implements OnInit {
         this.msgs.push("");
       }
     }
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 
 }

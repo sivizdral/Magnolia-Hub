@@ -21,14 +21,16 @@
             <li *ngIf="!log"> <a href="signup">sign up</a> </li>
             <li *ngIf="!log"> <a href="top">top 5</a> </li>
             <li *ngIf="!log"> <a href="all-workshops">all workshops</a> </li>
-            <li *ngIf="log"> <a href="">home</a> </li>
-            <li *ngIf="log"> <a href="my-profile">my profile</a> </li>
-            <li *ngIf="log"> <a href="my-workshops">my workshops</a> </li>
-            <li *ngIf="log"> <a href="all-workshops">all workshops</a> </li>
-            <li *ngIf="log"> <a href="top">top 5</a> </li>
-            <li *ngIf="log"> <a href="passch">change password</a> </li>
-            <li *ngIf="log"> <a href="propose-workshop">become organizer</a> </li>
-            <li *ngIf="log"> <a href="#" (click)="logOut()">log out</a> </li>
+            <li *ngIf="log && !org"> <a href="">home</a> </li>
+            <li *ngIf="log && !org"> <a href="my-profile">my profile</a> </li>
+            <li *ngIf="log && !org"> <a href="my-workshops">my workshops</a> </li>
+            <li *ngIf="log && !org"> <a href="all-workshops">all workshops</a> </li>
+            <li *ngIf="log && !org"> <a href="top">top 5</a> </li>
+            <li *ngIf="log && !org"> <a href="passch">change password</a> </li>
+            <li *ngIf="log && !org"> <a href="propose-workshop">become organizer</a> </li>
+            <li *ngIf="log && !org"> <a href="#" (click)="logOut()">log out</a> </li>
+            <li *ngIf="org"> <a href="organizer/my-workshops">my workshops</a></li>
+            <li *ngIf="org"> <a href="organizer/create-workshop">create workshop</a></li>
             </ul>
         </label>
 </header>
@@ -42,8 +44,7 @@
                 About
                 <div class="border"></div>
             </h3>
-            <p class="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque officiis quos expedita ipsa, a quidem inventore voluptates debitis accusamus tenetur qui et voluptas dicta, culpa earum, doloribus odio consectetur consequuntur soluta quasi nobis!
-                Deserunt voluptatum reiciendis iure expedita sequi quisquam laboriosam temporibus exercitationem.</p>
+            <p class="text">Welcome to our creative art workshops website, where you can explore your passion for art and crafts with our expert instructors. Our workshops offer a range of mediums to choose from, including mosaic building, ceramic vase making, and bookbinding.</p>
         </div>
 
         <div class="imgContainer opacity">

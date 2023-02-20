@@ -1,0 +1,51 @@
+{
+  "_id": "63f3459c092119c7c49199ea",
+  "name": "Pablo Picasso: Guernica",
+  "date": "2023-02-25T10:03:00.000Z",
+  "location": "Ušće 10, Beograd",
+  "organizer": "63e512bf02aebfe3a4b18920",
+  "photo": [
+    {
+      "fieldname": "photo",
+      "originalname": "guernica.jpg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "./uploads/",
+      "filename": "1676887452795guernica.jpg",
+      "path": "uploads\\1676887452795guernica.jpg",
+      "size": 51854
+    }
+  ],
+  "short_description": "Pablo Picasso was a Spanish artist who co-founded the Cubist movement. His powerful anti-war painting, Guernica, is considered one of the most important artworks of the 20th century.",
+  "long_description": "Pablo Picasso revolutionized the art world with his bold, innovative approach to painting and sculpture. His iconic work, Guernica, is a haunting depiction of the horrors of war, conveying the senseless violence and destruction inflicted upon innocent civilians.",
+  "gallery": [
+    {
+      "fieldname": "gallery",
+      "originalname": "picasso2.jpg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "./uploads/",
+      "filename": "1676887452890picasso2.jpg",
+      "path": "uploads\\1676887452890picasso2.jpg",
+      "size": 311583
+    },
+    {
+      "fieldname": "gallery",
+      "originalname": "picasso1.jpg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "./uploads/",
+      "filename": "1676887452947picasso1.jpg",
+      "path": "uploads\\1676887452947picasso1.jpg",
+      "size": 1201017
+    }
+  ],
+  "status": "unapproved",
+  "capacity": 6,
+  "participantsList": [],
+  "pendingList": [],
+  "waitingList": [],
+  "likes": [],
+  "comments": [],
+  "__v": 0
+}

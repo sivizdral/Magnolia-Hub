@@ -107,7 +107,7 @@ export class MyProfileComponent {
     
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    console.log(this.namesCom, this.idsCom, this.textsCom)
+    console.log(this.chats)
 
     for (let i = 0; i < this.chats.length; i++) {
       await this.authService.getData(this.chats[i].organizer).subscribe(data => {

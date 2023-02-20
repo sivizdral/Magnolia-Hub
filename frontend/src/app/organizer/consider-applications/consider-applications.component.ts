@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WorkshopService } from 'src/app/services/workshop.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class ConsiderApplicationsComponent implements OnInit{
   names: string[] = [];
   ids: string[] = [];
 
-  constructor(private wService: WorkshopService) { }
+  constructor(private wService: WorkshopService, private router: Router) { }
 
   ngOnInit() {
     let wString = localStorage.getItem('workshop');
@@ -39,6 +40,11 @@ export class ConsiderApplicationsComponent implements OnInit{
       this.names = data.names;
       this.ids = data.ids;
     })
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 
 }

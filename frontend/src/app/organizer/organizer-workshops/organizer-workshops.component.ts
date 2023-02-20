@@ -17,9 +17,11 @@ export class OrganizerWorkshopsComponent implements OnInit {
   photos: any[] = [];
   name: string = "";
   place: string = "";
+  org:boolean = false;
 
   async ngOnInit(): Promise<void> {
     let user = JSON.parse(sessionStorage.getItem('auth-user'));
+    this.org = (user.type == 'organizer');
     await this.wService.getAllOrganizer(user.id).subscribe((w: Workshop[]) => {
       this.workshops = w;
     })
@@ -60,5 +62,10 @@ export class OrganizerWorkshopsComponent implements OnInit {
     await this.wService.cancelWorkshop(id).subscribe();
     await new Promise(resolve => setTimeout(resolve, 100));
     window.location.reload();
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 }

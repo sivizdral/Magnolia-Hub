@@ -65,9 +65,14 @@
         <input type="checkbox" style="display:none">
         <span class="menu"> <span class="hamburger"></span> </span>
         <ul>
-          <li> <a href="#">home</a> </li>
-          <li> <a href="#">about</a> </li>
-          <li> <a href="#">contact</a> </li>
+            <li><a href="">home</a></li>
+            <li *ngIf="org"> <a href="organizer/my-workshops">my workshops</a></li>
+            <li *ngIf="org"> <a href="organizer/create-workshop">create workshop</a></li>
+            <li *ngIf="!org"> <a href="admin/user-create">create user</a></li>
+            <li *ngIf="!org"> <a href="admin/workshop-listing">workshops</a> </li>
+            <li *ngIf="!org"> <a href="admin/user-listing">users</a> </li>
+            <li *ngIf="!org"> <a href="admin/create-workshop">create workshop</a> </li>
+            <li> <a href="#" (click)="logOut()">log out</a> </li>
         </ul>
         </label>
 

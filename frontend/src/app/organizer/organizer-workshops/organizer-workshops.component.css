@@ -62,7 +62,7 @@ header {
 }
 
 .container-fluid .post .header_post img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     transition: ease-in-out 600ms;
 }
